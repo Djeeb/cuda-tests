@@ -69,7 +69,7 @@ int main(void) {
 
     // Vérification
     float est_pi =0.;
-    for (int i = 0; i < numElements; ++i) est_pi + = h_C[i]
+    for (int i = 0; i < numElements; ++i) est_pi + = h_C[i];
 	cout << "estimation de pi : " << est_pi*4;
 
 
