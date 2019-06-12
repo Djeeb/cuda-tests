@@ -2,27 +2,29 @@
 #include <cuda_runtime.h>
 #include <thrust/host_vector.h>
 #include <thrust/device_vector.h>
+#include <random>
 using namespace std;
 
- //Fonction de scalaire de vecteurs avec __global__ pour utiliser sur host ou device
 
+ //Fonction d'équation du cercle avec __global__ pour utiliser sur host ou device
 __global__ void
-vectorAdd(const float *A, const float *B, float *C, int numElements)
+cercle(const float *A, const float *B, float *C, int numElements)
 {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
 
     if (i < numElements)
     {
-        C[i] = A[i] * B[i];
+        C[i] = A[i]*A[i] + B[i]*B[i];
     }
 }
 
 int main(void) {
-
+	
+	cout << "---Estimation de pi par méthode de monte carlo sur GPU---" << endl;
     // Print the vector length to be used, and compute its size
     int numElements;
-    std::cout << "entrez la taille des vecteurs désirée pour le test de pdt scalaire : " << std::endl;
-    std::cin >> numElements;
+    cout << "Entrez le nombre de simulations que vous voulez faire : " << endl;
+    cin >> numElements;
     size_t size = numElements * sizeof(float);
 
 
@@ -72,7 +74,7 @@ int main(void) {
     int threadsPerBlock = 256;
     int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
     printf("CUDA kernel launch with %d blocks of %d threads\n", blocksPerGrid, threadsPerBlock);
-    vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements);
+    scalaire<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements);
 
     // Copy the device result vector in device memory to the host result vector
     // in host memory.

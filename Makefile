@@ -1,12 +1,12 @@
 CC = nvcc
 CFLAGS = -ccbin g++ -std=c++11 -O2
 
-scalaire-test: scalaire-test.o
-	$(CC) -o scalaire scalaire-test.o $(CFLAGS)
+pi-simulation: pi-simulation.o
+	$(CC) -o pi-simulation pi-simulation.o $(CFLAGS)
 	
-scalaire-test.o: scalaire-test.cu
-	$(CC) -c scalaire-test.cu $(CFLAGS)
+pi-simulation.o: pi-simulation.cu
+	$(CC) -c pi-simulation.cu $(CFLAGS)
 
 clean:
-	rm scalaire-test.o
-	rm scalaire-test
+	rm pi-simulation.o
+	rm pi-simulation
