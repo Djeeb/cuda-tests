@@ -9,29 +9,34 @@ using namespace std;
 int main(void){
 	
 	//génération d'un tableau de doubles à allouer
-	mt19937 G;
-	uniform_real_distribution<double> U(0.,1.);
 	int n = 1000;
 	double * data = new double[n];
-	for(int i=0;i<n;i++) data[i] = U(G);
+	for(int i=0;i<n;i++) data[i] = 0.;
+	
 	
 	//initialisation (obligatoire pour utiliser CuBLAS)
 	InitTensorEngine<gpu>();
 	
-	Tensor<gpu,2, double> T;
+	Tensor<gpu,2, double> T1,T2;
 	
 	//allocation du tableau de double
-	cout << "Allocation d'un tableau de " << n << " valeurs sur dans un tenseur :" << endl;
-	T.dptr_ = data;
+	cout << "Allocation d'un tableau de " << n << " valeurs sur dans deux tenseurs différents :" << endl;
+	T1.dptr_ = data;
+	T2.dptr_ = data;
 	
 	//test sur les dimensions
-	cout << "size  :" << T.size(0) << endl;
-	cout << "shape : " << T.shape_ << endl;
+	cout << "size  :" << T1.size(0) << endl;
+	cout << "shape : " << T1.shape_ << endl;
 	cout << "\nTenseur redimensionné au maximum en utilisant la méthode .Slice() :" << endl;
-	T = T.Slice(0,n);
-	cout << "size  : " << T.size(0) << endl;
-	cout << "shape : " << T.shape_ << endl;
+	T1 = T1.Slice(0,n);
+	T2 = T2.Slice(0,n);
+	cout << "size  : " << T1.size(0) << endl;
+	cout << "shape : " << T1.shape_ << endl;
 	
-	//Arrêt (obligatoire pour utiliser CuBLAS)	
+	index_t i;
+	T1[i] = 5;
+	cout << T1[i] << endl;
+	
+	//Arrêt (obligatoire pour utiliser CuBLAS)
 	ShutdownTensorEngine<gpu>();
 }
