@@ -8,7 +8,13 @@ using namespace std;
 
 int main(void){
 	
-	xpu = "gpu";
+	//choix GPU/CPU
+	int choix;
+	cout << "Quel mode désirez vous ? Entrez le chiffre correspondant :" << endl;
+	cout << "1.CPU \t 2.GPU" << endl;
+	cin >> choix;
+	
+	string xpu = (choix==1)?"CPU":"GPU";
 	
 	//initialisation (obligatoire pour utiliser CuBLAS)
 	InitTensorEngine<xpu>();
