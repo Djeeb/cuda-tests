@@ -36,7 +36,7 @@ int main(void) {
     // simulation
     cout << "simulation..." << endl;
     mt19937 G;
-    uniform_real_distribution<float> U(-1.,1.)
+    uniform_real_distribution<float> U(-1.,1.);
     for (int i = 0; i < numElements; ++i)
 		{
         h_A[i] = U(G);
