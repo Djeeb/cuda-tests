@@ -23,9 +23,10 @@ int main(void){
 	cout << "Allocation d'un tableau de " << n << " valeurs sur dans un tenseur :" << endl;
 	T.dptr_ = data;
 	
+	cout << "size :" << T.size() << endl;
 	cout << "shape : " << T.shape_ << endl;
 	cout << "Tenseur redimensionné au maximum : " << endl;
-	T = T.Slice(0,n/2);
+	T = T.Slice(0,n);
 	cout << "shape : " << T.shape_ << endl;
 	
 	//Arrêt (obligatoire pour utiliser CuBLAS)	
