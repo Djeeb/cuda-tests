@@ -24,7 +24,7 @@ int main(void){
 	T.dptr_ = data;
 	
 	cout << "Tenseur redimensionné au maximum : " << endl;
-	T = T.slice();
+	T = T.Slice();
 	cout << "shape : " << T.shape_ << endl;
 	
 	//Arrêt (obligatoire pour utiliser CuBLAS)	
