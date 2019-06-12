@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <cuda_runtime.h>
-#include <iostream>
-using namespace std;
 
 /**
  * CUDA Kernel Device code
@@ -29,10 +27,10 @@ int main(void) {
 
     // Print the vector length to be used, and compute its size
     int numElements;
-    size_t size = numElements * sizeof(float);
     cout << "entrez la taille des vecteurs désirée pour le test de pdt scalaire : " << endl;
     cin >> numElements;
     size_t size = numElements * sizeof(float);
+
 
     // Allocate the host input vector A
     float *h_A = (float *)malloc(size);
