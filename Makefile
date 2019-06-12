@@ -216,7 +216,7 @@ endif
 # Target rules
 all: build
 
-build: vectorAdd
+build: scalaire-test
 
 check.deps:
 ifeq ($(SAMPLE_ENABLED),0)
@@ -225,16 +225,16 @@ else
 	@echo "Sample is ready - all dependencies have been met"
 endif
 
-vectorAdd.o:vectorAdd.cu
+scalaire-test.o:scalaire-test.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-vectorAdd: vectorAdd.o
+scalaire-test: scalaire-test.o
 	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
 run: build
 	$(EXEC) ./vectorAdd
 
 clean:
-	rm -f vectorAdd vectorAdd.o
+	rm -f scalaire-test scalaire-test.o
 
 clobber: clean
