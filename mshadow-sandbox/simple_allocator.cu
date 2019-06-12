@@ -13,7 +13,7 @@ int main(void){
 	cout << "Quel mode désirez vous ? Entrez le chiffre correspondant :" << endl;
 	cout << "1.CPU \t 2.GPU" << endl;
 	cin >> choix;
-	auto xpu = (choix==1)?cpu:gpu;
+	auto xpu = (choix==1)?Device::kDevCPU:Device::kDevGPU;
 	
 	//initialisation (obligatoire pour utiliser CuBLAS)
 	InitTensorEngine<xpu>();
