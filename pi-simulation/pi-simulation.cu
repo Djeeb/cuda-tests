@@ -22,7 +22,7 @@ cercle(const float *A, const float *B, float *C, int numElements)
 
 int main(void) {
 	
-	//Initialisatio
+	//Initialisation
 	int numElements;
 	cout << "---Estimation de pi par méthode de monte carlo sur GPU---" << endl;
     cout << "Entrez le nombre de simulations que vous voulez faire : " << endl;
@@ -96,9 +96,8 @@ int main(void) {
     // Reset du device
     cudaDeviceReset();
     
-    
-	
-	chrono::duration<double> diff = t2 - t1;
+
+    chrono::duration<double> diff = t2 - t1;
     cout << "Temps de calcul de la tâche : " << diff.count() << endl;
     return 0;
 }
