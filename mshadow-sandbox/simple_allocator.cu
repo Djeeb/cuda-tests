@@ -1,6 +1,6 @@
 #include "mshadow/tensor.h"
 #include <iostream>
-#include <string>
+#include <random>
 
 using namespace mshadow;
 using namespace mshadow::expr;
@@ -8,25 +8,20 @@ using namespace std;
 
 int main(void){
 	
-	//choix GPU/CPU
-	int choix;
-	cout << "Quel mode désirez vous ? Entrez le chiffre correspondant :" << endl;
-	cout << "1.CPU \t 2.GPU" << endl;
-	cin >> choix;
-	auto xpu = (choix==1)?Device::kDevCPU:Device::kDevGPU;
+	//génération d'un tableau de doubles à allouer
+	mt19937 G;
+	uniform_real_distribution<double> U(0.,1.)
+	n = 1000;
+	double data[n];
+	for(int i=0;i<n;i++) data[i] = U(G);
 	
 	//initialisation (obligatoire pour utiliser CuBLAS)
-	InitTensorEngine<xpu>();
+	InitTensorEngine<gpu>();
 	
+	Tensor<gpu,2> T;
+	T.dptr_ = data
+	//T = T.slice();
 	
-	
-	
-	
-	
-	
-	
-	
-
 	//Arrêt (obligatoire pour utiliser CuBLAS)	
-	ShutdownTensorEngine<xpu>();
+	ShutdownTensorEngine<gpu>();
 }
