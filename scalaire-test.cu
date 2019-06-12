@@ -24,10 +24,15 @@ vectorAdd(const float *A, const float *B, float *C, int numElements)
 }
 
 int main(void) {
+    // Error code to check return values for CUDA calls
+    cudaError_t err = cudaSuccess;
+
+    // Print the vector length to be used, and compute its size
     int numElements;
     size_t size = numElements * sizeof(float);
     cout << "entrez la taille des vecteurs désirée pour le test de pdt scalaire : " << endl;
     cin >> numElements;
+    size_t size = numElements * sizeof(float);
 
     // Allocate the host input vector A
     float *h_A = (float *)malloc(size);
