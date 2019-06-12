@@ -18,7 +18,7 @@ int main(void){
 	//initialisation (obligatoire pour utiliser CuBLAS)
 	InitTensorEngine<gpu>();
 	
-	Tensor<gpu,2> T;
+	Tensor<gpu,2, double> T;
 	T.dptr_ = data;
 	//T = T.slice();
 	
