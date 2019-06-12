@@ -12,7 +12,7 @@ int main(void){
 	mt19937 G;
 	uniform_real_distribution<double> U(0.,1.);
 	int n = 1000;
-	double data[n];
+	double * data[n];
 	for(int i=0;i<n;i++) data[i] = U(G);
 	
 	//initialisation (obligatoire pour utiliser CuBLAS)
