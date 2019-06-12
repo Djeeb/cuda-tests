@@ -17,7 +17,7 @@ int main(void){
 	//initialisation (obligatoire pour utiliser CuBLAS)
 	InitTensorEngine<gpu>();
 	
-	Tensor<gpu,2, double> T1,T2;
+	Tensor<gpu, 1 , double> T1,T2;
 	
 	//allocation du tableau de double
 	cout << "Allocation d'un tableau de " << n << " valeurs sur dans deux tenseurs différents :" << endl;
