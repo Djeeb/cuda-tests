@@ -27,7 +27,7 @@ int main(void){
 	//test sur les dimensions
 	cout << "size  :" << T.size(0) << endl;
 	cout << "shape : " << T.shape_ << endl;
-	cout << "\nTenseur redimensionné au maximum en utilisant la méthode .Slice() : \n" << endl;
+	cout << "\nTenseur redimensionné au maximum en utilisant la méthode .Slice() :" << endl;
 	T = T.Slice(0,n);
 	cout << "size  : " << T.size(0) << endl;
 	cout << "shape : " << T.shape_ << endl;
