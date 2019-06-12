@@ -19,8 +19,13 @@ int main(void){
 	InitTensorEngine<gpu>();
 	
 	Tensor<gpu,2, double> T;
+	
+	cout << "Allocation d'un tableau de " << n << " valeurs sur dans un tenseur :" << endl;
 	T.dptr_ = data;
-	//T = T.slice();
+	
+	cout << "Tenseur redimensionné au maximum : " << endl;
+	T = T.slice();
+	cout << "shape : " << T.shape_ << endl;
 	
 	//Arrêt (obligatoire pour utiliser CuBLAS)	
 	ShutdownTensorEngine<gpu>();
