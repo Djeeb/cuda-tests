@@ -23,6 +23,8 @@ int main(void){
 	cout << "Allocation d'un tableau de " << n << " valeurs sur dans un tenseur :" << endl;
 	T.dptr_ = data;
 	
+	T = T.Slice(0,n);
+	cout << "shape : " << T.shape_ << endl;
 	cout << "Tenseur redimensionné au maximum : " << endl;
 	T = T.Slice(0,n);
 	cout << "shape : " << T.shape_ << endl;
