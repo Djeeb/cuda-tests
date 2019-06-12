@@ -20,12 +20,14 @@ int main(void){
 	
 	Tensor<gpu,2, double> T;
 	
+	//allocation du tableau de double
 	cout << "Allocation d'un tableau de " << n << " valeurs sur dans un tenseur :" << endl;
 	T.dptr_ = data;
 	
+	//test sur les dimensions
 	cout << "size  :" << T.size(0) << endl;
 	cout << "shape : " << T.shape_ << endl;
-	cout << "Tenseur redimensionné au maximum en utilisant la méthode .Slice() : " << endl;
+	cout << "\nTenseur redimensionné au maximum en utilisant la méthode .Slice() : \n" << endl;
 	T = T.Slice(0,n);
 	cout << "size  : " << T.size(0) << endl;
 	cout << "shape : " << T.shape_ << endl;
