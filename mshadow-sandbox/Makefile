@@ -1,4 +1,4 @@
-CC = nvcc -ccbin
+CC = nvcc -ccbin g++
 CXX = g++
 CFLAGS = -std=c++11 -O2 -I ../mshadow -lm -lcblas
 
