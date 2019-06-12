@@ -1,7 +1,7 @@
 # Simulation de pi sur GPU
 
 ## Description : 
-simple méthode de monte-carlo qui utilise cuda 
+simple méthode de monte-carlo qui utilise cuda pour approximer pi. Utiliser "make pi-simulation" pour compiler le fichier.
 
 
 ## Questions :
