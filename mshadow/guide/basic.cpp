@@ -1,5 +1,7 @@
 // header file to use mshadow
 #include "mshadow/tensor.h"
+
+#include <cblas.h>
 // this namespace contains all data structures, functions
 using namespace mshadow;
 // this namespace contains all operator overloads
