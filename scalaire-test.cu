@@ -28,8 +28,8 @@ int main(void) {
 
     // Print the vector length to be used, and compute its size
     int numElements;
-    cout << "entrez la taille des vecteurs désirée pour le test de pdt scalaire : " << endl;
-    cin >> numElements;
+    std::cout << "entrez la taille des vecteurs désirée pour le test de pdt scalaire : " << std::endl;
+    std::cin >> numElements;
     size_t size = numElements * sizeof(float);
 
 
