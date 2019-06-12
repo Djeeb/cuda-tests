@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <cuda_runtime.h>
+using namespace std;
 
 /**
  * CUDA Kernel Device code
