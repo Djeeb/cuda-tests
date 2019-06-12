@@ -33,7 +33,7 @@ int main(void){
 	cout << "size  : " << T1.size(0) << endl;
 	cout << "shape : " << T1.shape_ << endl;
 	
-	index_t i;
+	index_t i = 200;
 	T1[i] = 5;
 	cout << T1[i] << endl;
 	
