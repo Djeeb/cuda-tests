@@ -69,28 +69,23 @@ int main(void) {
 
     // Vérification
     float est_pi =0.;
-    for (int i = 0; i < numElements; ++i) est_pi += h_C[i];
-	cout << "estimation de pi : " << est_pi*4;
+    for (int i = 0; i < numElements; ++i) est_pi += (h_C[i]<1)?1.:0.;
+	cout << "estimation de pi : " << (est_pi*4)/float(numElements);
 
 
-    // Free device global memory
+    // Libération de la mémoire device...
     cudaFree(d_A);
 	cudaFree(d_B);
 	cudaFree(d_C);
 	
-    // Free host memory
+    // Libération de la mémoire host ...
     free(h_A);
     free(h_B);
     free(h_C);
 
-    // Reset the device and exit
-    // cudaDeviceReset causes the driver to clean up all state. While
-    // not mandatory in normal operation, it is good practice.  It is also
-    // needed to ensure correct operation when the application is being
-    // profiled. Calling cudaDeviceReset causes all profile data to be
-    // flushed before the application exits
+    // Reset du device
     cudaDeviceReset();
 
-    printf("Done\n");
+    cout << "Terminé." << endl;
     return 0;
 }
