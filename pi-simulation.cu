@@ -87,8 +87,7 @@ int main(void) {
 	cudaFree(d_C);
 	
 	
-    // Libération de la mémoi
-    re host ...
+    // Libération de la mémoire host ...
     free(h_A);
     free(h_B);
     free(h_C);
