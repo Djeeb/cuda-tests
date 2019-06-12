@@ -34,9 +34,12 @@ int main(void){
 	cout << "shape : " << T1.shape_ << endl;
 	
 	index_t i = 200;
+	cout << "\nT1[200] = " << T1[i] << endl;
+	cout << "T2[200] = " << T2[i] << endl;	
+	cout << "Modification de T1[200] de 0 à 5 :" << endl;
 	T1[i] = 5;
-	cout << T1[i] << endl;
-	
+	cout << "T1[200] = "T1[i] << endl;
+	cout << "T2[200] = "T2[i] << endl;	
 	//Arrêt (obligatoire pour utiliser CuBLAS)
 	ShutdownTensorEngine<gpu>();
 }
