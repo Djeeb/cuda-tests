@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <chrono>
 class Vector;
 
 using namespace mshadow;
@@ -13,7 +14,7 @@ class Vector{
 		int size;
 		double * data;
 		
-		Vector(int n);
+		Vector(int n=0);
 		double operator[](int i) const {return data[i];}
 		double & operator[](int i) {return data[i];}
 		
@@ -38,15 +39,22 @@ int main(void){
 	//initialisation
 	mt19937 G;
 	uniform_real_distribution<double> U(-1.,1.);
-	int n = 10000;
-	Vector A(n), B(n), C(n),S(n);
+	int n = 1000000;
+	Vector A(n), B(n), C(n),S;
 	for(int i = 0; i < n; i++){
 		A[i] = U(G);
 		B[i] = U(G);
 		C[i] = U(G);
 	}
+	cout << "--- Calcul de A + B + C (3 vecteurs de taille " << n << ") par différentes méthodes ---" << endl;
 	
-	//
-	S = A + B;
+	
+	//méthode naïve
+	auto t1 = chrono::system_clock::now();
+	S = A + B + C;
+	auto t2 = chrono::system_clock::now();
+	chrono::duration<double> diff = t2 - t1;
+	cout << " \nTemps de calcul méthode naïve :" << diff.count() << endl;
+	
 	
 }
