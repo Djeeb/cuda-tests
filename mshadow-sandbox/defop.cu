@@ -39,7 +39,7 @@ int main(void){
 	
 	//Nettoyage du device
 	
-	DeleteStream(stream_)
+	DeleteStream(stream_);
 	ShutdownTensorEngine<gpu>();	
 	cout << "\n";
 }
