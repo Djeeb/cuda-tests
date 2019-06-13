@@ -49,6 +49,9 @@ Vector operator+(const Vector & A, const Vector & B){
 
 int main(void){
 	
+	
+	InitTensorEngine<gpu>();
+
 	//initialisation
 	mt19937 G;
 	uniform_real_distribution<double> U(-1.,1.);
@@ -69,5 +72,6 @@ int main(void){
 	chrono::duration<double> diff = t2 - t1;
 	cout << " \nTemps de calcul méthode naïve :" << diff.count() << endl;
 	
-	
+	ShutdownTensorEngine<gpu>();
+
 }
