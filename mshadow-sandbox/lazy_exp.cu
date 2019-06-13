@@ -1,4 +1,3 @@
-#include "mshadow/tensor.h"
 #include <iostream>
 #include <vector>
 #include <random>
@@ -11,7 +10,7 @@ using namespace mshadow::expr;
 using namespace std;
 
 
-//Classe vecteur
+//Classe vecteur___________________________________________PAS IMPORTANT
 class Vector{
 	public:
 		int size;
@@ -49,7 +48,18 @@ Vector::Vector(const Vector & A): size(A.size) {
 	for(int i=0;i<size;i++) data[i] = A.data[i];
 }
 
-//Structure pour la lazy expression
+
+//_________________________________________________________METHODE NAÏVE
+
+vector<double> operator+(const vector<double> & a, const vector<double> & b){
+	vector<double> c(a.size());
+	for(int i=0; i < c.size(); i++) c[i] = a[i] + b[i];
+	return c;
+}
+
+
+//_______________________________________________________LAZY EXPRESSION
+
 struct LazyExp{
 	const Vector & A;
 	const Vector & B;
@@ -68,17 +78,10 @@ inline LazyExp operator+(const Vector & A, const Vector & B) {
 	return LazyExp(A,B);
 }
 
-//méthode naïve
-vector<double> operator+(const vector<double> & a, const vector<double> & b){
-	vector<double> c(a.size());
-	for(int i=0; i < c.size(); i++) c[i] = a[i] + b[i];
-	return c;
-}
+//______________________________________________________________________
+
 
 int main(void){
-	
-	
-	InitTensorEngine<gpu>();
 
 	//initialisation
 	mt19937 G;
@@ -108,7 +111,5 @@ int main(void){
 	t2 = chrono::system_clock::now();
 	diff = t2 - t1;
 	cout << " \nTemps de calcul lazy expression :" << diff.count() << endl;
-		
-	ShutdownTensorEngine<gpu>();
-
+	
 }
