@@ -22,21 +22,27 @@ struct ReLu{
 	}
 };
 
-
+struct addone {
+  // map can be template function
+  template<typename DType>
+  MSHADOW_XINLINE static DType Map(DType a) {
+    return  a + static_cast<DType>(1);
+  }
+};
 
 
 int main(void){
 	int n = 10;
-	InitTensorEngine<cpu>();
+	InitTensorEngine<gpu>();
 	
 	//Initialisation du vecteur
-	Stream<cpu> * stream_ = NewStream<cpu>(0);
-	Tensor<cpu,1, double> Vec = NewTensor<cpu>(Shape1(n), 1., stream_);
+	Stream<gpu> * stream_ = NewStream<gpu>(0);
+	Tensor<gpu,1, double> Vec = NewTensor<gpu>(Shape1(n), 1., stream_);
 	
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
-	Vec = F<tanh>(Vec);
+	Vec = F<addone>(Vec);
 	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
@@ -44,5 +50,5 @@ int main(void){
 	FreeSpace(&Vec);
 	DeleteStream(stream_);
 	
-	ShutdownTensorEngine<cpu>();	
+	ShutdownTensorEngine<gpu>();	
 }
