@@ -30,4 +30,18 @@ int main(void){
 		} 
 		cout << "\n";	
 	}
+	
+	//Modification rapide de la matrice
+	T = 0.;
+	cout << "\n\nAprès modification de la matrice, T est maintenant égal à : " << endl;
+	for(index_t i = 0; i < T.size(0); i++){
+		for(index_t j = 0; j < T.size(1); j++){
+			cout << T[i][j] << "\t";
+		} 
+		cout << "\n";	
+	}
+	
+	
+	//Fermeture du tensor Engine
+	ShutdownTensorEngine<gpu>();
 }
