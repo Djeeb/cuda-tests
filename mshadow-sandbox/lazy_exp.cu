@@ -21,6 +21,7 @@ class Vector{
 		double & operator[](int i) {return data[i];}
 		
 		friend Vector operator+(const Vector &, const Vector &);
+		friend Vector operator*(const Vector &, const Vector &);
 		Vector operator=(const Vector &);
 			
 };
@@ -46,6 +47,12 @@ Vector operator+(const Vector & A, const Vector & B){
 	return C;
 }
 
+Vector operator*(const Vector & A, const Vector & B){
+	Vector C(A.size);
+	for(int i=0; i < C.size; i++) C[i] = A[i] * B[i];
+	return C;
+}
+
 
 int main(void){
 	
@@ -67,7 +74,7 @@ int main(void){
 	
 	//méthode naïve
 	auto t1 = chrono::system_clock::now();
-	S = A + B + C;
+	S = A + B * C;
 	auto t2 = chrono::system_clock::now();
 	chrono::duration<double> diff = t2 - t1;
 	cout << " \nTemps de calcul méthode naïve :" << diff.count() << endl;
