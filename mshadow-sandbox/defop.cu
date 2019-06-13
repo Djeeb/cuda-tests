@@ -48,7 +48,6 @@ int main(void){
 	
 	//Nettoyage du device
 	FreeSpace(&Vec);
-	DeleteStream(stream_);
 	
 	ShutdownTensorEngine<gpu>();	
 }
