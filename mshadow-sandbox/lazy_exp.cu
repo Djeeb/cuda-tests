@@ -70,17 +70,13 @@ struct LazyExp{
 	LazyExp(const Vector & A_, const Vector & B_): A(A_), B(B_) {};
 };
 
-class Vector2 : public Vector{
-	friend Vector2 operator=(const LazyExp & E);
-};
-
 //lazy expression
-inline Vector2 operator=(const LazyExp & E){
-	for(int i=0; i < E.A.size; i++) this->Vector::data[i] = E.A.data[i] + E.B.data[i];
+inline Vector operator=(const LazyExp & E){
+	for(int i=0; i < E.A.size; i++) data[i] = E.A.data[i] + E.B.data[i];
 	return *this;
 	
-inline LazyExp operator+(const Vector2 & A, const Vector2 & B) {
-  return LazyExp(A,B);
+inline LazyExp operator+(const Vector & A, const Vector & B) {
+	return LazyExp(A,B);
 }
 
 int main(void){
@@ -93,13 +89,9 @@ int main(void){
 	uniform_real_distribution<double> U(-1.,1.);
 	int n = 10000000;
 	Vector A(n), B(n), C(n);
-	Vector2 a(n), b(n), c(n);
 	for(int i = 0; i < n; i++){
 		A[i] = U(G);
-		B[i] = U(G);
-		
-		a[i] = A[i];
-		b[i] = B[i];
+		B[i] = U(G);	
 	}
 	cout << "--- Calcul de A + B (2 vecteurs de taille " << n << ") par différentes méthodes ---" << endl;
 	
@@ -110,15 +102,6 @@ int main(void){
 	auto t2 = chrono::system_clock::now();
 	chrono::duration<double> diff = t2 - t1;
 	cout << " \nTemps de calcul méthode naïve :" << diff.count() << endl;
-	
-	//lazy expression
-	t1 = chrono::system_clock::now();
-	c = a + b;
-	t2 = chrono::system_clock::now();
-	diff = t2 - t1;
-	cout << " \nTemps de calcul lazy expression :" << diff.count() << endl;
-	
-	
 	
 	
 	ShutdownTensorEngine<gpu>();
