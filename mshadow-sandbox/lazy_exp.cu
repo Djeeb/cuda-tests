@@ -102,7 +102,7 @@ int main(void){
 	chrono::duration<double> diff = t2 - t1;
 	cout << " \nTemps de calcul méthode naïve :" << diff.count() << endl;
 	
-	vector<double a(n), b(n), c(n);
+	vector<double> a(n), b(n), c(n);
 	c = a+b;
 	
 	
