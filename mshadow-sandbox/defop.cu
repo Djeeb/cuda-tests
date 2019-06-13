@@ -28,7 +28,7 @@ int main(void){
 	
 	//Initialisation du vecteur
 	Stream<gpu> * stream_ = NewStream<gpu>(0);
-	Tensor<gpu,1, double> Vec = NewTensor<gpu>(Shape1(n), 1., stream_);
+	Tensor<gpu,1, double> Vec = NewTensor<gpu, double>(Shape1(n), 1., stream_);
 	
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
@@ -38,8 +38,8 @@ int main(void){
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
 	//Nettoyage du device
-	FreeSpace(&Vec);
 	
+	DeleteStream(stream_)
 	ShutdownTensorEngine<gpu>();	
 	cout << "\n";
 }
