@@ -51,7 +51,19 @@ int main(void){
 	for(int i=1; i < 10; i++) Vec += T[i];
 	
 	cout << "\n\nPuis après addition de toutes les lignes dans Vec : " << endl;
-	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";	
+	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";
+	
+	Tensor<gpu,3,doube> D(T,Shape3(5,2,2));
+	cout << "\n\nCopie de T dans un tenseur D de shape " << D.Shape() << endl;
+	for(index_t i = 0; i < D.size(0); i++){
+		for(index_t j = 0; j < D.size(1); j++){ 
+			for(index_t k = 0; k < D.size(2); k++){ 
+				cout << D[i][j][k] << "\t";
+			}
+			cout << "\n";
+		}	
+			cout << "\n";
+	}
 	
 	
 	
