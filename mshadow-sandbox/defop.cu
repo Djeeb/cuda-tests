@@ -8,13 +8,13 @@ using namespace std;
 
 //_______________________________________________DEFINITION D'OPÉRATEURS
 
-struct tanh {
-	MSHADOW_XINLINE static double Map(double x){
+struct tanh{
+	MSHADOW_XINLINE static float Map(float x){
 		return (exp(2*x)-1)/(exp(2*x)+1);
 	}
 };
 
-struct ReLu {
+struct ReLu{
 	MSHADOW_XINLINE static double Map(double x){
 		return (x>0.)?x:0.;
 	}
@@ -29,7 +29,7 @@ int main(void){
 	
 	//Initialisation du vecteur
 	Stream<gpu> * stream_ = NewStream<gpu>(0);
-	Tensor<gpu,1, double> Vec = NewTensor<gpu>(Shape1(n), 1., stream_);
+	Tensor<gpu,1, float> Vec = NewTensor<gpu>(Shape1(n), 1., stream_);
 	
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
