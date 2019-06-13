@@ -8,7 +8,7 @@ using namespace std;
 int main(void){
 	int n = 100;
 	
-	cout << "\n\n--- Exploration de la syntaxe de mshadow ---" << endl;
+	cout << "\n--- Exploration de la syntaxe de mshadow ---" << endl;
 	
 	//Initialisation du tensor Engine pour CuBLAS
 	InitTensorEngine<cpu>();
@@ -22,7 +22,7 @@ int main(void){
 	
 	Tensor<cpu,1,double> Vec = T[0]; 
 	
-	cout << "T est une matrice " << T.size(0) << "x" << T.size(1) << " : " << endl;
+	cout << "\nT est une matrice " << T.size(0) << "x" << T.size(1) << " : " << endl;
 	
 	for(index_t i = 0; i < T.size(0); i++){
 		for(index_t j = 0; j < T.size(1); j++){
@@ -35,7 +35,7 @@ int main(void){
 	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";
 		
 	//Modification rapide de la matrice
-	T = 0.;
+	T = 1.;
 	cout << "\n\nAprès modification de la matrice, T est maintenant égal à : " << endl;
 	for(index_t i = 0; i < T.size(0); i++){
 		for(index_t j = 0; j < T.size(1); j++){
@@ -47,7 +47,16 @@ int main(void){
 	cout << "\nLe vecteur est quant à lui égal à : " << endl;
 	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";	
 	
+	//Modification du vecteur par lazy evaluation
+	for(int i=1; i < 10; i++) Vec += T[i];
+	
+	cout << "\n\nPuis après addition de toutes les lignes dans Vec : " << endl;
+	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";	
+	
+	
+	
 	//Fermeture du tensor Engine
 	ShutdownTensorEngine<cpu>();
 	cout << "\n";
+	
 }
