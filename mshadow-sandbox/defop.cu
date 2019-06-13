@@ -22,7 +22,7 @@ struct ReLu{
 	}
 };
 
-struct addone {
+struct addtwo {
   // map can be template function
 	template<typename DType>
 	MSHADOW_XINLINE static DType Map(DType a) {
@@ -42,7 +42,7 @@ int main(void){
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
-	Vec = F<tanh>(Vec);
+	Vec = F<addtwo>(Vec);
 	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
