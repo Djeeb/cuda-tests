@@ -59,9 +59,7 @@ Vector::Vector(const Vector & A): size(A.size) {
 	for(int i=0;i<size;i++) data[i] = A.data[i];
 }
 
-class Vector2 : public Vector{
-	friend Vector2 operator=(const LazyExp & E);
-};
+
 
 
 //Structure pour la lazy expression
@@ -72,11 +70,15 @@ struct LazyExp{
 	LazyExp(const Vector & A_, const Vector & B_): A(A_), B(B_) {};
 };
 
+class Vector2 : public Vector{
+	friend Vector2 operator=(const LazyExp & E);
+};
+
 //lazy expression
 inline Vector2 operator=(const LazyExp & E){
-	for(int i=0; i < E.A.size; i++) data[i] = A.data[i] + B.data[i];
+	for(int i=0; i < E.A.size; i++) this->Vector::data[i] = E.A.data[i] + E.B.data[i];
 	return *this;
-}
+	
 inline LazyExp operator+(const Vector2 & A, const Vector2 & B) {
   return LazyExp(A,B);
 }
