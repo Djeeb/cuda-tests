@@ -31,6 +31,9 @@ int main(void){
 		cout << "\n";	
 	}
 	
+	cout << "Vec est un vecteur de taille " << Vec.size(0) << " copié sur T[0] : " << endl;
+	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";
+		
 	//Modification rapide de la matrice
 	T = 0.;
 	cout << "\n\nAprès modification de la matrice, T est maintenant égal à : " << endl;
@@ -41,6 +44,8 @@ int main(void){
 		cout << "\n";	
 	}
 	
+	cout << "\n\nLe vecteur est quant à lui égal à : " << endl;
+	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";	
 	
 	//Fermeture du tensor Engine
 	ShutdownTensorEngine<cpu>();
