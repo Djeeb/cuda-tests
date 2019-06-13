@@ -9,8 +9,8 @@ using namespace std;
 //_______________________________________________DEFINITION D'OPÉRATEURS
 
 struct tanh{
-	template<typename type>
-	MSHADOW_XINLINE static type Map(type x){
+	template<typename DType>
+	MSHADOW_XINLINE static DType Map(DType x) {
 		return (exp(2*x)-1)/(exp(2*x)+1);
 	}
 };
@@ -24,9 +24,9 @@ struct ReLu{
 
 struct addone {
   // map can be template function
-  template<typename DType>
-  MSHADOW_XINLINE static DType Map(DType a) {
-    return  (exp(2*a)-1)/(exp(2*a)+1);
+	template<typename DType>
+	MSHADOW_XINLINE static DType Map(DType a) {
+		return  (exp(2*a)-1)/(exp(2*a)+1);
   }
 };
 
@@ -42,7 +42,7 @@ int main(void){
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
-	Vec = F<addone>(Vec);
+	Vec = F<tanh>(Vec);
 	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
