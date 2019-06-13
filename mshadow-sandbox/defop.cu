@@ -33,11 +33,11 @@ struct addone {
 
 int main(void){
 	int n = 10;
-	InitTensorEngine<gpu>();
+	InitTensorEngine<cpu>();
 	
 	//Initialisation du vecteur
-	Stream<gpu> * stream_ = NewStream<gpu>(0);
-	Tensor<gpu,1, double> Vec = NewTensor<gpu>(Shape1(n), 1., stream_);
+	Stream<cpu> * stream_ = NewStream<cpu>(0);
+	Tensor<cpu,1, double> Vec = NewTensor<cpu>(Shape1(n), 1., stream_);
 	
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
@@ -49,5 +49,5 @@ int main(void){
 	//Nettoyage du device
 	FreeSpace(&Vec);
 	
-	ShutdownTensorEngine<gpu>();	
+	ShutdownTensorEngine<cpu>();	
 }
