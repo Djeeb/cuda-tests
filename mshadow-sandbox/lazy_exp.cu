@@ -18,6 +18,7 @@ class Vector{
 		
 		Vector(int n=0);
 		~Vector(){delete [] data;}
+		Vector(const Vector &);
 		
 		double operator[](int i) const {return data[i];}
 		double & operator[](int i) {return data[i];}
@@ -57,7 +58,7 @@ Vector operator*(const Vector & A, const Vector & B){
 
 Vector::Vector(const Vector & A): size(A.size) {
 	data = new double[size];
-	for(int i=0;i<n;i++) data[i] = A.data[i];
+	for(int i=0;i<size;i++) data[i] = A.data[i];
 }
 
 
@@ -67,7 +68,7 @@ struct LazyExp{
 	const Vector & B;
 	
 	LazyExp(const & A_, const & B_ ): A(A_), B(B_) {};
-}
+};
 
 
 int main(void){
