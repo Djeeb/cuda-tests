@@ -46,7 +46,7 @@ Vector & Vector::operator=(const Vector & A){
 
 
 
-Vector<double> operator+(const vector<double> & a, const vector<double> & b){
+vector<double> operator+(const vector<double> & a, const vector<double> & b){
 	vector<double> c(a.size());
 	for(int i=0; i < c.size(); i++) c[i] = a[i] + b[i];
 	return c;
