@@ -14,6 +14,9 @@ class Vector{
 		double * data;
 		
 		Vector(int n);
+		double operator[](int i) const {return data[i];}
+		double & operator[](int i) {return data[i];}
+		
 		Vector operator+(const Vector &, const Vector &);
 			
 };
