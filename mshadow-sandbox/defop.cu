@@ -30,7 +30,7 @@ struct addtwo {
   }
 };
 
-struct tanh {
+struct tanh_ {
 	template<typename DType>
 	MSHADOW_XINLINE static DType Map(DType a) {
 		return  (exp(2*a)-1)/(exp(2*a)+1);
@@ -48,7 +48,7 @@ int main(void){
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
-	Vec = F<tanh>(Vec);
+	Vec = F<tanh_>(Vec);
 	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
