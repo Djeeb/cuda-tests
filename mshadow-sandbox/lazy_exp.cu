@@ -24,6 +24,7 @@ class Vector{
 		double & operator[](int i) {return data[i];}
 		
 		Vector operator=(const Vector &);
+		Vector operator=(const LazyExp & E);
 			
 };
 
@@ -71,7 +72,7 @@ struct LazyExp{
 };
 
 //lazy expression
-Vector & operator=(const LazyExp & E){
+Vector & Vector::operator=(const LazyExp & E){
 	for(int i=0; i < E.A.size; i++) data[i] = E.A.data[i] + E.B.data[i];
 	return *this;
 	
