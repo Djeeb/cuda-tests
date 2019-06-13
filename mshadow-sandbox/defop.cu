@@ -42,7 +42,7 @@ int main(void){
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
-	Vec = F<tanh>(Vec);
+	Vec = F<addone>(Vec);
 	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
