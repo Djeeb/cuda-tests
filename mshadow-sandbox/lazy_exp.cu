@@ -40,7 +40,7 @@ int main(void){
 	mt19937 G;
 	uniform_real_distribution<double> U(-1.,1.);
 	int n = 1000000;
-	Vector A(n), B(n), C(n),S;
+	Vector A(n), B(n), C(n),S(n);
 	for(int i = 0; i < n; i++){
 		A[i] = U(G);
 		B[i] = U(G);
