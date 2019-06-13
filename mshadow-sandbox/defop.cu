@@ -9,13 +9,15 @@ using namespace std;
 //_______________________________________________DEFINITION D'OPÉRATEURS
 
 struct tanh{
-	MSHADOW_XINLINE static float Map(float x){
+	template<typename type>
+	MSHADOW_XINLINE static type Map(type x){
 		return (exp(2*x)-1)/(exp(2*x)+1);
 	}
 };
 
 struct ReLu{
-	MSHADOW_XINLINE static double Map(double x){
+	template<typename type>
+	MSHADOW_XINLINE static type Map(type x){
 		return (x>0.)?x:0.;
 	}
 };
