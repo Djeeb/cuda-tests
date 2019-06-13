@@ -53,8 +53,7 @@ int main(void){
 	cout << "\n\nPuis après addition de toutes les lignes dans Vec : " << endl;
 	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";
 	
-	Tensor<gpu,3,double> D = T.Slice(0,5);
-	D.shape_ = Shape3(5,2,2);
+	Tensor<gpu,3,double> D(data,Shape3(5,2,2));
 	
 	cout << "\n\nCopie de T dans un tenseur D de shape " << D.Shape_ << endl;
 	for(index_t i = 0; i < D.size(0); i++){
