@@ -17,7 +17,7 @@ class Vector{
 		double operator[](int i) const {return data[i];}
 		double & operator[](int i) {return data[i];}
 		
-		Vector operator+(const Vector &, const Vector &);
+		friend Vector operator+(const Vector &, const Vector &);
 			
 };
 
