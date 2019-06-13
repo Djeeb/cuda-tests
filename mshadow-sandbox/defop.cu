@@ -8,33 +8,18 @@ using namespace std;
 
 //_______________________________________________DEFINITION D'OPÉRATEURS
 
-struct tanh_wrong {
-	template<typename DType>
-	MSHADOW_XINLINE static DType Map(DType x) {
+struct tanh_ {
+	template<typename type>
+	MSHADOW_XINLINE static type Map(type x) {
 		return (exp(2*x)-1)/(exp(2*x)+1);
 	}
 };
 
-struct ReLu{
+struct ReLu_ {
 	template<typename type>
 	MSHADOW_XINLINE static type Map(type x){
 		return (x>0.)?x:0.;
 	}
-};
-
-struct addtwo {
-  // map can be template function
-	template<typename DType>
-	MSHADOW_XINLINE static DType Map(DType a) {
-		return  (exp(2*a)-1)/(exp(2*a)+1);
-  }
-};
-
-struct tanh_ {
-	template<typename DType>
-	MSHADOW_XINLINE static DType Map(DType a) {
-		return  (exp(2*a)-1)/(exp(2*a)+1);
-  }
 };
 
 int main(void){
@@ -48,8 +33,8 @@ int main(void){
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
-	Vec = F<tanh_>(Vec);
-	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
+	Vec = F<tanh_>(F<Relu>(Vec)+1);
+	cout << "\n\nVec après mapping (x -> tanh( Relu(x) + 1 ) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
 	//Nettoyage du device
