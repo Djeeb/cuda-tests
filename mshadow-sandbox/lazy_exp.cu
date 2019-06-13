@@ -67,7 +67,7 @@ struct LazyExp{
 	const Vector & A;
 	const Vector & B;
 	
-	LazyExp(const & A_, const & B_ ): A(A_), B(B_) {};
+	LazyExp(const Vector & A_, const Vector & B_ ): A(A_), B(B_) {};
 };
 
 
