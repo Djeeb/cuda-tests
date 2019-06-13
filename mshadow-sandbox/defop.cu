@@ -26,7 +26,7 @@ struct addone {
   // map can be template function
   template<typename DType>
   MSHADOW_XINLINE static DType Map(DType a) {
-    return  a + static_cast<DType>(1);
+    return  exp(a);
   }
 };
 
