@@ -44,21 +44,10 @@ Vector & Vector::operator=(const Vector & A){
 	return *this;
 }
 
-
-
-vector<double> operator+(const vector<double> & a, const vector<double> & b){
-	vector<double> c(a.size());
-	for(int i=0; i < c.size(); i++) c[i] = a[i] + b[i];
-	return c;
-}
-
 Vector::Vector(const Vector & A): size(A.size) {
 	data = new double[size];
 	for(int i=0;i<size;i++) data[i] = A.data[i];
 }
-
-
-
 
 //Structure pour la lazy expression
 struct LazyExp{
@@ -69,14 +58,21 @@ struct LazyExp{
 };
 
 //là où se fait l'évaluation
-Vector & Vector::operator=(const LazyExp & E){
+inline Vector & Vector::operator=(const LazyExp & E){
 	for(int i=0; i < E.A.size; i++) data[i] = E.A.data[i] + E.B.data[i];
 	return *this;
 }
 
 //pas d'évaluation
-LazyExp operator+(const Vector & A, const Vector & B) {
+inline LazyExp operator+(const Vector & A, const Vector & B) {
 	return LazyExp(A,B);
+}
+
+//méthode naïve
+vector<double> operator+(const vector<double> & a, const vector<double> & b){
+	vector<double> c(a.size());
+	for(int i=0; i < c.size(); i++) c[i] = a[i] + b[i];
+	return c;
 }
 
 int main(void){
@@ -106,7 +102,7 @@ int main(void){
 	chrono::duration<double> diff = t2 - t1;
 	cout << " \nTemps de calcul méthode naïve :" << diff.count() << endl;
 	
-	//méthode naïve
+	//lazy expression
 	t1 = chrono::system_clock::now();
 	C = A + B;
 	t2 = chrono::system_clock::now();
