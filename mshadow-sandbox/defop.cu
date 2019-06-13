@@ -9,7 +9,7 @@ using namespace std;
 
 struct tanh {
 	MSHADOW_XINLINE static double Map(double x){
-		return (exp(2*x)-1)/(exp(2*x)+1)
+		return (exp(2*x)-1)/(exp(2*x)+1);
 	}
 };
 
@@ -32,8 +32,8 @@ int main(void){
 	
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
-	for(index_t i = 0; i < T.size(0); i++) cout << Vec[i] << "\t";	
-	mat = F<tanh>(mat);
+	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
+	Vec = F<tanh>(Vec);
 	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
