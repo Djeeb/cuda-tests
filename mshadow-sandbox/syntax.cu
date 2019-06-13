@@ -24,8 +24,8 @@ int main(void){
 	
 	cout << "T est une matrice " << T.size(0) << "x" << T.size(1) << " : " << endl;
 	
-	for(index_t i = 0;i < T.size(0) < i++){
-		for(index_t j = 0;j < T.size(1) < j++){
+	for(index_t i = 0; i < T.size(0); i++){
+		for(index_t j = 0; j < T.size(1); j++){
 			cout << T[i][j] << "\ŧ";
 		} 
 		cout << "\n";	
