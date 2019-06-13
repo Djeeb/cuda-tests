@@ -71,7 +71,7 @@ struct LazyExp{
 };
 
 //lazy expression
-Vector operator=(const LazyExp & E){
+Vector & operator=(const LazyExp & E){
 	for(int i=0; i < E.A.size; i++) data[i] = E.A.data[i] + E.B.data[i];
 	return *this;
 	
