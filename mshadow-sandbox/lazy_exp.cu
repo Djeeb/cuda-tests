@@ -71,11 +71,11 @@ struct LazyExp{
 };
 
 //lazy expression
-inline Vector operator=(const LazyExp & E){
+Vector operator=(const LazyExp & E){
 	for(int i=0; i < E.A.size; i++) data[i] = E.A.data[i] + E.B.data[i];
 	return *this;
 	
-inline LazyExp operator+(const Vector & A, const Vector & B) {
+LazyExp operator+(const Vector & A, const Vector & B) {
 	return LazyExp(A,B);
 }
 
