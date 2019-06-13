@@ -15,16 +15,33 @@ class Vector{
 		double * data;
 		
 		Vector(int n=0);
+		~Vector;
+		
 		double operator[](int i) const {return data[i];}
 		double & operator[](int i) {return data[i];}
 		
 		friend Vector operator+(const Vector &, const Vector &);
+		Vector operator=(const Vector &);
 			
 };
 
 Vector::Vector(int n){
 	data = new double[n];
 	for(int i=0; i<n; i++) data[i] = 0.; 
+}
+
+Vector::~Vector{
+	delete data; 
+}
+
+Vector::operator=(const Vector & A){
+	if(this == &A) return *this;
+	else{
+		delete data;
+		data = new double[A.size];
+		for(int i=0; i<size; i++) data[i] = A.data[i]; 
+	}
+	return *this;
 }
 
 Vector operator+(const Vector & A, const Vector & B){
