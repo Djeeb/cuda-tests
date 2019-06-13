@@ -23,8 +23,6 @@ class Vector{
 		double operator[](int i) const {return data[i];}
 		double & operator[](int i) {return data[i];}
 		
-		friend Vector operator+(const Vector &, const Vector &);
-		friend Vector operator*(const Vector &, const Vector &);
 		Vector operator=(const Vector &);
 			
 };
@@ -61,15 +59,26 @@ Vector::Vector(const Vector & A): size(A.size) {
 	for(int i=0;i<size;i++) data[i] = A.data[i];
 }
 
+class Vector2 public: Vector{
+};
+
 
 //Structure pour la lazy expression
 struct LazyExp{
 	const Vector & A;
 	const Vector & B;
 	
-	LazyExp(const Vector & A_, const Vector & B_ ): A(A_), B(B_) {};
+	LazyExp(const Vector & A_, const Vector & B_): A(A_), B(B_) {};
 };
 
+//lazy expression
+inline Vector2 operator=(const LazyExp & E){
+	for(int i=0; i < E.A.size; i++) data[i] = A.data[i] + B.data[i];
+	return *this;
+}
+inline LazyExp operator+(const Vector2 & A, const Vector2 & B) {
+  return LazyExp(A,B);
+}
 
 int main(void){
 	
@@ -79,22 +88,35 @@ int main(void){
 	//initialisation
 	mt19937 G;
 	uniform_real_distribution<double> U(-1.,1.);
-	int n = 1000000;
-	Vector A(n), B(n), C(n),S(n);
+	int n = 10000000;
+	Vector A(n), B(n), C(n);
+	Vector2 a(n), b(n), c(n);
 	for(int i = 0; i < n; i++){
 		A[i] = U(G);
 		B[i] = U(G);
-		C[i] = U(G);
+		
+		a[i] = A[i];
+		b[i] = B[i];
 	}
-	cout << "--- Calcul de A + B + C (3 vecteurs de taille " << n << ") par différentes méthodes ---" << endl;
+	cout << "--- Calcul de A + B (2 vecteurs de taille " << n << ") par différentes méthodes ---" << endl;
 	
 	
 	//méthode naïve
 	auto t1 = chrono::system_clock::now();
-	S = A + B * C;
+	C = A + B;
 	auto t2 = chrono::system_clock::now();
 	chrono::duration<double> diff = t2 - t1;
 	cout << " \nTemps de calcul méthode naïve :" << diff.count() << endl;
+	
+	//lazy expression
+	t1 = chrono::system_clock::now();
+	c = a + b;
+	t2 = chrono::system_clock::now();
+	diff = t2 - t1;
+	cout << " \nTemps de calcul lazy expression :" << diff.count() << endl;
+	
+	
+	
 	
 	ShutdownTensorEngine<gpu>();
 

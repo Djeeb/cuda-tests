@@ -1,6 +1,6 @@
 CC = nvcc -ccbin g++
 CXX = g++
-CFLAGS = -std=c++11 -O2 -I ../mshadow -lm -lcblas
+CFLAGS = -std=c++11 -I ../mshadow -lm -lcblas
 
 all : simple_allocator lazy_exp
 
