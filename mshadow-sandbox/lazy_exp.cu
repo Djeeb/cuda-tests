@@ -34,7 +34,7 @@ Vector::Vector(int n){
 	for(int i=0; i<n; i++) data[i] = 0.; 
 }
 
-Vector Vector::operator=(const Vector & A){
+Vector & Vector::operator=(const Vector & A){
 	if(this == &A){return *this;}
 	else{
 		delete [] data;
