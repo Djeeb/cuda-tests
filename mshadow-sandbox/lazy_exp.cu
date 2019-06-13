@@ -26,7 +26,7 @@ Vector::Vector(int n){
 	for(int i=0; i<n; i++) data[i] = 0.; 
 }
 
-Vector Vector::operator+(const Vector & A, const Vector & B){
+Vector operator+(const Vector & A, const Vector & B){
 	Vector C(A.size);
 	for(int i=0; i < C.size; i++) C[i] = A[i] + B[i];
 	return C;
