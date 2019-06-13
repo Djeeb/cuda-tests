@@ -4,6 +4,7 @@
 #include <random>
 #include <chrono>
 class Vector;
+struct LazyExp;
 
 using namespace mshadow;
 using namespace mshadow::expr;
@@ -23,8 +24,8 @@ class Vector{
 		double operator[](int i) const {return data[i];}
 		double & operator[](int i) {return data[i];}
 		
-		Vector operator=(const Vector &);
-		Vector operator=(const LazyExp & E);
+		Vector & operator=(const Vector &);
+		Vector & operator=(const LazyExp & E);
 			
 };
 
@@ -75,7 +76,8 @@ struct LazyExp{
 Vector & Vector::operator=(const LazyExp & E){
 	for(int i=0; i < E.A.size; i++) data[i] = E.A.data[i] + E.B.data[i];
 	return *this;
-	
+}
+
 LazyExp operator+(const Vector & A, const Vector & B) {
 	return LazyExp(A,B);
 }
