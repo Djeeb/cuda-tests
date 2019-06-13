@@ -42,7 +42,7 @@ int main(void){
 	//Mapping de la fonction
 	cout << "Vec avant mapping :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";	
-	Vec = F<addone>(Vec);
+	Vec = F<tanh>(Vec);
 	cout << "\n\nVec après mapping (x -> tanh(x)) :" << endl;
 	for(index_t i = 0; i < Vec.size(0); i++) cout << Vec[i] << "\t";
 	
@@ -50,4 +50,5 @@ int main(void){
 	FreeSpace(&Vec);
 	
 	ShutdownTensorEngine<cpu>();	
+	cout << "\n";
 }
