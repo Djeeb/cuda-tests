@@ -26,7 +26,7 @@ int main(void){
 	
 	for(index_t i = 0; i < T.size(0); i++){
 		for(index_t j = 0; j < T.size(1); j++){
-			cout << T[i][j] << "\ŧ";
+			cout << T[i][j] << "\t";
 		} 
 		cout << "\n";	
 	}
