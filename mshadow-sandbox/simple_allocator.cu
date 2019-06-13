@@ -1,6 +1,5 @@
 #include "mshadow/tensor.h"
 #include <iostream>
-#include <random>
 
 using namespace mshadow;
 using namespace mshadow::expr;
