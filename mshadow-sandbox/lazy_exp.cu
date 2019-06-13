@@ -59,7 +59,8 @@ Vector::Vector(const Vector & A): size(A.size) {
 	for(int i=0;i<size;i++) data[i] = A.data[i];
 }
 
-class Vector2 public: Vector{
+class Vector2 : public Vector{
+	friend Vector2 operator=(const LazyExp & E);
 };
 
 
