@@ -55,7 +55,7 @@ int main(void){
 	
 	Tensor<gpu,3,double> D(data,Shape3(5,2,2));
 	
-	cout << "\n\nCopie de T dans un tenseur D de shape " << D.shape_ << endl;
+	cout << "\n\nCopie des données dans un tenseur D de shape " << D.shape_ << endl;
 	for(index_t i = 0; i < D.size(0); i++){
 		for(index_t j = 0; j < D.size(1); j++){ 
 			for(index_t k = 0; k < D.size(2); k++){ 

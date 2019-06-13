@@ -2,7 +2,7 @@ CC = nvcc -ccbin g++
 CXX = g++
 CFLAGS = -std=c++11 -O2 -I ../mshadow -lm -lcblas
 
-all : simple_allocator lazy_exp syntax
+all : simple_allocator lazy_exp syntax defop
 
 simple_allocator: simple_allocator.o
 	$(CC) -o simple_allocator simple_allocator.o $(CFLAGS)
@@ -22,7 +22,12 @@ syntax: syntax.o
 syntax.o: syntax.cu
 	$(CC) -c syntax.cu $(CFLAGS)
 
+defop: defop.o
+	$(CC) -o defop defop.o $(CFLAGS)
+	
+defop.o: defop.cu
+	$(CC) -c defop.cu $(CFLAGS)
 
 clean:
 	rm *.o
-	rm simple_allocator lazy_exp syntax
+	rm simple_allocator lazy_exp syntax defop
