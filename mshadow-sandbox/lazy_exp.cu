@@ -9,6 +9,8 @@ using namespace mshadow;
 using namespace mshadow::expr;
 using namespace std;
 
+
+//Classe vecteur
 class Vector{
 	public:
 		int size;
@@ -51,6 +53,20 @@ Vector operator*(const Vector & A, const Vector & B){
 	Vector C(A.size);
 	for(int i=0; i < C.size; i++) C[i] = A[i] * B[i];
 	return C;
+}
+
+Vector::Vector(const Vector & A): size(A.size) {
+	data = new double[size];
+	for(int i=0;i<n;i++) data[i] = A.data[i];
+}
+
+
+//Structure pour la lazy expression
+struct LazyExp{
+	const Vector & A;
+	const Vector & B;
+	
+	LazyExp(const & A_, const & B_ ): A(A_), B(B_) {};
 }
 
 
