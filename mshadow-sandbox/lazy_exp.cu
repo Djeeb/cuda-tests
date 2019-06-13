@@ -2,12 +2,10 @@
 #include <vector>
 #include <random>
 #include <chrono>
+using namespace std;
 class Vector;
 struct LazyExp;
 
-using namespace mshadow;
-using namespace mshadow::expr;
-using namespace std;
 
 
 //Classe vecteur___________________________________________PAS IMPORTANT
