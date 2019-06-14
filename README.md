@@ -8,3 +8,5 @@ Exploration de la bibliothèque mshadow.
 - **mshadow** : bibliothèque mshadow importée depuis https://github.com/dmlc/mshadow.
 
 - **mshadow-sandbox** : programmes simples pour tester et comprendre la structure des objets proposés par mshadow.
+
+- **neuralnet-MNIST** : programmes de perceptrons multicouches entraînés sur la base de données MNIST. 
