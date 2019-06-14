@@ -82,5 +82,5 @@ inline void LoadMNIST(const char *path_img, const char *path_label,
     ylabel[i] = l_data[rindex[i]];
   }
   delete[] t_data; delete [] l_data;
-  printf("Chargement terminé depuis %s, shuffle_activé=%d\n", num_image, step, path_img, (int)do_shuffle);
+  printf("Chargement terminé depuis %s, shuffle_activé=%d\n", path_img, (int)do_shuffle);
 }
