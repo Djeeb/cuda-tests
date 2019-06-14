@@ -7,6 +7,7 @@ using namespace mshadow::expr;
 using namespace std;
 
 int main(){
+InitTensorEngine<gpu>();
 	
 	//Chargement des données
 	cout << "Chargement des données..." << endl;
@@ -16,4 +17,6 @@ int main(){
 	LoadMNIST("data/t10k-images-idx3-ubyte", "data/t10k-labels-idx1-ubyte", ytest, xtest, false);
 	
 	cout << xtrain[0][0] << endl;
+	
+ShutdownTensorEngine<gpu>();
 }
