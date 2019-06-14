@@ -7,6 +7,8 @@ using namespace std;
 
 class SimpleNeuralNet {
 	private:
+		// random seed generator
+		Random<gpu, real_t> rnd;
 		// nodes in neural net
 		TensorContainer<gpu, 2, double> layer_input, layer_hidden, layer_hiddenbak, layer_out;
 		// hidden bias, gradient
