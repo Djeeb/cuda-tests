@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
   LoadMNIST("train-images-idx3-ubyte", "train-labels-idx1-ubyte", ytrain, xtrain, true);
   LoadMNIST("t10k-images-idx3-ubyte", "t10k-labels-idx1-ubyte", ytest, xtest, false);
 
-  int num_iter = 20;
+  int num_iter = 200;
 
   for (int i = 0; i < num_iter; ++ i) {
     // training
