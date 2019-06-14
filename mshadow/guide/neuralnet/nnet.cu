@@ -36,7 +36,7 @@ class NNet : public INNet {
   // initialize the network
   NNet(int batch_size, int num_in, int num_hidden, int num_out) : rnd(0) {
     // setup stream
-    Stream<cpu> *stream = NewStream<cpu>();
+    Stream<gpu> *stream = NewStream<gpu>();
     ninput.set_stream(stream);
     nhidden.set_stream(stream);
     nhiddenbak.set_stream(stream);
