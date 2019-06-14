@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
   int num_out = 10;
   // choose which version to use
   INNet *net;
-    InitTensorEngine<gpu>();
+    InitTensorEngine<gpu>();https://www.kaggle.com/
     net = new NNet(batch_size, num_in, num_hidden, num_out);
 
   // temp output layer
