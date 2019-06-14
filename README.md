@@ -1,5 +1,5 @@
 # Tests CUDA
-Exploration de fichiers .cu et de la bibliothèque mshadow.
+Exploration de la bibliothèque mshadow.
 
 ### Description des dossiers :
 
