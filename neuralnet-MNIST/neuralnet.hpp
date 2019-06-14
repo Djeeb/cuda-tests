@@ -17,10 +17,10 @@ class SimpleNeuralNet {
 	
 	public:
 		NNet(int batch_size, int n_input, int n_hidden, int n_output);
-		~NNet() {}
+		~NNet() {};
 		
 		void Forward(const Tensor<cpu, 2, real_t>& inbatch, Tensor<cpu, 2, real_t> &oubatch);
 		void Backprop(const Tensor<cpu, 2, real_t>& gradout);
-		void Update()
+		void Update();
 };
 
