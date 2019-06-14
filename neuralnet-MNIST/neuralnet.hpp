@@ -8,7 +8,7 @@ using namespace std;
 class SimpleNeuralNet {
 	private:
 		// random seed generator
-		Random<gpu, real_t> rnd;
+		Random<gpu, double> rnd;
 		// nodes in neural net
 		Tensor<gpu, 2, double> layer_input, layer_hidden, layer_hiddenbak, layer_out;
 		// hidden bias, gradient
@@ -65,8 +65,8 @@ SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int 
 	g_Wh2o.shape_ = Shape2(n_hidden, n_output); 
 	
 	// Initialisation aléatoire des poids
-	rnd.SampleGaussian(&Wi2h, 0., 0.01);
-    rnd.SampleGaussian(&Wh2o, 0., 0.01);
+	rnd.SampleGaussian(&Wi2h, 0.0f, 0.01f);
+    rnd.SampleGaussian(&Wh2o, 0.0f, 0.01f);
 	
 }
 
