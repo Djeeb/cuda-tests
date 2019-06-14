@@ -8,7 +8,7 @@ using namespace std;
 
 int main(){
 InitTensorEngine<gpu>();
-cout << "------------------------------------------ NEURAL NET V1 ------------------------------------------"
+cout << "------------------------------------------ NEURAL NET V1 ------------------------------------------" << endl;
 
 	
 	//Chargement des données
