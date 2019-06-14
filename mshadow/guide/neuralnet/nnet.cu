@@ -30,13 +30,12 @@ class INNet{
  * \brief simple two layer neural net
  *        this implementation is device invariant
  */
-template<typename xpu>
 class NNet : public INNet {
  public:
   // initialize the network
   NNet(int batch_size, int num_in, int num_hidden, int num_out) : rnd(0) {
     // setup stream
-    Stream<xpu> *stream = NewStream<xpu>(void);
+    Stream<gpu> *stream = NewStream<gpu>(void);
     ninput.set_stream(stream);
     nhidden.set_stream(stream);
     nhiddenbak.set_stream(stream);
@@ -115,13 +114,13 @@ class NNet : public INNet {
   }
  private:
   // random seed generator
-  Random<xpu, real_t> rnd;
+  Random<gpu, real_t> rnd;
   // nodes in neural net
-  TensorContainer<xpu, 2, real_t> ninput, nhidden, nhiddenbak, nout;
+  TensorContainer<gpu, 2, real_t> ninput, nhidden, nhiddenbak, nout;
   // hidden bias, gradient
-  TensorContainer<xpu, 1, real_t> hbias, obias, g_hbias, g_obias;
+  TensorContainer<gpu, 1, real_t> hbias, obias, g_hbias, g_obias;
   // weight gradient
-  TensorContainer<xpu, 2, real_t> Wi2h, Wh2o, g_Wi2h, g_Wh2o;
+  TensorContainer<gpu, 2, real_t> Wi2h, Wh2o, g_Wi2h, g_Wh2o;
 };
 // helper function to get the max inde
 inline int MaxIndex(Tensor<cpu, 1, real_t> pred) {
@@ -145,13 +144,8 @@ int main(int argc, char *argv[]) {
   int num_out = 10;
   // choose which version to use
   INNet *net;
-  if (!strcmp(argv[1], "gpu")) {
     InitTensorEngine<gpu>();
-    net = new NNet<gpu>(batch_size, num_in, num_hidden, num_out);
-  } else {
-    InitTensorEngine<cpu>();
-    net = new NNet<cpu>(batch_size, num_in, num_hidden, num_out);
-  }
+    net = new NNet(batch_size, num_in, num_hidden, num_out);
 
   // temp output layer
   TensorContainer<cpu, 2, real_t> pred;
@@ -193,10 +187,7 @@ int main(int argc, char *argv[]) {
     printf("round %d: test-err=%f\n", i, (float)nerr/xtest.size(0));
   }
   delete net;
-  if (!strcmp(argv[1], "gpu")) {
     ShutdownTensorEngine<gpu>();
-  } else {
-    ShutdownTensorEngine<cpu>();
-  }
+
   return 0;
 }
