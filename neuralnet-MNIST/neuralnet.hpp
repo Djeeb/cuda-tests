@@ -10,11 +10,11 @@ class SimpleNeuralNet {
 		// random seed generator
 		Random<gpu, real_t> rnd;
 		// nodes in neural net
-		TensorContainer<gpu, 2, double> layer_input, layer_hidden, layer_hiddenbak, layer_out;
+		Tensor<gpu, 2, double> layer_input, layer_hidden, layer_hiddenbak, layer_out;
 		// hidden bias, gradient
-		TensorContainer<gpu, 1, double> hbias, obias, g_hbias, g_obias;
+		Tensor<gpu, 1, double> hbias, obias, g_hbias, g_obias;
 		// weight gradient
-		TensorContainer<gpu, 2, double> Wi2h, Wh2o, g_Wi2h, g_Wh2o;
+		Tensor<gpu, 2, double> Wi2h, Wh2o, g_Wi2h, g_Wh2o;
 
 	
 	public:
@@ -47,22 +47,22 @@ SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int 
     g_Wh2o.set_stream(stream);
 	
 	// Redimension des couches
-    layer_input.Resize(Shape2(batch_size, n_input));
-    layer_hidden.Resize(Shape2(batch_size, n_hidden));
-    layer_hiddenbak.Resize(Shape2(batch_size, n_hidden));
-    layer_out.Resize(Shape2(batch_size, n_output));
+    layer_input.shape_ = Shape2(batch_size, n_input);
+    layer_hidden.shape_ = Shape2(batch_size, n_hidden);
+    layer_hiddenbak.shape_ = Shape2(batch_size, n_hidden);
+    layer_out.shape_ = Shape2(batch_size, n_output);
     
 	// Redimension des biais
-    hbias.Resize(Shape1(n_hidden)); 
-    g_hbias.Resize(Shape1(n_hidden));
-    obias.Resize(Shape1(n_output)); 
-    g_obias.Resize(Shape1(n_output));
+    hbias.shape_ = Shape1(n_hidden); 
+    g_hbias.shape_ = Shape1(n_hidden);
+    obias.shape_ = Shape1(n_output); 
+    g_obias.shape_ = Shape1(n_output);
 	
 	// Redimension des poids
-	Wi2h.Resize(Shape2(n_input, n_hidden));  
-	g_Wi2h.Resize(Shape2(n_input, n_hidden));  
-	Wh2o.Resize(Shape2(n_hidden, n_output)); 
-	g_Wh2o.Resize(Shape2(n_hidden, n_output)); 
+	Wi2h.shape_ = Shape2(n_input, n_hidden);  
+	g_Wi2h.shape_ = Shape2(n_input, n_hidden);  
+	Wh2o.shape_ = Shape2(n_hidden, n_output); 
+	g_Wh2o.shape_ = Shape2(n_hidden, n_output); 
 	
 	// Initialisation aléatoire des poids
 	rnd.SampleGaussian(&Wi2h, 0., 0.01);
