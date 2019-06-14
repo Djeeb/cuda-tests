@@ -6,5 +6,4 @@ nnet_v1: nnet_v1.cu
 	$(CC) -o nnet_v1 $(CFLAGS) nnet_v1.cu
 
 clean:
-	rm *.o
 	rm nnet_v1
