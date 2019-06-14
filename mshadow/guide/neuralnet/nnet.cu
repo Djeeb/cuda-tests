@@ -61,8 +61,8 @@ class NNet : public INNet {
     // setup weights
     Wi2h.Resize(Shape2(num_in, num_hidden));  g_Wi2h.Resize(Wi2h.shape_);
     Wh2o.Resize(Shape2(num_hidden, num_out)); g_Wh2o.Resize(Wh2o.shape_);
-    rnd.SampleGaussian(&Wi2h, 0, 0.01f);
-    rnd.SampleGaussian(&Wh2o, 0, 0.01f);
+    rnd.SampleGaussian(&Wi2h, 0.0f, 0.01f);
+    rnd.SampleGaussian(&Wh2o, 0.0f, 0.01f);
   }
   virtual ~NNet() {}
   // forward propagation
@@ -121,7 +121,7 @@ class NNet : public INNet {
   // hidden bias, gradient
   TensorContainer<xpu, 1, real_t> hbias, obias, g_hbias, g_obias;
   // weight gradient
-  TensorContainer<xpu, 2, real_t> Wi2h, Wh2o, g_Wi2h, g_Wh2o;
+  Tensor<xpu, 2, real_t> Wi2h, Wh2o, g_Wi2h, g_Wh2o;
 };
 // helper function to get the max inde
 inline int MaxIndex(Tensor<cpu, 1, real_t> pred) {
