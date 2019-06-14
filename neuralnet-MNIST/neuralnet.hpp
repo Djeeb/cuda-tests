@@ -48,13 +48,13 @@ SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int 
     layer_input.Resize(Shape2(batch_size, n_input));
     layer_hidden.Resize(Shape2(batch_size, n_hidden));
     layer_hiddenbak.Resize(Shape2(batch_size, n_hidden));
-    layer_out.Resize(Shape2(batch_size, num_output));
+    layer_out.Resize(Shape2(batch_size, n_output));
     
 	// setup bias
     hbias.Resize(Shape1(n_hidden)); 
     g_hbias.Resize(Shape1(n_hidden));
-    obias.Resize(Shape1(n_out)); 
-    g_obias.Resize(Shape1(n_out));
+    obias.Resize(Shape1(n_output)); 
+    g_obias.Resize(Shape1(n_output));
 
 }
 
