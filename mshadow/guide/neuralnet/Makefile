@@ -4,8 +4,8 @@ export CXX = g++
 export NVCC =nvcc
 include config.mk
 include ../../make/mshadow.mk
-export CFLAGS = -Wall -O3 -I../../ -fopenmp $(MSHADOW_CFLAGS)
-export LDFLAGS= -lm $(MSHADOW_LDFLAGS)
+export CFLAGS = -std=c++11 -Wall -O3 -I../../ -fopenmp $(MSHADOW_CFLAGS)
+export LDFLAGS= -lm -lcblas -lblas $(MSHADOW_LDFLAGS)
 export NVCCFLAGS = -O3 --use_fast_math -ccbin $(CXX) $(MSHADOW_NVCCFLAGS)
 
 # specify tensor path
