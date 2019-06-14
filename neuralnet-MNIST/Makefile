@@ -4,3 +4,7 @@ CFLAGS = -O3 --use_fast_math -ccbin g++  -Xcompiler "-std=c++11 -Wall -O3 -I../m
 
 nnet_v1: nnet_v1.cu
 	$(CC) -o nnet_v1 $(CFLAGS) nnet_v1.cu
+
+clean:
+	rm *.o
+	rm nnet_v1
