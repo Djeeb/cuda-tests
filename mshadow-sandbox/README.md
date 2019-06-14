@@ -12,9 +12,10 @@ Il semblerait que les objets du type Tensor<gpu, 2, float> soient des sortes de 
   - Que se passe-t-il concrètement lors du calcul avec une *lazy expression* ?
   - pourquoi le mot-clé *inline* permet un gain de temps de l'ordre de 10^1 ?
   
-  **syntax.cu** : simple exploration de la syntaxe de *Tensor* dans mshadow. 
+- **syntax.cu** : simple exploration de la syntaxe de *Tensor* dans mshadow. 
   Questions :
     - problème lors du passage de CPU à GPU. 
     - Notion de *stream* à explorer.
     
-    **defop.cu** : 
+ - **defop.cu** : mapping un peu plus pousé avec des fonctions d'activation pour voir comment marchent les expression templates :
+    - /!\ donner un nom particulier pour les fonctions d'activation pour ne pas entrer en conflit avec d'autres librairies. 
