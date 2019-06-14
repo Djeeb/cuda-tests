@@ -29,7 +29,7 @@ class SimpleNeuralNet {
 //Constructeur
 SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int n_output){
 	
-	//paramétrage d'un stream sur tous les objets qui vont être modifiés lors de la tâche
+	// Paramétrage d'un stream sur tous les objets qui vont être modifiés lors de la tâche
 	Stream<gpu> * stream = NewStream<gpu>(0);
 	layer_input.set_stream(stream);
     layer_hidden.set_stream(stream);
@@ -44,19 +44,27 @@ SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int 
     g_Wi2h.set_stream(stream);
     g_Wh2o.set_stream(stream);
 	
-	// setup nodes
+	// Redimension des couches
     layer_input.Resize(Shape2(batch_size, n_input));
     layer_hidden.Resize(Shape2(batch_size, n_hidden));
     layer_hiddenbak.Resize(Shape2(batch_size, n_hidden));
     layer_out.Resize(Shape2(batch_size, n_output));
     
-	// setup bias
+	// Redimension des biais
     hbias.Resize(Shape1(n_hidden)); 
     g_hbias.Resize(Shape1(n_hidden));
     obias.Resize(Shape1(n_output)); 
     g_obias.Resize(Shape1(n_output));
-
+	
+	// Redimension des poids
+	Wi2h.Resize(Shape2(n_input, n_hidden));  
+	g_Wi2h.Resize(Shape2(n_input, n_hidden));  
+	Wh2o.Resize(Shape2(n_hidden, n_output)); 
+	g_Wh2o.Resize(Shape2(n_hidden, n_output)); 
+	
+	// Initialisation aléatoire des poids
+	rnd.SampleGaussian(&Wi2h, 0., 0.01);
+    rnd.SampleGaussian(&Wh2o, 0., 0.01);
+	
 }
-
-
 
