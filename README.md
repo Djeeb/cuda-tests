@@ -14,4 +14,4 @@ Exploration de la bibliothèque mshadow.
 
 ### Ajouts dans la bibliothèque mshadow :
 - **tensor_container.h** :
-  - *ligne 189* : Ajout d'un accesseur-mutateur pour le tenseur contenu dans le TensorContainer. Cela permet d'utiliser **random.h** avec un Tensorcontainer en input. 
+  - *ligne 189* : Ajout de TensorContainer::data(). Un accesseur-mutateur pour le tenseur contenu dans le TensorContainer. Cela permet d'utiliser **random.h** avec un Tensorcontainer en input.
