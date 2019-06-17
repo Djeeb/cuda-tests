@@ -186,8 +186,8 @@ class TensorContainer: public Tensor<Device, dimension, DType> {
   }
 
 //Ajout accesseur-mutateur pour le tensor
-	inline Tensor<Device, dimension, DType> const data() { return this-> data_;}
-	inline Tensor<Device, dimension, DType> & data() { return this-> data_;}
+//	inline Tensor<Device, dimension, DType> const data() { return this-> data_;}
+//	inline Tensor<Device, dimension, DType> & data() { return this-> data_;}
     
 //fin ajout accesseur
 
