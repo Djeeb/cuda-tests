@@ -65,8 +65,8 @@ SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int 
 	g_Wh2o.shape_ = Shape2(n_hidden, n_output); 
 	
 	// Initialisation aléatoire des poids
-	//rnd.SampleGaussian(&Wi2h, 0.0f, 0.01f);
-    //rnd.SampleGaussian(&Wh2o, 0.0f, 0.01f);
+	Rand.SampleGaussian(&(Wi2h.data()), 0.0f, 0.01f);
+    Rand.SampleGaussian(&(Wh2o.data()), 0.0f, 0.01f);
 	
 }
 
