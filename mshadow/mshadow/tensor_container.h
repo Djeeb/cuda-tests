@@ -186,7 +186,6 @@ class TensorContainer: public Tensor<Device, dimension, DType> {
   }
 
 //Ajout accesseur-mutateur pour le tensor
-	Tensor<Device, dimension, DType> const data() { return this-> data_;}
 	Tensor<Device, dimension, DType> & data() { return this-> data_;}
     
 //fin ajout accesseur
