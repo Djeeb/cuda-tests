@@ -8,7 +8,7 @@ using namespace std;
 class SimpleNeuralNet {
 	private:
 		// random seed generator
-		Random<gpu, double> rnd;
+		Random<gpu, double> Rand;
 		// nodes in neural net
 		Tensor<gpu, 2, double> layer_input, layer_hidden, layer_hiddenbak, layer_out;
 		// hidden bias, gradient
@@ -29,7 +29,7 @@ class SimpleNeuralNet {
 
 
 //Constructeur
-SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int n_output){
+SimpleNeuralNet::SimpleNeuralNet(int batch_size, int n_input, int n_hidden, int n_output): Rand(0) {
 	
 	// Paramétrage d'un stream sur tous les objets qui vont être modifiés lors de la tâche
 	Stream<gpu> * stream = NewStream<gpu>(0);
