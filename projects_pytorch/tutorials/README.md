@@ -1,6 +1,6 @@
 # Description des programmes
 
--**tensor_example.cpp** :
+- **tensor_example.cpp** :
         - Utilisation d'opérations usuelles sur les tenseurs. La plupart des opérateurs sont surchargés de manière *elementwise*.
         - Utilisation de l'allocateur host/device par *torch::Device*. Question : comment utiliser l'allocateur sur GPU à bon escient ?
         - Exemple de *forward propagation* simple sur un tenseur random. L'application de fonctions d'activation est particulièrement simple.
