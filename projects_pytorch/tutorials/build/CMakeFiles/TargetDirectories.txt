@@ -1,4 +1,4 @@
 /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/rebuild_cache.dir
-/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/second_example.dir
-/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/first_example.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/tensor_example.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/autograd_example.dir
 /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/edit_cache.dir

@@ -65,76 +65,76 @@ CMAKE_SOURCE_DIR = /home/jb/stage_DL/projects_pytorch/tutorials
 CMAKE_BINARY_DIR = /home/jb/stage_DL/projects_pytorch/tutorials/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/second_example.dir
+# Target rules for target CMakeFiles/tensor_example.dir
 
 # All Build rule for target.
-CMakeFiles/second_example.dir/all:
-	$(MAKE) -f CMakeFiles/second_example.dir/build.make CMakeFiles/second_example.dir/depend
-	$(MAKE) -f CMakeFiles/second_example.dir/build.make CMakeFiles/second_example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=3,4 "Built target second_example"
-.PHONY : CMakeFiles/second_example.dir/all
+CMakeFiles/tensor_example.dir/all:
+	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/depend
+	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=3,4 "Built target tensor_example"
+.PHONY : CMakeFiles/tensor_example.dir/all
 
 # Include target in all.
-all: CMakeFiles/second_example.dir/all
+all: CMakeFiles/tensor_example.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/second_example.dir/rule: cmake_check_build_system
+CMakeFiles/tensor_example.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/second_example.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/tensor_example.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 0
-.PHONY : CMakeFiles/second_example.dir/rule
+.PHONY : CMakeFiles/tensor_example.dir/rule
 
 # Convenience name for target.
-second_example: CMakeFiles/second_example.dir/rule
+tensor_example: CMakeFiles/tensor_example.dir/rule
 
-.PHONY : second_example
-
-# clean rule for target.
-CMakeFiles/second_example.dir/clean:
-	$(MAKE) -f CMakeFiles/second_example.dir/build.make CMakeFiles/second_example.dir/clean
-.PHONY : CMakeFiles/second_example.dir/clean
+.PHONY : tensor_example
 
 # clean rule for target.
-clean: CMakeFiles/second_example.dir/clean
+CMakeFiles/tensor_example.dir/clean:
+	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/clean
+.PHONY : CMakeFiles/tensor_example.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/tensor_example.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/first_example.dir
+# Target rules for target CMakeFiles/autograd_example.dir
 
 # All Build rule for target.
-CMakeFiles/first_example.dir/all:
-	$(MAKE) -f CMakeFiles/first_example.dir/build.make CMakeFiles/first_example.dir/depend
-	$(MAKE) -f CMakeFiles/first_example.dir/build.make CMakeFiles/first_example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=1,2 "Built target first_example"
-.PHONY : CMakeFiles/first_example.dir/all
+CMakeFiles/autograd_example.dir/all:
+	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/depend
+	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=1,2 "Built target autograd_example"
+.PHONY : CMakeFiles/autograd_example.dir/all
 
 # Include target in all.
-all: CMakeFiles/first_example.dir/all
+all: CMakeFiles/autograd_example.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/first_example.dir/rule: cmake_check_build_system
+CMakeFiles/autograd_example.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/first_example.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/autograd_example.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 0
-.PHONY : CMakeFiles/first_example.dir/rule
+.PHONY : CMakeFiles/autograd_example.dir/rule
 
 # Convenience name for target.
-first_example: CMakeFiles/first_example.dir/rule
+autograd_example: CMakeFiles/autograd_example.dir/rule
 
-.PHONY : first_example
-
-# clean rule for target.
-CMakeFiles/first_example.dir/clean:
-	$(MAKE) -f CMakeFiles/first_example.dir/build.make CMakeFiles/first_example.dir/clean
-.PHONY : CMakeFiles/first_example.dir/clean
+.PHONY : autograd_example
 
 # clean rule for target.
-clean: CMakeFiles/first_example.dir/clean
+CMakeFiles/autograd_example.dir/clean:
+	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/clean
+.PHONY : CMakeFiles/autograd_example.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/autograd_example.dir/clean
 
 .PHONY : clean
 

@@ -92,8 +92,8 @@ second_example: /home/jb/libtorch/lib/libc10.so
 second_example: /opt/cuda/lib64/libcufft.so
 second_example: /opt/cuda/lib64/libcurand.so
 second_example: /usr/lib/libcudnn.so
-second_example: /usr/local/cuda/lib64/libculibos.a
-second_example: /usr/local/cuda/lib64/libculibos.a
+second_example: /opt/cuda/lib64/libculibos.a
+second_example: /opt/cuda/lib64/libculibos.a
 second_example: /opt/cuda/lib64/libcublas.so
 second_example: /opt/cuda/lib64/libcudart.so
 second_example: CMakeFiles/second_example.dir/link.txt

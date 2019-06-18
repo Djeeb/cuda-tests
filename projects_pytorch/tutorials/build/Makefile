@@ -111,84 +111,84 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named second_example
+# Target rules for targets named tensor_example
 
 # Build rule for target.
-second_example: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 second_example
-.PHONY : second_example
+tensor_example: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tensor_example
+.PHONY : tensor_example
 
 # fast build rule for target.
-second_example/fast:
-	$(MAKE) -f CMakeFiles/second_example.dir/build.make CMakeFiles/second_example.dir/build
-.PHONY : second_example/fast
+tensor_example/fast:
+	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/build
+.PHONY : tensor_example/fast
 
 #=============================================================================
-# Target rules for targets named first_example
+# Target rules for targets named autograd_example
 
 # Build rule for target.
-first_example: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 first_example
-.PHONY : first_example
+autograd_example: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 autograd_example
+.PHONY : autograd_example
 
 # fast build rule for target.
-first_example/fast:
-	$(MAKE) -f CMakeFiles/first_example.dir/build.make CMakeFiles/first_example.dir/build
-.PHONY : first_example/fast
+autograd_example/fast:
+	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/build
+.PHONY : autograd_example/fast
 
-first_example.o: first_example.cpp.o
+autograd_example.o: autograd_example.cpp.o
 
-.PHONY : first_example.o
-
-# target to build an object file
-first_example.cpp.o:
-	$(MAKE) -f CMakeFiles/first_example.dir/build.make CMakeFiles/first_example.dir/first_example.cpp.o
-.PHONY : first_example.cpp.o
-
-first_example.i: first_example.cpp.i
-
-.PHONY : first_example.i
-
-# target to preprocess a source file
-first_example.cpp.i:
-	$(MAKE) -f CMakeFiles/first_example.dir/build.make CMakeFiles/first_example.dir/first_example.cpp.i
-.PHONY : first_example.cpp.i
-
-first_example.s: first_example.cpp.s
-
-.PHONY : first_example.s
-
-# target to generate assembly for a file
-first_example.cpp.s:
-	$(MAKE) -f CMakeFiles/first_example.dir/build.make CMakeFiles/first_example.dir/first_example.cpp.s
-.PHONY : first_example.cpp.s
-
-second_example.o: second_example.cpp.o
-
-.PHONY : second_example.o
+.PHONY : autograd_example.o
 
 # target to build an object file
-second_example.cpp.o:
-	$(MAKE) -f CMakeFiles/second_example.dir/build.make CMakeFiles/second_example.dir/second_example.cpp.o
-.PHONY : second_example.cpp.o
+autograd_example.cpp.o:
+	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/autograd_example.cpp.o
+.PHONY : autograd_example.cpp.o
 
-second_example.i: second_example.cpp.i
+autograd_example.i: autograd_example.cpp.i
 
-.PHONY : second_example.i
+.PHONY : autograd_example.i
 
 # target to preprocess a source file
-second_example.cpp.i:
-	$(MAKE) -f CMakeFiles/second_example.dir/build.make CMakeFiles/second_example.dir/second_example.cpp.i
-.PHONY : second_example.cpp.i
+autograd_example.cpp.i:
+	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/autograd_example.cpp.i
+.PHONY : autograd_example.cpp.i
 
-second_example.s: second_example.cpp.s
+autograd_example.s: autograd_example.cpp.s
 
-.PHONY : second_example.s
+.PHONY : autograd_example.s
 
 # target to generate assembly for a file
-second_example.cpp.s:
-	$(MAKE) -f CMakeFiles/second_example.dir/build.make CMakeFiles/second_example.dir/second_example.cpp.s
-.PHONY : second_example.cpp.s
+autograd_example.cpp.s:
+	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/autograd_example.cpp.s
+.PHONY : autograd_example.cpp.s
+
+tensor_example.o: tensor_example.cpp.o
+
+.PHONY : tensor_example.o
+
+# target to build an object file
+tensor_example.cpp.o:
+	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/tensor_example.cpp.o
+.PHONY : tensor_example.cpp.o
+
+tensor_example.i: tensor_example.cpp.i
+
+.PHONY : tensor_example.i
+
+# target to preprocess a source file
+tensor_example.cpp.i:
+	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/tensor_example.cpp.i
+.PHONY : tensor_example.cpp.i
+
+tensor_example.s: tensor_example.cpp.s
+
+.PHONY : tensor_example.s
+
+# target to generate assembly for a file
+tensor_example.cpp.s:
+	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/tensor_example.cpp.s
+.PHONY : tensor_example.cpp.s
 
 # Help Target
 help:
@@ -197,15 +197,15 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... second_example"
-	@echo "... first_example"
+	@echo "... tensor_example"
+	@echo "... autograd_example"
 	@echo "... edit_cache"
-	@echo "... first_example.o"
-	@echo "... first_example.i"
-	@echo "... first_example.s"
-	@echo "... second_example.o"
-	@echo "... second_example.i"
-	@echo "... second_example.s"
+	@echo "... autograd_example.o"
+	@echo "... autograd_example.i"
+	@echo "... autograd_example.s"
+	@echo "... tensor_example.o"
+	@echo "... tensor_example.i"
+	@echo "... tensor_example.s"
 .PHONY : help
 
 

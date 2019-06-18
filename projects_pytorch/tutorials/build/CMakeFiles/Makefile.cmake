@@ -70,6 +70,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/second_example.dir/DependInfo.cmake"
-  "CMakeFiles/first_example.dir/DependInfo.cmake"
+  "CMakeFiles/tensor_example.dir/DependInfo.cmake"
+  "CMakeFiles/autograd_example.dir/DependInfo.cmake"
   )

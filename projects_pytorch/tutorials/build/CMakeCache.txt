@@ -148,7 +148,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=first_example
+CMAKE_PROJECT_NAME:STATIC=tutorials
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -383,6 +383,12 @@ first_example_BINARY_DIR:STATIC=/home/jb/stage_DL/projects_pytorch/tutorials/bui
 
 //Value Computed by CMake
 first_example_SOURCE_DIR:STATIC=/home/jb/stage_DL/projects_pytorch/tutorials
+
+//Value Computed by CMake
+tutorials_BINARY_DIR:STATIC=/home/jb/stage_DL/projects_pytorch/tutorials/build
+
+//Value Computed by CMake
+tutorials_SOURCE_DIR:STATIC=/home/jb/stage_DL/projects_pytorch/tutorials
 
 
 ########################
