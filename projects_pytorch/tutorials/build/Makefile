@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/jb/stage_DL/projects_pytorch/tutorials/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -135,6 +135,46 @@ autograd_example: cmake_check_build_system
 autograd_example/fast:
 	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/build
 .PHONY : autograd_example/fast
+
+#=============================================================================
+# Target rules for targets named GPU_CPU_example
+
+# Build rule for target.
+GPU_CPU_example: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 GPU_CPU_example
+.PHONY : GPU_CPU_example
+
+# fast build rule for target.
+GPU_CPU_example/fast:
+	$(MAKE) -f CMakeFiles/GPU_CPU_example.dir/build.make CMakeFiles/GPU_CPU_example.dir/build
+.PHONY : GPU_CPU_example/fast
+
+GPU_CPU_example.o: GPU_CPU_example.cpp.o
+
+.PHONY : GPU_CPU_example.o
+
+# target to build an object file
+GPU_CPU_example.cpp.o:
+	$(MAKE) -f CMakeFiles/GPU_CPU_example.dir/build.make CMakeFiles/GPU_CPU_example.dir/GPU_CPU_example.cpp.o
+.PHONY : GPU_CPU_example.cpp.o
+
+GPU_CPU_example.i: GPU_CPU_example.cpp.i
+
+.PHONY : GPU_CPU_example.i
+
+# target to preprocess a source file
+GPU_CPU_example.cpp.i:
+	$(MAKE) -f CMakeFiles/GPU_CPU_example.dir/build.make CMakeFiles/GPU_CPU_example.dir/GPU_CPU_example.cpp.i
+.PHONY : GPU_CPU_example.cpp.i
+
+GPU_CPU_example.s: GPU_CPU_example.cpp.s
+
+.PHONY : GPU_CPU_example.s
+
+# target to generate assembly for a file
+GPU_CPU_example.cpp.s:
+	$(MAKE) -f CMakeFiles/GPU_CPU_example.dir/build.make CMakeFiles/GPU_CPU_example.dir/GPU_CPU_example.cpp.s
+.PHONY : GPU_CPU_example.cpp.s
 
 autograd_example.o: autograd_example.cpp.o
 
@@ -196,10 +236,14 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... tensor_example"
 	@echo "... autograd_example"
-	@echo "... edit_cache"
+	@echo "... GPU_CPU_example"
+	@echo "... GPU_CPU_example.o"
+	@echo "... GPU_CPU_example.i"
+	@echo "... GPU_CPU_example.s"
 	@echo "... autograd_example.o"
 	@echo "... autograd_example.i"
 	@echo "... autograd_example.s"

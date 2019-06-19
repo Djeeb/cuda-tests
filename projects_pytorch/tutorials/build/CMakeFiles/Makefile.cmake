@@ -72,4 +72,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/tensor_example.dir/DependInfo.cmake"
   "CMakeFiles/autograd_example.dir/DependInfo.cmake"
+  "CMakeFiles/GPU_CPU_example.dir/DependInfo.cmake"
   )

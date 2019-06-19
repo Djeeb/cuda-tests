@@ -28,7 +28,7 @@ cout << "\n------------------------------------------------------------------\n"
 	A.backward();
 	cout << "\n- EXEMPLE 2 - vecteurs : f(x) = <Wx,x> + B";
 	cout << "\n\tx.grad() = \n" << X.grad() << endl;
-	cout << "\t2*Wx = \n" << 2*W.mm(X) << endl;
+	cout << "\t2*Wx = \n" << 2*W.mm(X) << endl;	
 
 cout << "\n------------------------------------------------------------------\n";
 	X = torch::rand({5,1}, torch::TensorOptions().dtype(torch::kFloat32).requires_grad(true));
@@ -38,12 +38,13 @@ cout << "\n------------------------------------------------------------------\n"
 	auto weights = W.accessor<float,2>();
 	for(int i=0;i<5;i++) weights[0][i] = float(i+1);
 	
-	auto g = at::sigmoid(W.mm(X) + bias);
+	auto f = W.mm(X) + bias;
+	auto g = at::sigmoid(f);
 	g.backward();
 
-	cout << "\n- EXEMPLE 3 - fonction d'activation : g(x) = sigmoid( Wx + B )";
+	cout << "\n- EXEMPLE 3 - fonction d'activation : g(x) = sigmoid( f(x) ) et f(x) = <w,x> + b";
 	cout << "\n\tx.grad() = \n" << X.grad() << endl;
-	cout << "\tdg/dx = (W*exp(- (W.mm(X) + bias)))/(g*g) = \n" << (W*exp(- (W.mm(X) + bias)))/(g*g) << endl;
+	cout << "\tdg/dx = (W*exp(- (W.mm(X) + bias)))/(g(x)^2) = \n" << (W*exp(- (W.mm(X) + bias)))/(g*g) << endl;
 	
 
 
