@@ -6,4 +6,4 @@
   - Exemple de *forward propagation* simple sur un tenseur random. L'application de fonctions d'activation est particulièrement simple.
   - L'objet principal de *libtorch* est le **Module**. Il est composé de sous-modules, et de paramètres qui simplifieraient le calcul d'un gradient. Question : creuser la structure du module et comprendre son fonctionnement.
 - **autograd_example.cpp** : *en construction*
-- **GPU_example.cpp** : *en construction*
+- **GPU_CPU_example.cpp** : *en construction*
