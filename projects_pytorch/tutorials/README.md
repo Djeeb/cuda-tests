@@ -11,6 +11,5 @@
   - Question : il y a un léger écart entre la méthode de calcul de gradient normal et backward lorsqu'on a des expressions plus longues. Ceci est clairement dû au *Dtype* mais quelle est la meilleure approximation ?
 - **GPU_CPU_example.cpp** : Estimation de pi par CPU puis par GPU pour comparer les méthodes et temps de calcul.
   -  Syntaxe pour faire passer un tenseur sur GPU très simple. Pour cet exercice, le temps de calcul le plus 'rapide' est donné quand on met les premiers tenseurs (les random) sur GPU sans faire rien d'autre. Meilleure pratique ? A creuser.
-  - Question : impossible de faire une estimation de plus de 200,000,000, même sur CPU. Limitations du tenseur ? A creuser.
-  - 
+  - Question : impossible de faire une estimation de plus de 200,000,000 sur CPU et problème de saturation de la mémoire lorsqu'on est en GPU. Limitations du tenseur ? Ou est-ce normal ? A creuser
 - **nnet_from_scratch.cpp** : *en construction*
