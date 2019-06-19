@@ -10,4 +10,4 @@
   - La méthode backward est **récursive** et c'est tout l'intérêt d'*autograd* : si on calcule f1(x) puis f2(x) = g(f1(x)), la méthode backward() donnera le gradient pour x sans problème puisque les informations sur df1/dx sont stockées dans l'objet f1 lors de sa création. 
   - Question : il y a un léger écart entre la méthode de calcul de gradient normal et backward lorsqu'on a des expressions plus longues. Ceci est clairement dû au *Dtype* mais quelle est la meilleure approximation ?
 - **GPU_CPU_example.cpp** : *en construction*
-- **NNet_from_scratch.cpp** : *en construction*
+- **nnet_from_scratch.cpp** : *en construction*
