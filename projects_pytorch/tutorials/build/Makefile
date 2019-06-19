@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named nnet_from_scratch
+
+# Build rule for target.
+nnet_from_scratch: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 nnet_from_scratch
+.PHONY : nnet_from_scratch
+
+# fast build rule for target.
+nnet_from_scratch/fast:
+	$(MAKE) -f CMakeFiles/nnet_from_scratch.dir/build.make CMakeFiles/nnet_from_scratch.dir/build
+.PHONY : nnet_from_scratch/fast
+
+#=============================================================================
 # Target rules for targets named tensor_example
 
 # Build rule for target.
@@ -203,6 +216,33 @@ autograd_example.cpp.s:
 	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/autograd_example.cpp.s
 .PHONY : autograd_example.cpp.s
 
+nnet_from_scratch.o: nnet_from_scratch.cpp.o
+
+.PHONY : nnet_from_scratch.o
+
+# target to build an object file
+nnet_from_scratch.cpp.o:
+	$(MAKE) -f CMakeFiles/nnet_from_scratch.dir/build.make CMakeFiles/nnet_from_scratch.dir/nnet_from_scratch.cpp.o
+.PHONY : nnet_from_scratch.cpp.o
+
+nnet_from_scratch.i: nnet_from_scratch.cpp.i
+
+.PHONY : nnet_from_scratch.i
+
+# target to preprocess a source file
+nnet_from_scratch.cpp.i:
+	$(MAKE) -f CMakeFiles/nnet_from_scratch.dir/build.make CMakeFiles/nnet_from_scratch.dir/nnet_from_scratch.cpp.i
+.PHONY : nnet_from_scratch.cpp.i
+
+nnet_from_scratch.s: nnet_from_scratch.cpp.s
+
+.PHONY : nnet_from_scratch.s
+
+# target to generate assembly for a file
+nnet_from_scratch.cpp.s:
+	$(MAKE) -f CMakeFiles/nnet_from_scratch.dir/build.make CMakeFiles/nnet_from_scratch.dir/nnet_from_scratch.cpp.s
+.PHONY : nnet_from_scratch.cpp.s
+
 tensor_example.o: tensor_example.cpp.o
 
 .PHONY : tensor_example.o
@@ -238,6 +278,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... nnet_from_scratch"
 	@echo "... tensor_example"
 	@echo "... autograd_example"
 	@echo "... GPU_CPU_example"
@@ -247,6 +288,9 @@ help:
 	@echo "... autograd_example.o"
 	@echo "... autograd_example.i"
 	@echo "... autograd_example.s"
+	@echo "... nnet_from_scratch.o"
+	@echo "... nnet_from_scratch.i"
+	@echo "... nnet_from_scratch.s"
 	@echo "... tensor_example.o"
 	@echo "... tensor_example.i"
 	@echo "... tensor_example.s"

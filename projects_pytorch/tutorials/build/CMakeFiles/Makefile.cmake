@@ -70,6 +70,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/nnet_from_scratch.dir/DependInfo.cmake"
   "CMakeFiles/tensor_example.dir/DependInfo.cmake"
   "CMakeFiles/autograd_example.dir/DependInfo.cmake"
   "CMakeFiles/GPU_CPU_example.dir/DependInfo.cmake"
