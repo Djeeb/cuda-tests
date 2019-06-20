@@ -21,14 +21,14 @@ cout << "\n--- TEST DE BACKWARD() et de l'autograd ---\n";
 cout << "\n------------------------------------------------------------------\n";
 //exemple matriciel plus poussé
 	torch::Tensor X = torch::rand({3,1},torch::TensorOptions().requires_grad(true));
-	torch::Tensor W = torch::ones({3,3},torch::TensorOptions().requires_grad(false));
-	torch::Tensor B = torch::ones({3,1},torch::TensorOptions().requires_grad(false));
+	torch::Tensor W = torch::ones({1,3},torch::TensorOptions().requires_grad(false));
+	torch::Tensor B = torch::ones({1,1},torch::TensorOptions().requires_grad(false));
 	
-	auto A = W.mm(X)*X + B;
+	auto A = W.mm(X) + B;
 	A.backward();
-	cout << "\n- EXEMPLE 2 - vecteurs : f(x) = <Wx,x> + B";
+	cout << "\n- EXEMPLE 2 - vecteurs : f(x) = <W,X> + B";
 	cout << "\n\tx.grad() = \n" << X.grad() << endl;
-	cout << "\t2*Wx = \n" << 2*W.mm(X) << endl;	
+	cout << "\t2*Wx = \n" << W << endl;	
 
 cout << "\n------------------------------------------------------------------\n";
 	X = torch::rand({5,1}, torch::TensorOptions().dtype(torch::kFloat32).requires_grad(true));

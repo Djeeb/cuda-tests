@@ -15,10 +15,10 @@
 ########################
 
 //Path to a library.
-C10_CUDA_LIBRARY:FILEPATH=/home/jb/libtorch/lib/libc10_cuda.so
+C10_CUDA_LIBRARY:FILEPATH=/usr/local/lib/libc10_cuda.so
 
 //Path to a library.
-C10_LIBRARY:FILEPATH=/home/jb/libtorch/lib/libc10.so
+C10_LIBRARY:FILEPATH=/usr/local/lib/libc10.so
 
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
@@ -137,9 +137,6 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 
 //Path to a program.
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
-
-//No help, variable specified on the command line.
-CMAKE_PREFIX_PATH:UNINITIALIZED=/home/jb/stage_DL/projects_pytorch/tutorials/build/../../../../libtorch
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
@@ -361,28 +358,19 @@ CUDNN_LIBRARY:FILEPATH=/usr/lib/libcudnn.so
 CUDNN_ROOT_DIR:PATH=
 
 //The directory containing a CMake configuration file for Caffe2.
-Caffe2_DIR:PATH=/home/jb/libtorch/share/cmake/Caffe2
+Caffe2_DIR:PATH=/usr/local/share/cmake/Caffe2
 
 //Path to a library.
 LIBNVTOOLSEXT:FILEPATH=/opt/cuda/lib64/libnvToolsExt.so
-
-//The directory containing a CMake configuration file for MKLDNN.
-MKLDNN_DIR:PATH=MKLDNN_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for MKL.
 MKL_DIR:PATH=MKL_DIR-NOTFOUND
 
 //Path to a library.
-TORCH_LIBRARY:FILEPATH=/home/jb/libtorch/lib/libtorch.so
+TORCH_LIBRARY:FILEPATH=/usr/local/lib/libtorch.so
 
 //The directory containing a CMake configuration file for Torch.
-Torch_DIR:PATH=/home/jb/libtorch/share/cmake/Torch
-
-//Value Computed by CMake
-first_example_BINARY_DIR:STATIC=/home/jb/stage_DL/projects_pytorch/tutorials/build
-
-//Value Computed by CMake
-first_example_SOURCE_DIR:STATIC=/home/jb/stage_DL/projects_pytorch/tutorials
+Torch_DIR:PATH=/usr/local/share/cmake/Torch
 
 //Value Computed by CMake
 tutorials_BINARY_DIR:STATIC=/home/jb/stage_DL/projects_pytorch/tutorials/build
@@ -612,7 +600,7 @@ CUDA_cusolver_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_cusparse_LIBRARY
 CUDA_cusparse_LIBRARY-ADVANCED:INTERNAL=1
 //Location of make2cmake.cmake
-CUDA_make2cmake:INTERNAL=/home/jb/libtorch/share/cmake/Caffe2/Modules_CUDA_fix/upstream/FindCUDA/make2cmake.cmake
+CUDA_make2cmake:INTERNAL=/usr/local/share/cmake/Caffe2/Modules_CUDA_fix/upstream/FindCUDA/make2cmake.cmake
 //ADVANCED property for variable: CUDA_nppc_LIBRARY
 CUDA_nppc_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_nppial_LIBRARY
@@ -638,9 +626,9 @@ CUDA_nppitc_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_npps_LIBRARY
 CUDA_npps_LIBRARY-ADVANCED:INTERNAL=1
 //Location of parse_cubin.cmake
-CUDA_parse_cubin:INTERNAL=/home/jb/libtorch/share/cmake/Caffe2/Modules_CUDA_fix/upstream/FindCUDA/parse_cubin.cmake
+CUDA_parse_cubin:INTERNAL=/usr/local/share/cmake/Caffe2/Modules_CUDA_fix/upstream/FindCUDA/parse_cubin.cmake
 //Location of run_nvcc.cmake
-CUDA_run_nvcc:INTERNAL=/home/jb/libtorch/share/cmake/Caffe2/Modules_CUDA_fix/upstream/FindCUDA/run_nvcc.cmake
+CUDA_run_nvcc:INTERNAL=/usr/local/share/cmake/Caffe2/Modules_CUDA_fix/upstream/FindCUDA/run_nvcc.cmake
 //Details about finding CUDA
 FIND_PACKAGE_MESSAGE_DETAILS_CUDA:INTERNAL=[/opt/cuda][/opt/cuda/bin/nvcc][/opt/cuda/include][/opt/cuda/lib64/libcudart.so][v10.1()]
 //Details about finding CUDNN
@@ -648,7 +636,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_CUDNN:INTERNAL=[/usr/include][/usr/lib/libcudnn.so]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Details about finding torch
-FIND_PACKAGE_MESSAGE_DETAILS_torch:INTERNAL=[/home/jb/libtorch/lib/libtorch.so][/home/jb/libtorch/include;/home/jb/libtorch/include/torch/csrc/api/include][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_torch:INTERNAL=[/usr/local/lib/libtorch.so][/usr/local/include;/usr/local/include/torch/csrc/api/include][v()]
 //Result of TRY_COMPILE
 compile_result:INTERNAL=TRUE
 //Result of TRY_RUN
