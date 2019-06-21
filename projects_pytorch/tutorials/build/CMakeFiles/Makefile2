@@ -65,13 +65,87 @@ CMAKE_SOURCE_DIR = /home/jb/stage_DL/projects_pytorch/tutorials
 CMAKE_BINARY_DIR = /home/jb/stage_DL/projects_pytorch/tutorials/build
 
 #=============================================================================
+# Target rules for target CMakeFiles/nnet.dir
+
+# All Build rule for target.
+CMakeFiles/nnet.dir/all:
+	$(MAKE) -f CMakeFiles/nnet.dir/build.make CMakeFiles/nnet.dir/depend
+	$(MAKE) -f CMakeFiles/nnet.dir/build.make CMakeFiles/nnet.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=5,6 "Built target nnet"
+.PHONY : CMakeFiles/nnet.dir/all
+
+# Include target in all.
+all: CMakeFiles/nnet.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/nnet.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/nnet.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 0
+.PHONY : CMakeFiles/nnet.dir/rule
+
+# Convenience name for target.
+nnet: CMakeFiles/nnet.dir/rule
+
+.PHONY : nnet
+
+# clean rule for target.
+CMakeFiles/nnet.dir/clean:
+	$(MAKE) -f CMakeFiles/nnet.dir/build.make CMakeFiles/nnet.dir/clean
+.PHONY : CMakeFiles/nnet.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/nnet.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/sandbox.dir
+
+# All Build rule for target.
+CMakeFiles/sandbox.dir/all:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/depend
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=9,10 "Built target sandbox"
+.PHONY : CMakeFiles/sandbox.dir/all
+
+# Include target in all.
+all: CMakeFiles/sandbox.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/sandbox.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/sandbox.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles 0
+.PHONY : CMakeFiles/sandbox.dir/rule
+
+# Convenience name for target.
+sandbox: CMakeFiles/sandbox.dir/rule
+
+.PHONY : sandbox
+
+# clean rule for target.
+CMakeFiles/sandbox.dir/clean:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/clean
+.PHONY : CMakeFiles/sandbox.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/sandbox.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/nnet_from_scratch.dir
 
 # All Build rule for target.
 CMakeFiles/nnet_from_scratch.dir/all:
 	$(MAKE) -f CMakeFiles/nnet_from_scratch.dir/build.make CMakeFiles/nnet_from_scratch.dir/depend
 	$(MAKE) -f CMakeFiles/nnet_from_scratch.dir/build.make CMakeFiles/nnet_from_scratch.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=5,6 "Built target nnet_from_scratch"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=7,8 "Built target nnet_from_scratch"
 .PHONY : CMakeFiles/nnet_from_scratch.dir/all
 
 # Include target in all.
@@ -108,7 +182,7 @@ clean: CMakeFiles/nnet_from_scratch.dir/clean
 CMakeFiles/tensor_example.dir/all:
 	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/depend
 	$(MAKE) -f CMakeFiles/tensor_example.dir/build.make CMakeFiles/tensor_example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=7,8 "Built target tensor_example"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles --progress-num=11,12 "Built target tensor_example"
 .PHONY : CMakeFiles/tensor_example.dir/all
 
 # Include target in all.

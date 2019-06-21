@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named nnet
+
+# Build rule for target.
+nnet: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 nnet
+.PHONY : nnet
+
+# fast build rule for target.
+nnet/fast:
+	$(MAKE) -f CMakeFiles/nnet.dir/build.make CMakeFiles/nnet.dir/build
+.PHONY : nnet/fast
+
+#=============================================================================
+# Target rules for targets named sandbox
+
+# Build rule for target.
+sandbox: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sandbox
+.PHONY : sandbox
+
+# fast build rule for target.
+sandbox/fast:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/build
+.PHONY : sandbox/fast
+
+#=============================================================================
 # Target rules for targets named nnet_from_scratch
 
 # Build rule for target.
@@ -216,6 +242,33 @@ autograd_example.cpp.s:
 	$(MAKE) -f CMakeFiles/autograd_example.dir/build.make CMakeFiles/autograd_example.dir/autograd_example.cpp.s
 .PHONY : autograd_example.cpp.s
 
+nnet.o: nnet.cpp.o
+
+.PHONY : nnet.o
+
+# target to build an object file
+nnet.cpp.o:
+	$(MAKE) -f CMakeFiles/nnet.dir/build.make CMakeFiles/nnet.dir/nnet.cpp.o
+.PHONY : nnet.cpp.o
+
+nnet.i: nnet.cpp.i
+
+.PHONY : nnet.i
+
+# target to preprocess a source file
+nnet.cpp.i:
+	$(MAKE) -f CMakeFiles/nnet.dir/build.make CMakeFiles/nnet.dir/nnet.cpp.i
+.PHONY : nnet.cpp.i
+
+nnet.s: nnet.cpp.s
+
+.PHONY : nnet.s
+
+# target to generate assembly for a file
+nnet.cpp.s:
+	$(MAKE) -f CMakeFiles/nnet.dir/build.make CMakeFiles/nnet.dir/nnet.cpp.s
+.PHONY : nnet.cpp.s
+
 nnet_from_scratch.o: nnet_from_scratch.cpp.o
 
 .PHONY : nnet_from_scratch.o
@@ -242,6 +295,33 @@ nnet_from_scratch.s: nnet_from_scratch.cpp.s
 nnet_from_scratch.cpp.s:
 	$(MAKE) -f CMakeFiles/nnet_from_scratch.dir/build.make CMakeFiles/nnet_from_scratch.dir/nnet_from_scratch.cpp.s
 .PHONY : nnet_from_scratch.cpp.s
+
+sandbox.o: sandbox.cpp.o
+
+.PHONY : sandbox.o
+
+# target to build an object file
+sandbox.cpp.o:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/sandbox.cpp.o
+.PHONY : sandbox.cpp.o
+
+sandbox.i: sandbox.cpp.i
+
+.PHONY : sandbox.i
+
+# target to preprocess a source file
+sandbox.cpp.i:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/sandbox.cpp.i
+.PHONY : sandbox.cpp.i
+
+sandbox.s: sandbox.cpp.s
+
+.PHONY : sandbox.s
+
+# target to generate assembly for a file
+sandbox.cpp.s:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/sandbox.cpp.s
+.PHONY : sandbox.cpp.s
 
 tensor_example.o: tensor_example.cpp.o
 
@@ -277,6 +357,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... nnet"
+	@echo "... sandbox"
 	@echo "... rebuild_cache"
 	@echo "... nnet_from_scratch"
 	@echo "... tensor_example"
@@ -288,9 +370,15 @@ help:
 	@echo "... autograd_example.o"
 	@echo "... autograd_example.i"
 	@echo "... autograd_example.s"
+	@echo "... nnet.o"
+	@echo "... nnet.i"
+	@echo "... nnet.s"
 	@echo "... nnet_from_scratch.o"
 	@echo "... nnet_from_scratch.i"
 	@echo "... nnet_from_scratch.s"
+	@echo "... sandbox.o"
+	@echo "... sandbox.i"
+	@echo "... sandbox.s"
 	@echo "... tensor_example.o"
 	@echo "... tensor_example.i"
 	@echo "... tensor_example.s"
