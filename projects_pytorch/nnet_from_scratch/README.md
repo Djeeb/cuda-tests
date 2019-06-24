@@ -26,7 +26,13 @@ Regarding to our model, we should initialize 4 objects : two couples of weight/b
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20b_%7B2%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%200%5C%5C%20...%5C%5C%200%20%5Cend%7Bpmatrix%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%7D)
 
 Hence, a simple way to code initialization method for our neuralnet class is to use '<torch::tensor>' objects : 
-
+```javascript
+function fancyAlert(arg) {
+  if(arg) {
+    $.facebox({div:'#foo'})
+  }
+}
+```
 
 2- Forward propagation
 
