@@ -18,7 +18,7 @@ Regarding to our model, we should initialize 4 objects : two couples of weight/b
 
 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B200%7D%20W_%7B2%7D%20%5Csim%20%5Cmathcal%7BN%7D%280%2C1%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%5Ctimes64%7D?style=centerme)
+                    ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B200%7D%20W_%7B2%7D%20%5Csim%20%5Cmathcal%7BN%7D%280%2C1%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%5Ctimes64%7D)
 
 2- Forward propagation
 
