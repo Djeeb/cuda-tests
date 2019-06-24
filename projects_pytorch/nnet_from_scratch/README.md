@@ -5,16 +5,16 @@ The aim of this section is to describe step by step how to implement a 1-layer s
 - Implementing our neural network
 
 
-## Choice of neural network model
+## Neural network model choice
 
 Will we use the most simple neural network architecture, a 1-hidden layer fully connected neural network which could look like this : 
 
 ![1 hidden layer fully-connected neural network](data/nn_model.svg)
 
 here are the main parameters of our model :
-- Input layer size : 784 
-- Hidden layer size : 64
-- Output layer size : 10
+- input layer size : 784 
+- hidden layer size : 64
+- output layer size : 10
 - first activation function : sigmoid
 - second activation function : sigmoid
 - cost function used : mean squared error
