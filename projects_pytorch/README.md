@@ -6,3 +6,4 @@
 # Description des projets
 
 - **tutorials** : des programmes simples pour comprendre la syntaxe et le fonctionnement de libtorch. 
+- **nnet_from_scratch** : implémentation d'un réseau de neurones à une couche n'utilisant que la structure des tenseurs. Permet de comprendre toutes les étapes d'une phase d'apprentissage profond. Entraînement sur MNIST. 
