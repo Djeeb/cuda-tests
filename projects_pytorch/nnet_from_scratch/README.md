@@ -26,8 +26,8 @@ Regarding to our model, we should initialize 4 objects : two couples of weight/b
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20b_%7B2%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%200%5C%5C%20...%5C%5C%200%20%5Cend%7Bpmatrix%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%7D)
  
  
-Hence, a simple way to code initialization method for our nnet class is to use `torch::randn` and `torch::zeros` : 
-```javascript
+Hence, a simple way to code initialization method for our nnet class is to use `torch::randn` and `torch::zeros` and to set their dtype to `torch::kFloat64` for homogeneity : 
+```c++
 nnet::nnet(int n_i,int n_h,int n_o, double alpha): n_input(n_i), n_hidden(n_h), n_output(n_o), learning_rate(alpha) {
 	
 	//1st layer
