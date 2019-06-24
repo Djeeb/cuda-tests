@@ -28,11 +28,11 @@ Regarding to our model, we should initialize 4 objects : two couples of weight/b
 Hence, a simple way to code initialization method for our nnet class is to use `torch::randn` and `torch::zeros` and to set their dtype to `torch::kFloat64` for homogeneity : 
 ```c++
 nnet::nnet(int n_i,int n_h,int n_o, double alpha): n_input(n_i), n_hidden(n_h), n_output(n_o), learning_rate(alpha) {
-	//input_layer -> hidden_layer
+	//First couple
 	W1 = torch::randn({n_hidden,n_input}, torch::dtype(torch::kFloat64));
 	b1 = torch::zeros({n_hidden,1}, torch::dtype(torch::kFloat64));
 
-	//hidden_layer -> output
+	//Second couple
 	W2 = torch::randn({n_output,n_hidden}, torch::dtype(torch::kFloat64));
 	b2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64));
 }
@@ -59,19 +59,28 @@ It follows that we can decompose our forward propagation in to main steps.
 Here is a simple implementation of the forward method, using `torch::tensor::mm` and `torch::sigmoid` methods :
 ```c++
 void nnet::forward(const torch::Tensor & X){
-	
-	//1ere couche
+	//input_layer -> hidden_layer
 	z1 = W1.mm(X) + b1;
 	g1 = torch::sigmoid(z1);
 	
-	//2eme couche
+	//hidden_layer -> output
 	z2 = W2.mm(g1) + b2;
 	g2 = torch::sigmoid(z2);
-	
 }
 ```
 
 ### 3- Cost function used
+Choice of the cost function J is a key element in neural network modeling as it directly impact the first gradient calculation (in our case, dJ/dg2) as we will see in next section.
+As the cost function should represent how "bad" or how "well" the learning task is converging to an estimator, there is a plenty of choice. The most common one is the [Mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) : 
+
+
+
+```c++
+void nnet::compute_cost(torch::Tensor & Y,int batch_size){
+	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))) / double(batch_size);
+}
+```
+
 
 
 ### 4- Backward propagation
