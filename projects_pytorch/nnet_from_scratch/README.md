@@ -1,17 +1,20 @@
 # Implementing a neural net from scratch using libtorch data structure (on MNIST)
-The aim of this section is to precisely describe how to implement a neural network on both mathematical and coding side. 
+The aim of this section is to precisely describe how to implement a 1-layer simple neural network using SGD on both mathematical and coding side. It will be trained on MNIST database to illustrate the theory. 
 
 **Table of contents**
-- Theory
+- Mathematical side
     - Neural network steps
     - structure used
     - computing backward propagation
- - Code
+- Coding side
+
     - 
   
  
- 
-## Neural network steps
+## Mathematical side
+
+### Neural network steps
+
 1- Parameters initialization
 
 2- Forward propagation
