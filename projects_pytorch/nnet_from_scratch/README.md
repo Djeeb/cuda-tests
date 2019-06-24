@@ -7,7 +7,7 @@ The aim of this section is to describe step by step how to implement a 1-layer s
 
 ## Choice of neural network model
 
-![1 hidden layer fully-connected neural network](/data/nn.svg)
+![1 hidden layer fully-connected neural network](data/nn.svg)
 
 ## Implementing our neural network
 
