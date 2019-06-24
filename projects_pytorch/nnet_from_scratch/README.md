@@ -14,13 +14,11 @@ The aim of this section is to precisely describe how to implement a 1-layer simp
 ### 1- Parameters initialization 
 Regarding to our model, we should initialize 4 objects : two couples of weight/bias matrices. The first one would be used to pass our samples from the input layer (size : 784) to the hidden layer (size : 64). The second one would be used to pass our sample from the hidden layer to the output layer (size : 10). The simplest and most logical idea for intializing them is to use an element-wise *standard normal distribution* for weights and to set bias to a **zero-vector** : 
 
-<p align="center">
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B200%7D%20W_%7B1%7D%20%5Csim%20%5Cmathcal%7BN%7D%280%2C1%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B64%5Ctimes784%7D)
+<p align="center"> ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B200%7D%20W_%7B1%7D%20%5Csim%20%5Cmathcal%7BN%7D%280%2C1%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B64%5Ctimes784%7D)
 
 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B200%7D%20W_%7B2%7D%20%5Csim%20%5Cmathcal%7BN%7D%280%2C1%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%5Ctimes64%7D)
-</p>
 
 2- Forward propagation
 
