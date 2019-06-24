@@ -22,7 +22,3 @@ set_property(TARGET nnet_from_scratch PROPERTY CXX_STANDARD 11)
 add_executable(sandbox sandbox.cpp)
 target_link_libraries(sandbox "${TORCH_LIBRARIES}")
 set_property(TARGET sandbox PROPERTY CXX_STANDARD 11)
-
-add_executable(nnet nnet.cpp)
-target_link_libraries(nnet "${TORCH_LIBRARIES}")
-set_property(TARGET nnet PROPERTY CXX_STANDARD 11)
