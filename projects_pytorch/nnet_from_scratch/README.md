@@ -38,19 +38,20 @@ nnet::nnet(int n_i,int n_h,int n_o, double alpha): n_input(n_i), n_hidden(n_h), 
 }
 ```
 
-2- Forward propagation
+### 2- Forward propagation
 Next step is to implement forward propagation, i.e. evaluation of samples by the neural network. If our neural network was a black-box represented by a function, our foward propagation would ideally look like :
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20f%28X%29%20%3D%20%5Cwidehat%7BY%7D)
+
 It follows that we can decompose our forward propagation in to main steps. 
 - First step, from 784 features to 64 features, using a **sigmoid activation function** :
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20Z_%7B1%7D%20%3D%20W_%7B1%7DX%20&plus;%20b_%7B1%7D)
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20G_%7B1%7D%20%3D%20%5Cfrac%7B1%7D%7B1&plus;e%5E%7B-Z_%7B1%7D%7D%7D)
 
-
-
-
 - Second step, from 64 features to 10 features, using a **sigmoid activation function** :
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B200%7D%20Z_%7B2%7D%20%3D%20W_%7B2%7DG_%7B1%7D&plus;b_%7B2%7D)
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20G_%7B2%7D%20%3D%20%5Cfrac%7B1%7D%7B1&plus;e%5E%7B-Z_%7B2%7D%7D%7D%20%3D%20%5Cwidehat%7BY%7D)
