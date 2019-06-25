@@ -55,7 +55,7 @@ Next step is to implement forward propagation, i.e. evaluation of samples by the
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20f%28X%29%20%3D%20%5Cwidehat%7BY%7D)
 
-It follows that we can decompose our forward propagation in to main steps. 
+It follows that we can decompose our forward propagation in two main steps. 
 - First step, from 784 features to 64 features, using a **sigmoid activation function** :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20Z_%7B1%7D%20%3D%20W_%7B1%7DX%20&plus;%20b_%7B1%7D)
@@ -83,19 +83,42 @@ void nnet::forward(const torch::Tensor & X){
 
 ### 3- Cost function used
 Choice of the cost function J is a key element in neural network modeling as it directly impact the first gradient calculation (in our case, dJ/dg2) as we will see in next section.
-As the cost function should represent how "bad" or how "well" the learning task is converging to an estimator, there is a plenty of choice. The most common one is the [Mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) : 
+As the cost function should represent how "bad" or how "well" the learning task is converging to an estimator, there is a plenty of choice. The most common one is the [Mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error). Indexing columns of matrices by i and number of samples by n, we have this equation for MSE :
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29%5E%7BT%7D%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29)
 
+Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor, and `item<double>()` to convert the coefficient to a `double`. Also note that we use the batch size to scale the cost and harmonize the results : 
 
 ```c++
-void nnet::compute_cost(torch::Tensor & Y,int batch_size){
-	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))) / double(batch_size);
+void nnet::compute_cost(torch::Tensor & Y){
+	J += (g2-Y)*(g2-Y).sum().item<double>() / double(batch_size);
 }
 ```
 
+Another option is given by the [Cross entropy loss](https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a), a more refined loss function that has the advantage to strongly penalize the model if the estimation differs from the actual answer : 
 
+
+Again, the implementation is quite simple with the `torch::log` function :
+
+```c++
+void nnet::compute_cost(torch::Tensor & Y){
+	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum().item<double>() / double(batch_size);
+}
+```
+
+To end this section, we use an auxiliary function to both display and reset the cost :
+
+```c++
+double nnet::reset_cost() { 
+	double x = J;
+	J = 0.;
+	return x;}
+}
+```
 
 ### 4- Backward propagation
+
+
 
 ### 5- Parameters update
 
