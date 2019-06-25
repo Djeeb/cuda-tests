@@ -89,11 +89,11 @@ The most common one is the [Mean squared error](https://en.wikipedia.org/wiki/Me
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29%5E%7BT%7D%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29)
 
-Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor, and `item<double>()` to convert the coefficient to a `double`. Also note that we use the batch size to scale the cost and harmonize the results :
+Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor, and `item<double>()` to convert the coefficient to a `double` :
 
 ```c++
 void nnet::compute_cost(torch::Tensor & Y){
-	J += (g2-Y)*(g2-Y).sum().item<double>() / double(batch_size);
+	J += ((g2-Y)*(g2-Y)).sum().item<double>();
 }
 ```
 
@@ -107,18 +107,17 @@ Again, the implementation is quite simple with the `torch::log` function :
 
 ```c++
 void nnet::compute_cost(torch::Tensor & Y){
-	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum().item<double>() / double(batch_size);
+	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum().item<double>();
 }
 ```
 
-To end this section, we use an auxiliary function to both display and reset the cost :
+To end this section, we use an auxiliary function to both display and reset the cost.  Also note that we use the training dataset size to scale the cost and harmonize the results :
 
 ```c++
-double nnet::reset_cost() { 
-	double x = J;
+double nnet::reset_cost(int training_size) { 
+	double x = J/double(training_size);
 	J = 0.;
 	return x;}
-}
 ```
 
 ### 4- Backward propagation
@@ -135,7 +134,7 @@ We have this equation for Z2 :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20G_%7B2%7D%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%20%5Cast%20G_%7B2%7D%20%5Cast%20%281-G_%7B2%7D%29)
 
-
+Now the chain rule can be applied to compute dJ w.r.t W2 and b2 :
 
 
 
