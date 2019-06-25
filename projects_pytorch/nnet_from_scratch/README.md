@@ -87,7 +87,9 @@ As the cost function should represent how "bad" or how "well" the learning task 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29%5E%7BT%7D%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29)
 
-Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor, and `item<double>()` to convert the coefficient to a `double`. Also note that we use the batch size to scale the cost and harmonize the results : 
+Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor, and `item<double>()` to convert the coefficient to a `double`. Also note that we use the batch size to scale the cost and harmonize the results :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20-%5C%3A%5Cleft%20%28%20%5C%3A%20%5Clog%28%5Cwidehat%7BY%7D_%7Bi%7D%29%5E%7BT%7DY_%7Bi%7D%5C%3A%20&plus;%20%5C%3A%20%5Clog%281-%5Cwidehat%7BY%7D_%7Bi%7D%29%5E%7BT%7D%5Cleft%20%281-Y_%7Bi%7D%20%5Cright%20%29%20%5Cright%20%29)
 
 ```c++
 void nnet::compute_cost(torch::Tensor & Y){
