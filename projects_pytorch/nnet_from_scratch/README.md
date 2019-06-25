@@ -1,5 +1,5 @@
 # Implementing a neural net from scratch using libtorch data structure (on MNIST)
-The aim of this section is to describe step by step how to implement a 1-layer simple neural network using SGD on both mathematical and coding side. It will be trained on MNIST database for illustration. You can check `nnet_from_scratch.cpp` to look at the whole code. 
+The aim of this section is to describe step by step how to implement a 1-layer simple neural network using SGD on both mathematical and coding side. It will be trained on MNIST database for illustration. You can check `nnet_from_scratch.cpp` to look at the whole code and check how `nnet` class is precisely implemented.
 
 - Choice of neural network model
 - Implementing our neural network
