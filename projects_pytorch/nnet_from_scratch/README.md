@@ -122,10 +122,24 @@ double nnet::reset_cost() {
 ```
 
 ### 4- Backward propagation
+#### - Method from scratch
 This is the trickiest part of neural network implementation as it requires a bit of calculus and linear algebra skills to compute the gradients. As our goal is to slightly change weights and biases with their slope regarding the cost function J, we have to use the [chain rule](https://en.wikipedia.org/wiki/Chain_rule) and calculate intermediary values to compute dJ w.r.t W1, W2, b1, and b2. Here is the step-by-step mathematical path **for MSE** :
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%20%3D%20%5Cfrac%7B2%7D%7Bn%7D%20%5Cleft%20%28%20G_%7B2%7D-Y%20%5Cright%20%29)
+
+Remembering the derivative of the sigmoid function of a multidimension variable where the star denotes the element-wise product : 
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cleft%20%28%20%5Cfrac%7B1%7D%7B1&plus;e%5E%7B-u%7D%7D%20%5Cright%20%29%27%20%3D%20%5Cfrac%7Be%5E%7B-u%7D%7D%7B%5Cleft%20%281&plus;e%5E%7B%20-u%20%7D%5Cright%20%29%5E%7B2%7D%7D%20%3D%20%5Cfrac%7B1%7D%7B1&plus;e%5E%7B-u%7D%7D%20%5Cast%20%5Cleft%20%281%20-%20%5Cfrac%7B1%7D%7B1&plus;e%5E%7B-u%7D%7D%20%5Cright%20%29)
+
+We have this equation for Z2 : 
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20G_%7B2%7D%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%20%5Cast%20G_%7B2%7D%20%5Cast%20%281-G_%7B2%7D%29)
 
 
+
+
+
+#### - Using *autograd* from libtorch
 
 
 
