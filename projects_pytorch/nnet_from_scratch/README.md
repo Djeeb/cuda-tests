@@ -82,14 +82,14 @@ void nnet::forward(const torch::Tensor & X){
 ```
 
 ### 3- Cost function used
-Choice of the cost function J is a key element in neural network modeling as it directly impact the first gradient calculation (in our case, dJ/dg2) as we will see in next section.
-As the cost function should represent how "bad" or how "well" the learning task is converging to an estimator, there is a plenty of choice. The most common one is the [Mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error). Indexing columns of matrices by i and number of samples by n, we have this equation for MSE :
+Choice of the cost function J is a key element in neural network modeling as it directly impact the first gradient calculation (in our case, dJ/dg2) as we will see in next section. As the cost function should represent how "bad" or how "well" the learning task is converging to an estimator, there is a plenty of choice. 
+
+#### - MSE
+The most common one is the [Mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error). Indexing columns of matrices by i and number of samples by n, we have this equation for MSE :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29%5E%7BT%7D%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29)
 
 Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor, and `item<double>()` to convert the coefficient to a `double`. Also note that we use the batch size to scale the cost and harmonize the results :
-
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20-%5C%3A%5Cleft%20%28%20%5C%3A%20%5Clog%28%5Cwidehat%7BY%7D_%7Bi%7D%29%5E%7BT%7DY_%7Bi%7D%5C%3A%20&plus;%20%5C%3A%20%5Clog%281-%5Cwidehat%7BY%7D_%7Bi%7D%29%5E%7BT%7D%5Cleft%20%281-Y_%7Bi%7D%20%5Cright%20%29%20%5Cright%20%29)
 
 ```c++
 void nnet::compute_cost(torch::Tensor & Y){
@@ -97,8 +97,11 @@ void nnet::compute_cost(torch::Tensor & Y){
 }
 ```
 
+#### - Cross entropy loss
+
 Another option is given by the [Cross entropy loss](https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a), a more refined loss function that has the advantage to strongly penalize the model if the estimation differs from the actual answer : 
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20-%5C%3A%5Cleft%20%28%20%5C%3A%20%5Clog%28%5Cwidehat%7BY%7D_%7Bi%7D%29%5E%7BT%7DY_%7Bi%7D%5C%3A%20&plus;%20%5C%3A%20%5Clog%281-%5Cwidehat%7BY%7D_%7Bi%7D%29%5E%7BT%7D%5Cleft%20%281-Y_%7Bi%7D%20%5Cright%20%29%20%5Cright%20%29)
 
 Again, the implementation is quite simple with the `torch::log` function :
 
@@ -119,6 +122,11 @@ double nnet::reset_cost() {
 ```
 
 ### 4- Backward propagation
+This is the trickiest part of neural network implementation as it requires a bit of calculus and linear algebra skills to compute the gradients. As our goal is to slightly change weights and biases with their slope regarding the cost function J, we have to use the [chain rule](https://en.wikipedia.org/wiki/Chain_rule) and calculate intermediary values to compute dJ w.r.t W1, W2, b1, and b2. Here is the step-by-step mathematical path **for MSE** :
+
+
+
+
 
 
 
