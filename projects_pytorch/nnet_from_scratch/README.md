@@ -1,7 +1,7 @@
 # Implementing a neural net from scratch using libtorch data structure (on MNIST)
-The aim of this section is to describe step by step how to implement a 1-layer simple neural network using SGD on both mathematical and coding side. It will be trained on MNIST database for illustration. You can check `nnet_from_scratch.cpp` to look at the whole code and check how `nnet` class is precisely implemented.
+The aim of this section is to describe a step-by-step implementation of a 1-layer fully-connected neural network using SGD,  on both mathematical and coding side. It will be trained on MNIST database for illustration. You can check `nnet_from_scratch.cpp` to look at the whole code and see how exactly `nnet` class is implemented.
 
-- Choice of neural network model
+- Neural network model choice
 - Implementing our neural network
 
 
@@ -18,7 +18,7 @@ here are the main parameters of our model :
 - first activation function : sigmoid
 - second activation function : sigmoid
 - cost function used : mean squared error
-- update algorithm used : stochastic gradient descent
+- update algorithm used : [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)  
 
 ## Implementing our neural network
 
