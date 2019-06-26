@@ -1,9 +1,10 @@
 # Implementing a neural net from scratch using libtorch data structure (on MNIST)
 The aim of this section is to describe a step-by-step implementation of a 1-layer fully-connected neural network using SGD,  on both mathematical and coding side. It will be trained on MNIST database for illustration. You can check `nnet_from_scratch.hpp` to look at the whole code and see how exactly `nnet` class is implemented.
 
-- I [ Neural network model choice ](#model)
+- **I- [ Neural network model choice ](#model)**
 
-- II [ Implementing our neural network. ](#implementing)
+- **II- [ Implementing our neural network. ](#implementing)**
+
 	1- [Parameters initialization ](#initialization)
 	2- [Forward propagation ](#forward)
 	3- [Cost function used ](#cost)
@@ -11,7 +12,9 @@ The aim of this section is to describe a step-by-step implementation of a 1-laye
 	5- [Parameters update ](#update)
 	6- [Model evaluation](#evaluation)
 
-- III [ Results ](#results)
+- **III- [ Results ](#results)**
+&nbsp;
+&nbsp;
 &nbsp;
 &nbsp;
 
