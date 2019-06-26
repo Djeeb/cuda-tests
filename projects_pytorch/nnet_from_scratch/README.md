@@ -151,7 +151,27 @@ As G2 and Z2 have the same dimensions, we can apply the chain rule using the ele
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%5Cast%20G_%7B2%7D%20%5Cast%20%281-G_%7B2%7D%29)
 
+Now we can compute dJ w.r.t dW2 by first computing dZ2 w.r.t dW2 using differentiation. If z2 can be viewed as a function we can compute the differentiation with the classical matrix inner product :
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20z_%7B2%7D%28W_%7B2%7D&plus;H%29%20-%20z_%7B2%7D%28W_%7B2%7D%29%20%3D%20HG_%7B1%7D%20%3D%20%5Cleft%20%5Clangle%20H%2CG%5E%7BT%7D_%7B1%7D%20%5Cright%20%5Crangle)
+
+And then :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20W_%7B2%7D%7D%20%3D%20G_%7B1%7D%5E%7BT%7D)
+
+By checking dimensions of our gradients, we can finally use the chain rule to compute dJ w.r.t dW2 :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%20%5Ctimes%20n%7D%2C%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20W_%7B2%7D%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bn%20%5Ctimes%2064%7D)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20W_%7B2%7D%7D)
+
+The role of bias in Z2 is slightly different from an actual matrix addition, as the dimensions don't match. It consists in adding the bias on each of the n columns of W2 x G1, Therefore : 
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20b_%7B2%7D%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%201%20%5C%5C%20...%20%5C%5C%201%20%5Cend%7Bpmatrix%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bn%20%5Ctimes%201%7D)
+
+And by the chain rule, we have dJ w.r.t db2 :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20b_%7B2%7D%7D%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%28Z_%7B2%7D%29_%7B%28i%29%7D)
 
 #### - Using *autograd* from libtorch
 
