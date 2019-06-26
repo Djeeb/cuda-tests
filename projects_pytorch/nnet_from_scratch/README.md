@@ -255,7 +255,9 @@ void nnet::update(){
 
 #### - With momentum
 
-In order to smooth the gradient descent, a smart way to avoid exploding and vanishing gradient descent is to give some "memory" to the gradient, by doing a weighted average between the new and the former value. If beta is in 0 and 1 (1 corresponding to the classical gradient descent), here is the example for W2 :
+A smart way to avoid exploding and vanishing gradient descent is to give some "memory" to the gradient, by doing a weighted average between the new and the former value. It is called [Momentum](https://towardsdatascience.com/stochastic-gradient-descent-with-momentum-a84097641a5d). If beta is in 0 and 1 (1 corresponding to the classical gradient descent), here is the example for W2 :
+
+
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5E%7Bupdated%7D%20%3A%3D%20%5Cbeta%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5E%7Bold%7D%20&plus;%20%281%20-%20%5Cbeta%29%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5E%7Bnew%7D)
 
