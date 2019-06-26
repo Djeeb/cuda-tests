@@ -4,7 +4,11 @@ The aim of this section is to describe a step-by-step implementation of a 1-laye
 - Neural network model choice
 - Implementing our neural network
 
+- [ Neural network model choice ](#model)
+- [ Implementing our neural network. ](#implementing)
+- [ Results ](#results)
 
+<a name="model"></a>
 ## Neural network model choice
 
 Will we use the most simple neural network architecture, a 1-hidden layer fully connected neural network which could look like this : 
@@ -20,6 +24,7 @@ here are the main parameters of our model :
 - cost function used : mean squared error // cross entropy loss
 - update algorithm used : [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)  
 
+<a name="implementing"></a>
 ## Implementing our neural network
 
 ### 1- Parameters initialization 
@@ -301,3 +306,6 @@ double error_rate(const torch::Tensor & Y_test, const torch::Tensor & Y_hat){
 	
 }
 ```
+
+<a name="results"></a>
+## Results
