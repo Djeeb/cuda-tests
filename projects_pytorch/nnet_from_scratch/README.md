@@ -6,7 +6,6 @@ The aim of this section is to describe a step-by-step implementation of a 1-laye
 - **II- [ Implementing our neural network. ](#implementing)**
 
 	- 1- [Parameters initialization ](#initialization)
-	
 	- 2- [Forward propagation ](#forward)
 	
 	- 3- [Cost function used ](#cost)
