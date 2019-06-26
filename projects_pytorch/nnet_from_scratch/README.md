@@ -9,7 +9,7 @@ The aim of this section is to describe a step-by-step implementation of a 1-laye
 
 Will we use the most simple neural network architecture, a 1-hidden layer fully connected neural network which could look like this : 
 
-![1 hidden layer fully-connected neural network](data/nn_model.svg)
+![1 hidden layer fully-connected neural network](../data/nn_model.svg)
 
 here are the main parameters of our model :
 - input layer size : 784 
