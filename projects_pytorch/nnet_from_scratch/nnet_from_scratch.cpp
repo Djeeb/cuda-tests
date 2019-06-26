@@ -6,21 +6,21 @@ int main(){
 	cout << "\n* Initialisation ..." << endl;
 	
 //paramètres d'initialisation
-	int epochs = 300;
+	int epochs = 100;
 	int training_size = 60000;
-	int batch_size = 6;
+	int batch_size = 6000;
 	torch::DeviceType device_type = torch::kCPU;
-	nnet neuralnet(784,4,10,batch_size,0.01,device_type);
+	nnet neuralnet(784,64,10,batch_size,0.01,device_type);
 	torch::Tensor Y_train,Y_hat,Y_test;
 	torch::Tensor X_train,X_test;
 	
 //chargement de MNIST
 	auto train_set = torch::data::make_data_loader(
-                     torch::data::datasets::MNIST("../data").map(
+                     torch::data::datasets::MNIST("../../data").map(
                      torch::data::transforms::Stack<>()),batch_size);
                        
 	auto test_set = torch::data::make_data_loader(
-                     torch::data::datasets::MNIST("../data",torch::data::datasets::MNIST::Mode::kTest).map(
+                     torch::data::datasets::MNIST("../../data",torch::data::datasets::MNIST::Mode::kTest).map(
                      torch::data::transforms::Stack<>()),10000);
 
 
@@ -36,18 +36,9 @@ int main(){
 			neuralnet.forward( X_train );
 			neuralnet.compute_cost( Y_train );
 			neuralnet.backward( X_train, Y_train);
-			
-			//Autograd checking
-			//cout << neuralnet.dWeight2() << endl;
-			//neuralnet.autoback();
-			//cout << neuralnet.dWeight2() << endl;
-			
-			
 			neuralnet.update();
 		}
-
-		if((i+1)%1 == 0) cout << "- epoch " << i+1 << ": \t loss = " << neuralnet.reset_cost(training_size) << endl;
-		else neuralnet.reset_cost(training_size);
+		cout << "- epoch " << i+1 << ": \t loss = " << neuralnet.reset_cost(training_size) << endl;
 	}
 	auto t2 = chrono::system_clock::now();
 	chrono::duration<double> diff = t2 - t1;
@@ -57,8 +48,8 @@ int main(){
 //Phase de test
 	cout << "\n* Précision sur le test set : ";
 	for(auto& sample : *test_set){
-			X_test = sample.data.reshape({10000,784}).to(torch::TensorOptions().dtype(torch::kFloat64)).transpose(0,1);
-			Y_test = sample.target.to(torch::TensorOptions().dtype(torch::kInt64));
+			X_test = sample.data.reshape({10000,784}).to(torch::TensorOptions().dtype(torch::kFloat64).requires_grad(false)).transpose(0,1);
+			Y_test = sample.target.to(torch::TensorOptions().dtype(torch::kInt64).requires_grad(false));
 			Y_hat = neuralnet.predict(X_test);
 			cout << error_rate(Y_test,Y_hat) << endl;
 			

@@ -50,20 +50,19 @@ nnet::nnet(int n_i,int n_h,int n_o, int n_batch, double alpha, torch::DeviceType
 															   learning_rate(alpha), batch_size(n_batch), device_type(device) {
 	
 	//1ere couche
-	W1 = torch::randn({n_hidden,n_input}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(true));
-	b1 = torch::zeros({n_hidden,1}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(true));
+	W1 = torch::randn({n_hidden,n_input}, torch::dtype(torch::kFloat64).device(device_type));
+	b1 = torch::zeros({n_hidden,1}, torch::dtype(torch::kFloat64).device(device_type));
 	
 	//2eme couche
-	W2 = torch::randn({n_output,n_hidden}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(true));
-	b2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(true));
+	W2 = torch::randn({n_output,n_hidden}, torch::dtype(torch::kFloat64).device(device_type));
+	b2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64).device(device_type);
 	
 	//momentum
-	VdW1 = torch::zeros({n_hidden,n_input}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(false));
-	Vdb1 = torch::zeros({n_hidden,1}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(false));
+	VdW1 = torch::zeros({n_hidden,n_input}, torch::dtype(torch::kFloat64).device(device_type));
+	Vdb1 = torch::zeros({n_hidden,1}, torch::dtype(torch::kFloat64).device(device_type));
 	
-	VdW2 = torch::zeros({n_output,n_hidden}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(false));
-	Vdb2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64).device(device_type).requires_grad(false));
-	
+	VdW2 = torch::zeros({n_output,n_hidden}, torch::dtype(torch::kFloat64).device(device_type));
+	Vdb2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64).device(device_type));
 	
 	//cost initialization
 	J = torch::zeros({1}, torch::dtype(torch::kFloat64).device(device_type));
@@ -87,9 +86,8 @@ void nnet::forward(const torch::Tensor & X){
 
 //________________________________________________________CALCUL DU COÛT
 void nnet::compute_cost(torch::Tensor & Y){
+
 	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum() / double(batch_size);
-	
-	
 	//J += ((g2-Y)*(g2-Y)).sum().item<double>() / double(batch_size);;
 }
 
@@ -154,21 +152,9 @@ void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 }
 
 
-//____________________________________________________BACK WITH AUTOGRAD
-void nnet::autoback(){
-
-	J.backward(c10::nullopt,true,true);
-	
-	dW2 = W2.grad();
-	db2 = b2.grad();
-	dW1 = W1.grad();
-	db1 = b1.grad();
-	cout << b1.grad() << endl;
-
-}
-
 //__________________________________________ACTUALISATION DES PARAMÈTRES
 void nnet::update(){
+	
 	if(momentum){
 		//calcul du momentum
 		VdW2 = 0.9 * VdW2 + 0.1 * dW2;
@@ -185,6 +171,7 @@ void nnet::update(){
 		W1 = W1 - VdW1 * learning_rate;
 		b1 = b1 - Vdb1 * learning_rate;
 	}
+	
 	else{
 		//1ere couche
 		W2 = W2 - dW2 * learning_rate;
@@ -194,9 +181,6 @@ void nnet::update(){
 		W1 = W1 - dW1 * learning_rate;
 		b1 = b1 - db1 * learning_rate;
 	}		
-		
-		
-
 }
 
 

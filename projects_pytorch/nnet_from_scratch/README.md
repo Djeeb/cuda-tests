@@ -17,7 +17,7 @@ here are the main parameters of our model :
 - output layer size : 10
 - first activation function : sigmoid
 - second activation function : sigmoid
-- cost function used : mean squared error
+- cost function used : mean squared error // cross entropy loss
 - update algorithm used : [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)  
 
 ## Implementing our neural network
@@ -226,11 +226,6 @@ void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 }
 ```
 
-#### - Using *autograd* from libtorch
-*autograd* is an automatic differentiation powerful method available in Pytorch and libtorch. It consists in using *backward differenciation* (just as we did before but in a smarter and automatic way) and *syntax trees*. Let see how it can be implemented to compare with the manual method above : 
-
-
-
 ### 5- Parameters update
 
 #### - Classical update
@@ -284,4 +279,25 @@ void nnet::update(){
 ```
 
 ### 6- Model evaluation
+Among the multiple ways that exist to evaluate a model, we chose to calculate the error rate regarding a test set. Therefore we implemented two auxiliary functions to help to compute this error rate.
 
+- First we map the result to the correct label using `argmax()` method :
+
+```c++
+torch::Tensor nnet::predict(const torch::Tensor & X_test){
+
+	this->forward(X_test);
+	return g2.argmax(0).to(torch::TensorOptions().dtype(torch::kInt64));
+	
+}
+```
+
+- Then we simply calculate the error rate by summing the difference between the two one-hot vectors (we couldn't find a way to combine boolean rules with tensors) :
+
+```c++
+double error_rate(const torch::Tensor & Y_test, const torch::Tensor & Y_hat){
+
+	return 1 - (at::one_hot(Y_test,10) - at::one_hot(Y_hat,10)).abs().sum().item<double>()/(2.*double(Y_test.size(0)));
+	
+}
+```
