@@ -128,8 +128,7 @@ void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 	//cout << "db2 : "<< db2.size(0) <<" x "  << db2.size(1) << endl;
 	
 	// dJ/dg1
-	dg1 = W2.transpose(0,1);
-	dg1 = dg1.mm(dz2);
+	dg1 = (W2.transpose(0,1)).mm(dz2);
 	//cout << "\ng1 : "<< g1.size(0) <<" x "  << g1.size(1) << endl;
 	//cout << "dg1 : "<< dg1.size(0) <<" x "  << dg1.size(1) << endl;
 	
