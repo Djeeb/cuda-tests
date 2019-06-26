@@ -227,11 +227,59 @@ void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 ```
 
 #### - Using *autograd* from libtorch
-*autograd* is an automatic differentiation powerful method available in Pytorch and libtorch. It consists in using *backward differenciation* (just as we did before but in a smarter and automatic way) and *syntax trees*. Let see of it can be implemented to compare with the manual method above : 
+*autograd* is an automatic differentiation powerful method available in Pytorch and libtorch. It consists in using *backward differenciation* (just as we did before but in a smarter and automatic way) and *syntax trees*. Let see how it can be implemented to compare with the manual method above : 
 
 
 
 ### 5- Parameters update
+
+#### - Classical update
+
+As we are using SGD algorithm, updating parameters is quite easy. It only consists in removing an small part of the gradient parameters (i.e. multiplicated by the `learning_rate` denoted by alpha) to each of them. An example for W2 :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W_%7B2%7D%5E%7Bupdated%7D%20%3A%3D%20W_%7B2%7D%20-)
+
+The code is quite simple :
+
+```c++
+void nnet::update(){
+
+	W2 = W2 - dW2 * learning_rate;
+	b2 = b2 - db2 * learning_rate;
+	
+	W1 = W1 - dW1 * learning_rate;
+	b1 = b1 - db1 * learning_rate;
+
+}
+```
+
+#### - With momentum
+
+In order to smooth the gradient descent, a smart way to avoid exploding and vanishing gradient descent is to give some "memory" to the gradient, by doing a weighted average between the new and the former value. If beta is in 0 and 1 (1 corresponding to the classical gradient descent), here is the example for W2 :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5E%7Bupdated%7D%20%3A%3D%20%5Cbeta%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5E%7Bold%7D%20&plus;%20%281%20-%20%5Cbeta%29%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5E%7Bnew%7D)
+
+And the code is now given by : 
+
+```c++
+void nnet::update(){
+
+	//Computing momentum with beta = 0.9
+	VdW2 = 0.9 * VdW2 + 0.1 * dW2;
+	Vdb2 = 0.9 * Vdb2 + 0.1 * db2;
+	
+	VdW1 = 0.9 * VdW1 + 0.1 * dW1;
+	Vdb1 = 0.9 * Vdb1 + 0.1 * db1;
+	
+	//Updating parameters
+	W2 = W2 - VdW2 * learning_rate;
+	b2 = b2 - Vdb2 * learning_rate;
+	
+	W1 = W1 - VdW1 * learning_rate;
+	b1 = b1 - Vdb1 * learning_rate;
+
+}
+```
 
 ### 6- Model evaluation
 
