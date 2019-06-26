@@ -1,11 +1,9 @@
 # Implementing a neural net from scratch using libtorch data structure (on MNIST)
 The aim of this section is to describe a step-by-step implementation of a 1-layer fully-connected neural network using SGD,  on both mathematical and coding side. It will be trained on MNIST database for illustration. You can check `nnet_from_scratch.hpp` to look at the whole code and see how exactly `nnet` class is implemented.
 
-- Neural network model choice
-- Implementing our neural network
-
 - [ Neural network model choice ](#model)
 - [ Implementing our neural network. ](#implementing)
+	1. [Parameters initialization ](#initialization)
 - [ Results ](#results)
 
 <a name="model"></a>
@@ -27,6 +25,7 @@ here are the main parameters of our model :
 <a name="implementing"></a>
 ## Implementing our neural network
 
+<a name="initialization"></a>
 ### 1- Parameters initialization 
 Regarding to our model, we should initialize 4 objects : two couples of weight/bias matrices. The first one would be used to pass our samples from the input layer (size : 784) to the hidden layer (size : 64). The second one would be used to pass our sample from the hidden layer to the output layer (size : 10). The simplest and most logical idea for intializing them is to use an element-wise *standard normal distribution* for weights and to set bias to a **zero-vector** : 
     
