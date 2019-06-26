@@ -89,11 +89,11 @@ The most common one is the [Mean squared error](https://en.wikipedia.org/wiki/Me
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%5Cleft%20%28%20%5Cwidehat%7BY%7D%20%5Cright%20%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum%20%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29%5E%7BT%7D%28%5Cwidehat%7BY%7D_%7Bi%7D-Y_%7Bi%7D%29)
 
-Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor, and `item<double>()` to convert the coefficient to a `double` :
+Implementing cost computing is not necessarily for the neural network in itself but it is a good way to see how well your model is training during the learning phase. We use the methods `sum()` that sums all matrix coefficients to output a single coefficient tensor. Then we divide by `batch_size`, i.e. the number of examples used during the forward propagation :
 
 ```c++
 void nnet::compute_cost(torch::Tensor & Y){
-	J += ((g2-Y)*(g2-Y)).sum().item<double>();
+	J += ((g2-Y)*(g2-Y)).sum() / double(batch_size);
 }
 ```
 
@@ -107,15 +107,15 @@ Again, the implementation is quite simple with the `torch::log` function :
 
 ```c++
 void nnet::compute_cost(torch::Tensor & Y){
-	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum().item<double>();
+	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum() / double(batch_size);
 }
 ```
 
-To end this section, we use an auxiliary function to both display and reset the cost.  Also note that we use the training dataset size to scale the cost and harmonize the results :
+To end this section, we use an auxiliary function to both display and reset the cost. We use `item<double>()` to convert the coefficient to a `double` and the `training_size` to scale the cost and harmonize the results :
 
 ```c++
 double nnet::reset_cost(int training_size) { 
-	double x = J/double(training_size);
+	double x = J.item<double>() * double(batch_size) / double(training_size);
 	J = 0.;
 	return x;}
 ```
@@ -183,8 +183,51 @@ The same kind of calculus for W1 and b1 leads to :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B1%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B1%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20Z_%7B1%7D%7D%7B%5Cpartial%20b_%7B1%7D%7D%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%5Cleft%20%28%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B1%7D%7D%20%5Cright%20%29_%7B%28i%29%7D)
 
-#### - Using *autograd* from libtorch
+We can finally write the code of our gradient computation, using a custom method for suming columns for `db1` and `db2` as the method `cumsum()` is not working : 
 
+```c++
+void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
+
+	// dJ/dg2
+	//dg2 = -((Y / g2) - ((1-Y) / (1-g2)))/double(batch_size); ----> use this function if you want to use the cross entropy function
+	dg2 = 2*(g2-Y)/double(batch_size);
+
+	// dJ/dz2
+	dz2 = dg2 * g2 * (1 - g2);
+	
+	// dJ/dW2
+	dW2 = dz2.mm(g1.transpose(0,1));
+	
+	// dJ/db2
+	dz2 = dz2.transpose(0,1);
+	db2 = dz2[0].reshape({n_output,1});
+	for(long i = 1; i < batch_size; i++){
+		db2 += dz2[i].reshape({n_output,1});
+	}
+	dz2 = dz2.transpose(0,1);
+	
+	// dJ/dg1
+	dg1 = (W2.transpose(0,1)).mm(dz2);
+	
+	// dJ/dz1
+	dz1 = dg1 * g1 * (1 - g1);
+	
+	// dJ/dW1 
+	dW1 = dz1.mm(X.transpose(0,1));
+	
+	// dJ/db1
+	dz1 = dz1.transpose(0,1);
+	db1 = dz1[0].reshape({n_hidden,1});
+	for(long i = 1; i < batch_size; i++){
+		db1 += dz1[i].reshape({n_hidden,1});
+	}
+	dz1 = dz1.transpose(0,1);
+
+}
+```
+
+#### - Using *autograd* from libtorch
+*autograd* is an automatic differentiation powerful method available in Pytorch and libtorch. It consists in using *backward differenciation* (just as we did before but in a smarter and automatic way) and *syntax trees*. Let see of it can be implemented to compare with the manual method above : 
 
 
 

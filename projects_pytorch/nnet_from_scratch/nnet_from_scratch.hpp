@@ -87,14 +87,14 @@ void nnet::forward(const torch::Tensor & X){
 
 //________________________________________________________CALCUL DU COÛT
 void nnet::compute_cost(torch::Tensor & Y){
-	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum() / double(batch_size);;
+	J += (- (Y * torch::log(g2) + (1-Y) * torch::log(1-g2))).sum() / double(batch_size);
 	
 	
 	//J += ((g2-Y)*(g2-Y)).sum().item<double>() / double(batch_size);;
 }
 
 double nnet::reset_cost(int training_size) { 
-	double x = J.item<double>()*double(batch_size)/double(training_size);
+	double x = J.item<double>() * double(batch_size) / double(training_size);
 	J = torch::zeros({1}, torch::dtype(torch::kFloat64).device(device_type));
 	return x;}
 
