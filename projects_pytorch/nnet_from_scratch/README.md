@@ -6,17 +6,18 @@ The aim of this section is to describe a step-by-step implementation of a 1-laye
 - **II- [ Implementing our neural network. ](#implementing)**
 
 	1- [Parameters initialization ](#initialization)
+	
 	2- [Forward propagation ](#forward)
+	
 	3- [Cost function used ](#cost)
+	
 	4- [Backward propagation ](#backward)
+	
 	5- [Parameters update ](#update)
+	
 	6- [Model evaluation](#evaluation)
 
 - **III- [ Results ](#results)**
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
 
 <a name="model"></a>
 ## I- Neural network model choice
