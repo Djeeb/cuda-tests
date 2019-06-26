@@ -1,13 +1,19 @@
 # Implementing a neural net from scratch using libtorch data structure (on MNIST)
 The aim of this section is to describe a step-by-step implementation of a 1-layer fully-connected neural network using SGD,  on both mathematical and coding side. It will be trained on MNIST database for illustration. You can check `nnet_from_scratch.hpp` to look at the whole code and see how exactly `nnet` class is implemented.
 
-- [ Neural network model choice ](#model)
-- [ Implementing our neural network. ](#implementing)
-	1. [Parameters initialization ](#initialization)
-- [ Results ](#results)
+I- [ Neural network model choice ](#model)
+II- [ Implementing our neural network. ](#implementing)
+	1- [Parameters initialization ](#initialization)
+	2- [Forward propagation ](#forward)
+	3- [Cost function used ](#cost)
+	4- [Backward propagation ](#backward)
+	5- [Parameters update ](#update)
+	6- [Model evaluation](#evaluation)
+
+III- [ Results ](#results)
 
 <a name="model"></a>
-## Neural network model choice
+## I- Neural network model choice
 
 Will we use the most simple neural network architecture, a 1-hidden layer fully connected neural network which could look like this : 
 
@@ -23,7 +29,7 @@ here are the main parameters of our model :
 - update algorithm used : [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)  
 
 <a name="implementing"></a>
-## Implementing our neural network
+## II- Implementing our neural network
 
 <a name="initialization"></a>
 ### 1- Parameters initialization 
@@ -53,7 +59,7 @@ nnet::nnet(int n_i,int n_h,int n_o, double alpha): n_input(n_i), n_hidden(n_h), 
 	b2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64));
 }
 ```
-
+<a name="forward"></a>
 ### 2- Forward propagation
 Next step is to implement forward propagation, i.e. evaluation of samples by the neural network. If our neural network was a black-box represented by a function, our foward propagation would ideally look like :
 
@@ -84,7 +90,7 @@ void nnet::forward(const torch::Tensor & X){
 	g2 = torch::sigmoid(z2);
 }
 ```
-
+<a name="cost"></a>
 ### 3- Cost function used
 Choice of the cost function J is a key element in neural network modeling as it directly impact the first gradient calculation (in our case, dJ/dg2) as we will see in next section. As the cost function should represent how "bad" or how "well" the learning task is converging to an estimator, there is a plenty of choice. 
 
@@ -123,7 +129,7 @@ double nnet::reset_cost(int training_size) {
 	J = 0.;
 	return x;}
 ```
-
+<a name="backward"></a>
 ### 4- Backward propagation
 #### - Mathematical step-by-step method
 This is the trickiest part of neural network implementation as it requires a bit of calculus and linear algebra skills to compute the gradients. As our goal is to slightly change weights and biases with their slope regarding the cost function J, we have to use the [chain rule](https://en.wikipedia.org/wiki/Chain_rule) and calculate intermediary values to compute dJ w.r.t W1, W2, b1, and b2. Here is the step-by-step mathematical path **for MSE** :
@@ -229,7 +235,7 @@ void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 
 }
 ```
-
+<a name="update"></a>
 ### 5- Parameters update
 
 #### - Classical update
@@ -281,7 +287,7 @@ void nnet::update(){
 
 }
 ```
-
+<a name="evaluation"></a>
 ### 6- Model evaluation
 Among the multiple ways that exist to evaluate a model, we chose to calculate the error rate regarding a test set. Therefore we implemented two auxiliary functions to help to compute this error rate.
 
@@ -307,4 +313,4 @@ double error_rate(const torch::Tensor & Y_test, const torch::Tensor & Y_hat){
 ```
 
 <a name="results"></a>
-## Results
+## III- Results
