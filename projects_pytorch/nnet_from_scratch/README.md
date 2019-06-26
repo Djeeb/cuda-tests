@@ -237,7 +237,7 @@ void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 
 As we are using SGD algorithm, updating parameters is quite easy. It only consists in removing an small part of the gradient parameters (i.e. multiplicated by the `learning_rate` denoted by alpha) to each of them. An example for W2 :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W_%7B2%7D%5E%7Bupdated%7D%20%3A%3D%20W_%7B2%7D%20-)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W_%7B2%7D%5E%7Bupdated%7D%20%3A%3D%20W_%7B2%7D%20-%20%5Calpha%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D)
 
 The code is quite simple :
 
