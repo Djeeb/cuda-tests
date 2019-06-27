@@ -325,7 +325,7 @@ We tried to change `learning_rate`, `batch_size`, and the loss function to see h
 | MSE           | 0.01          |     6      | 10         | 55.5	   | 51.3%		|
 | MSE           | 0.01          |     600    | 50	      | 46.6	   | 21.0%		|
 | MSE           | 0.01          |     60000  | 100		  | 86.9       |  8.6%		|
-| Cross Entropy | 0.1           |     6      | 10	      | 56.0	   | **95.6%**	|
+| **Cross Entropy** | **0.1**       |     **6**  | **10**     | **56.0**   | **95.6%**	|
 | Cross Entropy | 0.1           |     600    | 50	      | 43.6	   | 88.6%		|
 | Cross Entropy | 0.1           |     60000  | 100	      |  86.0	   | 38.0%		|
 | Cross Entropy | 0.01          |     6      | 10	      | 57.3	   | 91.0%		|
