@@ -55,7 +55,7 @@ nnet::nnet(int n_i,int n_h,int n_o, int n_batch, double alpha, torch::DeviceType
 	
 	//2eme couche
 	W2 = torch::randn({n_output,n_hidden}, torch::dtype(torch::kFloat64).device(device_type));
-	b2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64).device(device_type);
+	b2 = torch::zeros({n_output,1}, torch::dtype(torch::kFloat64).device(device_type));
 	
 	//momentum
 	VdW1 = torch::zeros({n_hidden,n_input}, torch::dtype(torch::kFloat64).device(device_type));
@@ -94,7 +94,8 @@ void nnet::compute_cost(torch::Tensor & Y){
 double nnet::reset_cost(int training_size) { 
 	double x = J.item<double>() * double(batch_size) / double(training_size);
 	J = torch::zeros({1}, torch::dtype(torch::kFloat64).device(device_type));
-	return x;}
+	return x;
+}
 
 //____________________________________________________BACK - PROPAGATION
 void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){

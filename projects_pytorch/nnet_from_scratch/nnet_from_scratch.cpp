@@ -6,11 +6,11 @@ int main(){
 	cout << "\n* Initialisation ..." << endl;
 	
 //paramètres d'initialisation
-	int epochs = 100;
+	int epochs = 10;
 	int training_size = 60000;
-	int batch_size = 6000;
+	int batch_size = 6;
 	torch::DeviceType device_type = torch::kCPU;
-	nnet neuralnet(784,64,10,batch_size,0.01,device_type);
+	nnet neuralnet(784,64,10,batch_size,0.1,device_type);
 	torch::Tensor Y_train,Y_hat,Y_test;
 	torch::Tensor X_train,X_test;
 	
@@ -48,8 +48,8 @@ int main(){
 //Phase de test
 	cout << "\n* Précision sur le test set : ";
 	for(auto& sample : *test_set){
-			X_test = sample.data.reshape({10000,784}).to(torch::TensorOptions().dtype(torch::kFloat64).requires_grad(false)).transpose(0,1);
-			Y_test = sample.target.to(torch::TensorOptions().dtype(torch::kInt64).requires_grad(false));
+			X_test = sample.data.reshape({10000,784}).to(torch::TensorOptions().dtype(torch::kFloat64)).transpose(0,1);
+			Y_test = sample.target.to(torch::TensorOptions().dtype(torch::kInt64));
 			Y_hat = neuralnet.predict(X_test);
 			cout << error_rate(Y_test,Y_hat) << endl;
 			

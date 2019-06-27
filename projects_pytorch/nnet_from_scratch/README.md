@@ -315,3 +315,21 @@ double error_rate(const torch::Tensor & Y_test, const torch::Tensor & Y_hat){
 
 <a name="results"></a>
 ## III- Results
+We tried to change `learning_rate`, `batch_size`, and the loss function to see how it affects *time complexity* and *accuracy* on test set : 
+
+| loss function | learning rate | batch_size | epochs     | time (sec) | Accuracy   |
+| ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
+| MSE           | 0.1           |     6      | 10         | 54.5	   | 92.9%      |
+| MSE           | 0.1           |     600    | 50         | 49.2   	   | 48.1%		|
+| MSE           | 0.1           |     60000  | 100	      | 89.9	   | 10.3%		|
+| MSE           | 0.01          |     6      | 10         | 55.5	   | 51.3%		|
+| MSE           | 0.01          |     600    | 50	      | 46.6	   | 21.0%		|
+| MSE           | 0.01          |     60000  | 100		  | 86.9       |  8.6%		|
+| Cross Entropy | 0.1           |     6      | 10	      | 56.0	   | **95.6%**	|
+| Cross Entropy | 0.1           |     600    | 50	      | 43.6	   | 88.6%		|
+| Cross Entropy | 0.1           |     60000  | 100	      |  86.0	   | 38.0%		|
+| Cross Entropy | 0.01          |     6      | 10	      | 57.3	   | 91.0%		|
+| Cross Entropy | 0.01          |     600    | 50	      | 42.0	   | 69.6%		|
+| Cross Entropy | 0.01          |     60000  | 100	      | 82.2	   | 14.0%		|
+
+*Note : all the models have been trained on CPU*
