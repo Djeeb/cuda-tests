@@ -197,6 +197,20 @@ Let's compute the gradients for W1 and b1 with the same method :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B1_%7B%28j%29%7D%7D%7D%20%3D%20G_%7B1_%7B%28j%29%7D%7D%20%5Ccdot%20%5Cleft%20%281%20-%20G_%7B1_%7B%28j%29%7D%7D%20%5Cright%20%29%20%5Ccdot%20%5Cleft%20%28%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20W_%7B2_%7B%28i%2Cj%29%7D%7D%20%5Ccdot%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29%20%5Cright%20%29)
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B1_%7B%28j%29%7D%7D%7D%7B%5Cpartial%20W_%7B1_%7B%28j%2Ck%29%7D%7D%7D%20%3D%20X_%7Bk%7D)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B1_%7B%28j%2Ck%29%7D%7D%7D%20%3D%20X_%7Bk%7D%20%5Ccdot%20G_%7B1_%7B%28j%29%7D%7D%20%5Ccdot%20%5Cleft%20%281%20-%20G_%7B1_%7B%28j%29%7D%7D%20%5Cright%20%29%20%5Ccdot%20%5Cleft%20%28%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20W_%7B2_%7B%28i%2Cj%29%7D%7D%20%5Ccdot%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29%20%5Cright%20%29)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B1_%7B%28j%29%7D%7D%7D%7B%5Cpartial%20b_%7B1_%7B%28j%29%7D%7D%7D%20%3D%201)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B1_%7B%28j%29%7D%7D%7D%20%3D%20G_%7B1_%7B%28j%29%7D%7D%20%5Ccdot%20%5Cleft%20%281%20-%20G_%7B1_%7B%28j%29%7D%7D%20%5Cright%20%29%20%5Ccdot%20%5Cleft%20%28%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20W_%7B2_%7B%28i%2Cj%29%7D%7D%20%5Ccdot%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29%20%5Cright%20%29)
+
+And the matrix-friendly formula and generalization to n > 1 leads to :
+
+
+
+
+
 ```c++
 void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 
