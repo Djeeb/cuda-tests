@@ -101,8 +101,8 @@ double nnet::reset_cost(int training_size) {
 void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 
 	// dJ/dg2
-	dg2 = -((Y / g2) - ((1-Y) / (1-g2)))/double(batch_size);
-	//dg2 = 2*(g2-Y)/double(batch_size);
+	//dg2 = -((Y / g2) - ((1-Y) / (1-g2)))/double(batch_size);
+	dg2 = 2*(g2-Y)/double(batch_size);
 	//cout << "g2 : "<< g2.size(0) <<" x "  << g2.size(1) << endl;
 	//cout << "dg2 : "<< dg2.size(0) <<" x "  << dg2.size(1) << endl;
 	
