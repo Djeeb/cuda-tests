@@ -209,6 +209,7 @@ And the matrix-friendly formula leads to :
 
 Here is the code to implement these formula with the computation of intermerdiary values. Note that we have to adapt the formula a little bit for the biases as we have to sum all the columns : 
 
+
 ```c++
 void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 

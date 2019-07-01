@@ -1,0 +1,71 @@
+#include "custom_nnet.hpp"
+using namespace std;
+
+auto options_float = torch::TensorOptions().dtype(torch::kFloat64).device(torch::kCPU);
+auto options_int = torch::TensorOptions().dtype(torch::kInt64).device(torch::kCPU);
+
+int main(){
+	
+//______________________________Initializing neural network and optimize
+	nnet neuralnet(784,64,10,0.1,"CPU");
+	torch::optim::SGD optimizer(neuralnet.parameters(), 0.1);
+	int epochs = 10;
+	int batch_size = 6;
+	int training_size = 60000;
+	
+	torch::Tensor X_train, Y_train, loss, X_test, Y_test;
+
+//_________________________________________________________Loading MNIST
+	auto train_set = torch::data::make_data_loader(
+                     torch::data::datasets::MNIST("../../data").map(
+                     torch::data::transforms::Stack<>()),batch_size);
+                
+                     
+//___________________________________________________________Running SGD
+auto t1 = chrono::system_clock::now();
+
+
+	for(int i=0; i < epochs;i++){
+		for(auto& sample : *train_set){
+			
+			//Setting optimizer to zero grad
+			optimizer.zero_grad();
+			
+			//Loading new examples
+			X_train = sample.data.reshape({batch_size,784}).to(options_float);		
+			Y_train = at::one_hot(sample.target,10).to(options_float);
+				
+			//Forward propagation
+			X_train = neuralnet.forward( X_train );
+			
+			//Compute loss function
+			loss = neuralnet.cross_entropy_loss( X_train, Y_train );
+			//loss = torch::mse_loss( X_train , sample.target );			
+			
+			//Back-propagation
+			loss.backward();
+			
+			//update
+			//neuralnet.update_SGD();
+			optimizer.step();
+		}	
+	cout << "Epoch: " << i+1 << "\t | Loss: " << neuralnet.compute_cost(batch_size,training_size) << endl;
+	}
+
+auto t2 = chrono::system_clock::now();
+chrono::duration<double> diff = t2 - t1;
+cout << "Phase d'apprentissage terminée en " << diff.count() << " sec" << endl;
+	
+//______________________________________________________Evaluating model
+	auto test_set = torch::data::make_data_loader(
+                     torch::data::datasets::MNIST("../../data",torch::data::datasets::MNIST::Mode::kTest).map(
+                     torch::data::transforms::Stack<>()),10000);
+                     
+	cout << "\n* Précision sur le test set : ";
+	for(auto& sample : *test_set){
+			X_test = sample.data.reshape({10000,784}).to(options_float);
+			Y_test = sample.target.to(options_int);
+			cout << error_rate(Y_test,neuralnet.predict(X_test)) << endl;
+		}
+		
+}
