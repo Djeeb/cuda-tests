@@ -137,7 +137,7 @@ This is the trickiest part of neural network implementation as it requires a bit
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5C%3B%20%2C%5C%3B%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B2%7D%7D%5C%3B%20%2C%5C%3B%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B1%7D%7D%5C%3B%20%2C%5C%3B%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B1%7D%7D)
 
-To facilitate gradient calculus, we will set n = 1 and use coordinates. Our cost function is now a simple multivariable function from R10 to R :
+To facilitate gradient calculus, we will set n = 1 and use coordinates before generalizing to matrices. Our cost function is now a simple multivariable function from R10 to R :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20J%3A%20%5Cmathbb%7BR%7D%5E%7B10%7D%5Crightarrow%20%5Cmathbb%20R)
 
@@ -145,7 +145,7 @@ To facilitate gradient calculus, we will set n = 1 and use coordinates. Our cost
 
 Then we can easily compute the gradient of J w.r.t G2 : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%28i%29%20%3D%202%20%5Cleft%20%28%20G_%7B2_%7B%28i%29%7D%7D%20-%20Y_%7B%28i%29%7D%20%5Cright%20%29)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2_%7B%28i%29%7D%7D%7D%20%3D%202%20%5Cleft%20%28%20G_%7B2_%7B%28i%29%7D%7D%20-%20Y_%7B%28i%29%7D%20%5Cright%29)
 
 Remembering the derivative of the sigmoid function of a single variable u : 
 
@@ -153,11 +153,11 @@ Remembering the derivative of the sigmoid function of a single variable u :
 
 We have this equation for dG2 w.r.t. Z2 : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20G_%7B2%7D%7D%7B%5Cpartial%20Z_%7B2%7D%7D%28i%29%20%3D%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201%20-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20G_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%3D%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-G_%7B2_%7B%28i%29%7D%7D%20%5Cright%29)
 
-And by using the chain rule we obtain the gradient of J w.r.t. G2 : 
+And by using the chain rule we obtain the gradient of J w.r.t. Z2 : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%28i%29%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2%7D%7D%28i%29%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20G_%7B2%7D%7D%7B%5Cpartial%20Z_%7B2%7D%7D%28i%29%20%3D%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2_%7B%28i%29%7D%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20G_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%3D%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
 
 Same method is applied for dJ w.r.t W2. Remembering how we compute the linear function Z2 : 
 
