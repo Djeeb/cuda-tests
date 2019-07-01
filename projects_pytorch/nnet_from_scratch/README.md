@@ -159,7 +159,7 @@ And by using the chain rule we obtain the gradient of J w.r.t. Z2 :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B2_%7B%28i%29%7D%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20G_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%3D%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
 
-Same method is applied for dJ w.r.t W2. Remembering how we compute the linear function Z2 : 
+Same method is applied for dJ w.r.t W2. Remembering how we compute the linear function Z2 without the bias : 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20Z_%7B2_%7B%28i%29%7D%7D%20%3D%20%5Csum_%7Bj%3D1%7D%5E%7B64%7D%20W_%7B2_%7B%28i%2Cj%29%7D%7D%20%5Ccdot%20G_%7B1_%7B%28j%29%7D%7D)
 
@@ -187,8 +187,15 @@ If the gradient of J w.r.t W2 doesn't change if n > 1, we'll have to adapt a lit
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20db_%7B2%7D%20%3D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%202%5Cleft%20%28%20G_%7B2_%7Bj%7D%7D-Y_%7Bj%7D%20%5Cright%20%29%5Cast%20G_%7B2_%7Bj%7D%7D%20%5Cast%20%5Cleft%20%28%201%20-%20G_%7B2_%7Bj%7D%7D%20%5Cright%20%29)
 
+Let's compute the gradients for W1 and b1 with the same method : 
 
- 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%20%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20G_%7B1_%7B%28j%29%7D%7D%7D%20%3D%20W_%7B2_%7B%28i%2Cj%29%7D%7D)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%20%7B%5Cpartial%20J%7D%7B%5Cpartial%20G_%7B1_%7B%28j%29%7D%7D%7D%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20%5Cfrac%20%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%5Ccdot%20%5Cfrac%20%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20G_%7B1_%7B%28j%29%7D%7D%7D%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20W_%7B2_%7B%28i%2Cj%29%7D%7D%20%5Ccdot%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20G_%7B1_%7B%28j%29%7D%7D%7D%7B%5Cpartial%20Z_%7B1_%7B%28j%29%7D%7D%7D%20%3D%20G_%7B1_%7B%28j%29%7D%7D%20%5Ccdot%20%5Cleft%20%281%20-%20G_%7B1_%7B%28j%29%7D%7D%20%5Cright%20%29)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B1_%7B%28j%29%7D%7D%7D%20%3D%20G_%7B1_%7B%28j%29%7D%7D%20%5Ccdot%20%5Cleft%20%281%20-%20G_%7B1_%7B%28j%29%7D%7D%20%5Cright%20%29%20%5Ccdot%20%5Cleft%20%28%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20W_%7B2_%7B%28i%2Cj%29%7D%7D%20%5Ccdot%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29%20%5Cright%20%29)
 
 ```c++
 void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
