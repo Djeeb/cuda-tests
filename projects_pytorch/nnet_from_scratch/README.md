@@ -169,25 +169,26 @@ Derivative is quite easy to calculate and we can apply the chain rule :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2_%7B%28i%2Cj%29%7D%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%5C%3B%20%5Ccdot%20%5C%3B%20%5Cfrac%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20W_%7B2_%7B%28i%2Cj%29%7D%7D%7D%20%3D%20G_%7B1_%7B%28j%29%7D%7D%20%5Ccdot%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
 
-The role of bias in Z2 is slightly different from an actual matrix addition, as the dimensions don't match. It consists in adding the bias on each of the n columns of W2 x G1, Therefore : 
+Finally, we can scale it to matrices to facilitate the further coding implementation ( the dot denotes matrix multiplication and the star element-wise multiplication) : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20b_%7B2%7D%7D%20%3D%20%5Cbegin%7Bpmatrix%7D%201%20%5C%5C%20...%20%5C%5C%201%20%5Cend%7Bpmatrix%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bn%20%5Ctimes%201%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20dW_%7B2%7D%20%3D%20G_%7B1%7D%5ET%20%5Ccdot%20%5Cleft%20%28%202%5Cleft%20%28%20G_%7B2%7D-Y%20%5Cright%20%29%5Cast%20G_%7B2%7D%20%5Cast%20%5Cleft%20%28%201%20-%20G_%7B2%7D%20%5Cright%20%29%20%5Cright%20%29)
 
-And by the chain rule, we have dJ w.r.t db2 :
+For the bias b2, the same method can be applied : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20b_%7B2%7D%7D%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%5Cleft%20%28%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%5Cright%20%29_%7B%28i%29%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%20%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20b_%7B2_%7B%28i%29%7D%7D%7D%20%3D%201)
 
-The same kind of calculus for W1 and b1 leads to :
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B2_%7B%28i%29%7D%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%5C%3B%20%5Ccdot%20%5C%3B%20%5Cfrac%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20b_%7B2_%7B%28i%29%7D%7D%7D%20%3D%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%7BJ%7D%7D%7B%5Cpartial%7BG_%7B1%7D%7D%7D%20%3D%20W_%7B2%7D%5E%7BT%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%7BJ%7D%7D%7B%5Cpartial%7BZ_%7B2%7D%7D%7D)
+And leads to :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%7BJ%7D%7D%7B%5Cpartial%7BZ_%7B1%7D%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%7BJ%7D%7D%7B%5Cpartial%7BG_%7B1%7D%7D%7D%20%5Cast%20G_%7B1%7D%20%5Cast%20%281-G_%7B1%7D%29)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20db_%7B2%7D%20%3D%202%5Cleft%20%28%20G_%7B2%7D-Y%20%5Cright%20%29%5Cast%20G_%7B2%7D%20%5Cast%20%5Cleft%20%28%201%20-%20G_%7B2%7D%20%5Cright%20%29)
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B1%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B1%7D%7D%20%5Ccdot%20X%5E%7BT%7D)
+If the gradient of J w.r.t W2 doesn't change if n > 1, we'll have to adapt a little bit the equation for b2 in order to accumulate the gradients. With n training examples, we have :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B1%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B1%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20Z_%7B1%7D%7D%7B%5Cpartial%20b_%7B1%7D%7D%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%5Cleft%20%28%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B1%7D%7D%20%5Cright%20%29_%7B%28i%29%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20db_%7B2%7D%20%3D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%202%5Cleft%20%28%20G_%7B2_%7Bj%7D%7D-Y_%7Bj%7D%20%5Cright%20%29%5Cast%20G_%7B2_%7Bj%7D%7D%20%5Cast%20%5Cleft%20%28%201%20-%20G_%7B2_%7Bj%7D%7D%20%5Cright%20%29)
 
-We can finally write the code of our gradient computation, using a custom method for suming columns for `db1` and `db2` as the method `cumsum()` is not working : 
+
+ 
 
 ```c++
 void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
