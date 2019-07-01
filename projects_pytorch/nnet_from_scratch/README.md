@@ -165,17 +165,9 @@ Same method is applied for dJ w.r.t W2. Remembering how we compute the linear fu
 
 Derivative is quite easy to calculate and we can apply the chain rule : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20W_%7B2_%7B%28i%2Cj%29%7D%7D%7D%20%3D%20G_%7B1_%7Bj%7D%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20W_%7B2_%7B%28i%2Cj%29%7D%7D%7D%20%3D%20G_%7B1_%7B%28j%29%7D%7D)
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20W_%7B2%7D%7D%20%3D%20G_%7B1%7D%5E%7BT%7D)
-
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%28i%2Cj%29%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%5C%3B%20%5Ccdot%20%5C%3B%20%5Cfrac%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20W_%7B2_%7B%28i%2Cj%29%7D%7D%7D)
-
-By checking dimensions of our gradients, we can finally use the chain rule to compute dJ w.r.t dW2 :
-
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%20%5Ctimes%20n%7D%2C%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20W_%7B2%7D%7D%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bn%20%5Ctimes%2064%7D)
-
-![equation](httpshttps://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%5C%3B%20%2C%5C%3B%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B2%7D%7D%5C%3B%20%2C%5C%3B%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B1%7D%7D%5C%3B%20%2C%5C%3B%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b_%7B1%7D%7D://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2%7D%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20Z_%7B2%7D%7D%7B%5Cpartial%20W_%7B2%7D%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W_%7B2_%7B%28i%2Cj%29%7D%7D%7D%20%3D%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%20%5C%3B%20%5Ccdot%20%5C%3B%20%5Cfrac%7B%5Cpartial%20Z_%7B2_%7B%28i%29%7D%7D%7D%7B%5Cpartial%20W_%7B2_%7B%28i%2Cj%29%7D%7D%7D%20%3D%20G_%7B1_%7B%28j%29%7D%7D%20%5Ccdot%202%20%28G_%7B2_%7B%28i%29%7D%7D-Y_%7B%28i%29%7D%29%20%5Ccdot%20G_%7B2_%7B%28i%29%7D%7D%20%5Ccdot%20%5Cleft%20%28%201-%20G_%7B2_%7B%28i%29%7D%7D%20%5Cright%20%29)
 
 The role of bias in Z2 is slightly different from an actual matrix addition, as the dimensions don't match. It consists in adding the bias on each of the n columns of W2 x G1, Therefore : 
 
