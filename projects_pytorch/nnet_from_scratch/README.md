@@ -207,6 +207,8 @@ And the matrix-friendly formula leads to :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20db_%7B1%7D%20%3D%20G_%7B1%7D%20%5Cast%20%281-G_%7B1%7D%29%20%5Cast%20%5Cleft%20%28%20W_%7B2%7D%5ET%20%5Ccdot%20%5Cleft%20%28%202%28G_%7B2%7D-Y%29%5Cast%20G_%7B2%7D%5Cast%20%281-G_%7B2%7D%29%20%5Cright%20%29%20%5Cright%20%29)
 
+Here is the code to implement these formula with the computation of intermerdiary values. Note that we have to adapt the formula a little bit for the biases as we have to sum all the columns : 
+
 ```c++
 void nnet::backward(const torch::Tensor & X,const torch::Tensor & Y){
 
