@@ -3,10 +3,11 @@ The aim of this page is to discuss about the implementation and the interest of 
 
 - **I- [ Intuition behind SAGA ](#intuition)**
 
-- **II- [ Implementing SAGA in libtorch ](#implementing)**
-	- 1- [Gradient storage issue ](#storage)
-	- 2- [Initializing gradients ](#init)
-	- 3- [SAGA update ](#update)
+- **II- [ Implementing SAGA on libtorch ](#implementing)**
+	- 1- [Algorithm ](#algorithm)
+	- 2- [Gradient storage issue ](#storage)
+	- 3- [Initializing gradients ](#init)
+	- 4- [SAGA update ](#update)
 
 - **III- [ Results vs SGD on MNIST ](#results)**
 
@@ -40,17 +41,24 @@ As we can see, it clearly involves three quantities :
 	- the former gradient of individual i
 	- the average gradient of the n individuals
 
-The objective of SAGA is to reduce variance by attaching less importance on each individual variation of gradients. On the other hand, the complexity of the update algorithm is greater than the SGD one as we have to update an entire table to compute the average of gradients (see SAGA update).
-This table of gradients is quite big when it comes to neural network. (see Gradient storage issue).
-
-FYI, SAGA is a variant of the Stochastic Average Gradient (SAG, you can check [Le Roux et al., 2014](https://arxiv.org/pdf/1309.2388.pdf) for more information.). SAG has a reduced variance compared to SAGA, but is biased. Here is the relatively similar implementation of SAG :
+The objective of SAGA is to reduce variance by attaching less importance on each individual variation of gradients. It is a variant of the Stochastic Average Gradient (SAG, you can check [Le Roux et al., 2014](https://arxiv.org/pdf/1309.2388.pdf) for more information.). SAG has a reduced variance compared to SAGA, but is biased. Here is the relatively similar implementation of SAG :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%3A%3DW%5E%7B%28k%29%7D%20-%20%5Calpha%20%5Cleft%20%28%20%5Cfrac%7BdW_%7Bi%7D%5E%7B%28k&plus;1%29%7D%20-%5C%3B%20dW_%7Bi%7D%5E%7B%28k%29%7D%7D%7Bn%7D%20&plus;%5C%3B%20d%5Cmathcal%7BW%7D%5E%7B%28k%29%7D%20%5Cright%20%29)
 
 Basically, each individual changes has less impact on the algorithm (this is why the variance is smaller) but it makes the assumption that the dataset is realitvely homogeneous, which is not obvious nor right in some cases.
 
 <a name="implementing"></a>
-## II- Implementing SAGA in libtorch 
+## II- Implementing SAGA on libtorch 
+
+While the idea behind SAGA is quite simple (see Algorithm), the implementation of the algorithm is not simple in the case of neural network. First, the complexity of the update algorithm is greater than the SGD one as we have to update an entire table to compute the average of gradients (see SAGA update).
+Then, this table of gradients is quite big when it comes to neural network. (see Gradient storage issue).
+
+<a name="algorithm"></a>
+### 1- Algorithm
+
+	- ![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%20%5Cmathcal%7BS%7D%3A%3D%20%5Cleft%20%5B%20dW_%7B1%7D%2C...%2CdW_%7Bn%7D%20%5Cright%20%5D)
+
+
 
 <a name="results"></a>
 ## III- Results vs SGD on MNIST
