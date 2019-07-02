@@ -5,7 +5,7 @@ The aim of this page is to discuss about the implementation and the interest of 
 
 - **II- [ Implementing SAGA on libtorch ](#implementing)**
 	- 1- [Algorithm ](#algorithm)
-	- 2- [Gradient storage issue ](#storage)
+	- 2- [Gradients storage issue ](#storage)
 	- 3- [Initializing gradients ](#init)
 	- 4- [SAGA update ](#update)
 
@@ -77,6 +77,17 @@ ________________________________________
 ![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%204.%5C%3B%5C%3B%5C%3B%5C%3B%5Cmathcal%7BS%7D%5Bi%5C%2C%20%5D%20%3A%3D%20W.grad%28%29)
 ________________________________________
 
+<a name="storage"></a>
+### 1- Gradients storage issue
+
+The first issue we encountered is due to the huge amount we have to store when it comes to neural networks. Indeed, if we want to run lines 2. and 3. of the algorithm above, we
+have to store the n gradients. If we use a similar architecture to the one in the [previous project](https://github.com/Djeeb/stage_DL/tree/master/projects_pytorch/nnet_from_scratch), remembering that MNIST train dataset length is 60,000 we have to store :
+	- 60,000 tensors of shape 64 x 784 to update W1
+	- 60,000 tensors of shape 64 to update b1
+	- 60,000 tensors of shape 10 x 64 to update W2
+	- 60,000 tensors of shape 10  to update b2
+
+Remembering a `double` is 8-bit long, if we use this dtype, we need around **25 Gb** of CPU/GPU memory to run the algorithm. In order to reduce this number, we'll reduce the hidden layer to **16 nodes**.
 
 <a name="results"></a>
 ## III- Results vs SGD on MNIST
