@@ -103,7 +103,6 @@ store the average of gradients in the last case of the vectors :
 
 ```c++
 if(optimizer == "SAGA"){
-
 	//Using resize() to define vectors length and avoid any hidden complexity
 	SAGA_W1.resize(n_train+1);
 	SAGA_b1.resize(n_train+1);
@@ -117,12 +116,54 @@ if(optimizer == "SAGA"){
 		SAGA_W2[i] = torch::zeros({n_output,n_hidden}).to(options_double);
 		SAGA_b2[i] = torch::zeros({n_output}).to(options_double);
 	}
-	
 }
 ```
 
 <a name="update"></a>
 ### 4- SAGA update
+
+One of the trickiest issues with SAGA is : how to compute the first loop ? We decided to implement a safe (but costly !) method that consist in computing a SGD-like algorithm during the first pass 
+without updating the parameters. Then, We simply apply the algorithm described above. Note that we need to use `set_data()` and `clone()` methods in order to copy the `grad()` values properly. 
+
+```c++
+void nnet::update_SAGA(int epoch,int i){
+	
+	//Init with SGD
+	if(epoch==0){
+
+		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
+		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
+		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
+		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
+		
+		SAGA_W1[training_size] += SAGA_W1[i] / double(training_size);
+		SAGA_b1[training_size] += SAGA_b1[i] / double(training_size);
+		SAGA_W2[training_size] += SAGA_W2[i] / double(training_size);
+		SAGA_b2[training_size] += SAGA_b2[i] / double(training_size);
+				
+	}
+	
+	//SAGA algorithm
+	else{
+		
+		this->parameters()[0].set_data(this->parameters()[0] - learning_rate * ( this->parameters()[0].grad() - SAGA_W1[i] + SAGA_W1[training_size] ) );
+		this->parameters()[1].set_data(this->parameters()[1] - learning_rate * ( this->parameters()[1].grad() - SAGA_b1[i] + SAGA_b1[training_size] ) );
+		this->parameters()[2].set_data(this->parameters()[2] - learning_rate * ( this->parameters()[2].grad() - SAGA_W2[i] + SAGA_W2[training_size] ) );
+		this->parameters()[3].set_data(this->parameters()[3] - learning_rate * ( this->parameters()[3].grad() - SAGA_b2[i] + SAGA_b2[training_size] ) );
+		
+		SAGA_W1[training_size] += ( this->parameters()[0].grad() - SAGA_W1[i] ) / double(training_size);
+		SAGA_b1[training_size] += ( this->parameters()[1].grad() - SAGA_b1[i] ) / double(training_size);
+		SAGA_W2[training_size] += ( this->parameters()[2].grad() - SAGA_W2[i] ) / double(training_size);
+		SAGA_b2[training_size] += ( this->parameters()[3].grad() - SAGA_b2[i] ) / double(training_size);
+	
+		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
+		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
+		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
+		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
+					
+	}
+}
+```
 
 <a name="results"></a>
 ## III- Results vs SGD on MNIST
