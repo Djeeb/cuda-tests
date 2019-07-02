@@ -82,6 +82,7 @@ ________________________________________
 
 The first issue we encountered is due to the huge amount we have to store when it comes to neural networks. Indeed, if we want to run lines 2. and 3. of the algorithm above, we
 have to store the n gradients. If we use a similar architecture to the one in the [previous project](https://github.com/Djeeb/stage_DL/tree/master/projects_pytorch/nnet_from_scratch), remembering that MNIST train dataset length is 60,000 we have to store :
+	
 	- 60,000 tensors of shape 64 x 784 to update W1
 	- 60,000 tensors of shape 64 to update b1
 	- 60,000 tensors of shape 10 x 64 to update W2
