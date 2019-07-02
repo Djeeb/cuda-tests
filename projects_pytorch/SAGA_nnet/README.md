@@ -21,7 +21,7 @@ Even if this gradient descent algorithm is great, one can wonder how much impact
 
 ![image](https://www.researchgate.net/profile/Balint_Gersey/publication/326676131/figure/fig20/AS:653646912028672@1532852976155/The-red-path-represents-the-path-followed-by-stochastic-gradient-descent-using-Momentum.png)
 
-A smoother approach to update our parameters could involve an **average** of all the gradients computed on each individual. But unlike a simple gradient descent, this algorithm would also update the gradient of a random individual at each path, and use it in the update equation. This is what SAGA algorithm attempts to do. 
+A smoother approach to update our parameters could involve an **average** of all the gradients computed on each individual. But unlike a simple gradient descent, this algorithm would also update the gradient of a random individual at each iteration, and use it in the update equation. This is what SAGA algorithm attempts to do. 
 
 To describe this algorithm on a simple weight W, we will denote the i th gradient (out of n) linked to the i th individual, at iteration k by :
 
@@ -34,6 +34,20 @@ The average of the n gradients is given by :
 At the (k+1)th iteration, denoting by i an individual chosen randomly, SAGA algorithm consists in the following update : 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%3A%3DW%5E%7B%28k%29%7D%20-%20%5Calpha%20%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k&plus;1%29%7D%20-%5C%3B%20dW_%7Bi%7D%5E%7B%28k%29%7D%20&plus;%5C%3B%20d%5Cmathcal%7BW%7D%5E%7B%28k%29%7D%20%5Cright%20%29)
+
+As we can see, it clearly involves three quantities :
+	- the new gradient of individual i
+	- the former gradient of individual i
+	- the average gradient of the n individuals
+
+The objective of SAGA is to reduce variance by attaching less importance on each individual variation of gradients. On the other hand, the complexity of the update algorithm is greater than the SGD one as we have to update an entire table to compute the average of gradients (see SAGA update).
+This table of gradients is quite big when it comes to neural network. (see Gradient storage issue).
+
+FYI, SAGA is a variant of the Stochastic Average Gradient (SAG, you can check [Le Roux et al., 2014](https://arxiv.org/pdf/1309.2388.pdf) for more information.). SAG has a reduced variance compared to SAGA, but is biased. Here is the relatively similar implementation of SAG :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%3A%3DW%5E%7B%28k%29%7D%20-%20%5Calpha%20%5Cleft%20%28%20%5Cfrac%7BdW_%7Bi%7D%5E%7B%28k&plus;1%29%7D%20-%5C%3B%20dW_%7Bi%7D%5E%7B%28k%29%7D%7D%7Bn%7D%20&plus;%5C%3B%20d%5Cmathcal%7BW%7D%5E%7B%28k%29%7D%20%5Cright%20%29)
+
+Basically, each individual changes has less impact on the algorithm (this is why the variance is smaller) but it makes the assumption that the dataset is realitvely homogeneous, which is not obvious nor right in some cases.
 
 <a name="implementing"></a>
 ## II- Implementing SAGA in libtorch 
