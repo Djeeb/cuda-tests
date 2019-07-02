@@ -28,7 +28,7 @@ A smoother approach to update our parameters could involve an **average** of all
 
 To describe this algorithm on a simple weight W, we will denote the i th gradient (out of n) linked to the i th individual, at iteration k by :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20dW_%7Bi%7D%5E%7B%28k%29%7D%20%3D%20%5Cleft%20%28%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W%7D%5Cright%20%29%20_%7Bi%7D%5E%7B%28k%29%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20d%5Cmathcal%7BW%7D%5E%7B%28k%29%7D%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7DdW_%7Bi%7D%5E%7B%28k%29%7D)
 
 The average of the n gradients is given by : 
 
@@ -85,10 +85,10 @@ ________________________________________
 The first issue we encountered is due to the huge amount we have to store when it comes to neural networks. Indeed, if we want to run lines 2. and 3. of the algorithm above, we
 have to store the n gradients. If we use a similar architecture to the one in the [previous project](https://github.com/Djeeb/stage_DL/tree/master/projects_pytorch/nnet_from_scratch), remembering that MNIST train dataset length is 60,000 we have to store :
 	
-	- 60,000 tensors of shape 64 x 784 to update W1
-	- 60,000 tensors of shape 64 to update b1
-	- 60,000 tensors of shape 10 x 64 to update W2
-	- 60,000 tensors of shape 10  to update b2
+- 60,000 tensors of shape 64 x 784 to update W1
+- 60,000 tensors of shape 64 to update b1
+- 60,000 tensors of shape 10 x 64 to update W2
+- 60,000 tensors of shape 10  to update b2
 
 Remembering a `double` is 8-bit long, if we use this dtype, we need around **25 Gb** of CPU/GPU memory to store these gradients. In order to reduce this number, we'll reduce the hidden layer to **16 nodes** (i.e. 7 Gb of memory needed).
 We will use 4 `std::vector` (one for each parameter object) of length 60,000 to store the gradients. This storage method is highly debatable.
@@ -127,10 +127,8 @@ without updating the parameters. Then, We simply apply the algorithm described a
 
 ```c++
 void nnet::update_SAGA(int epoch,int i){
-	
 	//Init with SGD
 	if(epoch==0){
-
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
 		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
@@ -139,13 +137,10 @@ void nnet::update_SAGA(int epoch,int i){
 		SAGA_W1[training_size] += SAGA_W1[i] / double(training_size);
 		SAGA_b1[training_size] += SAGA_b1[i] / double(training_size);
 		SAGA_W2[training_size] += SAGA_W2[i] / double(training_size);
-		SAGA_b2[training_size] += SAGA_b2[i] / double(training_size);
-				
+		SAGA_b2[training_size] += SAGA_b2[i] / double(training_size);			
 	}
-	
 	//SAGA algorithm
 	else{
-		
 		this->parameters()[0].set_data(this->parameters()[0] - learning_rate * ( this->parameters()[0].grad() - SAGA_W1[i] + SAGA_W1[training_size] ) );
 		this->parameters()[1].set_data(this->parameters()[1] - learning_rate * ( this->parameters()[1].grad() - SAGA_b1[i] + SAGA_b1[training_size] ) );
 		this->parameters()[2].set_data(this->parameters()[2] - learning_rate * ( this->parameters()[2].grad() - SAGA_W2[i] + SAGA_W2[training_size] ) );
@@ -159,8 +154,7 @@ void nnet::update_SAGA(int epoch,int i){
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
 		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
-		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
-					
+		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());				
 	}
 }
 ```
