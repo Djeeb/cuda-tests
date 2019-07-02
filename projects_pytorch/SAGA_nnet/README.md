@@ -56,10 +56,23 @@ Then, this table of gradients is quite big when it comes to neural network. (see
 <a name="algorithm"></a>
 ### 1- Algorithm
 
+
 ________________________________________
 
-![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%20%5Cmathcal%7BS%7D%3A%3D%20%5Cleft%20%5B%20dW_%7B1%7D%2C...%2CdW_%7Bn%7D%20%5Cright%20%5D) |
-![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%20%5Cmathcal%7BS%7D%3A%3D%20%5Cleft%20%5B%20dW_%7B1%7D%2C...%2CdW_%7Bn%7D%20%5Cright%20%5D) |
+- Initialization :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%20%5Cmathcal%7BS%7D%20%3A%3D%20%5Cleft%20%5B%20dW_%7B1%7D%2C...%2CdW_%7Bn%7D%20%5Cright%20%5D)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%20d%5Cmathcal%7BW%7D%20%3A%3D%20%5Cleft%20%28%20%5Cmathcal%7BS%7D%5B1%5D%20&plus;...&plus;%5Cmathcal%7BS%7D%5Bn%5D%20%5Cright%20%29/n)
+
+
+- Iteration :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%201.%20choose%5C%3B%20i%5C%3B%20at%5C%3B%20random%5C%3B%20and%5C%3B%20perform%5C%3B%20forward/back-prop%5C%3B%20to%5C%3B%20compute%5C%3B%20W.grad%28%29)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%202.%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20W%20%3A%3D%20W%20-%20%5Calpha%5Cleft%20%28%20W.grad%28%29-S%5Bi%5C%2C%20%5D&plus;%20d%5Cmathcal%7BW%7D%20%5Cright%20%29)
+
+
 ________________________________________
 
 
