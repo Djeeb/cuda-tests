@@ -102,22 +102,23 @@ Here is the part of the `nnet` class constructor we're interested in. The idea i
 store the average of gradients in the last case of the vectors :
 
 ```c++
-	if(optimizer == "SAGA"){
-		
-		//Using resize() to define vectors length and avoid any hidden complexity
-		SAGA_W1.resize(n_train+1);
-		SAGA_b1.resize(n_train+1);
-		SAGA_W2.resize(n_train+1);
-		SAGA_b2.resize(n_train+1);
-		
-		//setting tensors at the right dimension
-		for(int i=0; i < training_size+1; i++){
-			SAGA_W1[i] = torch::zeros({n_hidden,n_input}).to(options_double);
-			SAGA_b1[i] = torch::zeros({n_hidden}).to(options_double);
-			SAGA_W2[i] = torch::zeros({n_output,n_hidden}).to(options_double);
-			SAGA_b2[i] = torch::zeros({n_output}).to(options_double);
-		}
+if(optimizer == "SAGA"){
+
+	//Using resize() to define vectors length and avoid any hidden complexity
+	SAGA_W1.resize(n_train+1);
+	SAGA_b1.resize(n_train+1);
+	SAGA_W2.resize(n_train+1);
+	SAGA_b2.resize(n_train+1);
+	
+	//setting tensors at the right dimension
+	for(int i=0; i < training_size+1; i++){
+		SAGA_W1[i] = torch::zeros({n_hidden,n_input}).to(options_double);
+		SAGA_b1[i] = torch::zeros({n_hidden}).to(options_double);
+		SAGA_W2[i] = torch::zeros({n_output,n_hidden}).to(options_double);
+		SAGA_b2[i] = torch::zeros({n_output}).to(options_double);
 	}
+	
+}
 ```
 
 <a name="update"></a>
