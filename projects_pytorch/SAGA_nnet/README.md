@@ -72,7 +72,9 @@ ________________________________________
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%202.%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20W%20%3A%3D%20W%20-%20%5Calpha%5Cleft%20%28%20W.grad%28%29-S%5Bi%5C%2C%20%5D&plus;%20d%5Cmathcal%7BW%7D%20%5Cright%20%29)
 
+![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%203.%5C%3B%5C%3B%5C%3B%5C%3Bd%5Cmathcal%7BW%7D%20%3A%3D%20%5Cleft%20%28W.grad%28%29%20-%5Cmathcal%7BS%7D%5Bi%5C%2C%20%5D%20%5Cright%20%29/n)
 
+![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%204.%5C%3B%5C%3B%5C%3B%5C%3B%5Cmathcal%7BS%7D%5Bi%5C%2C%20%5D%20%3A%3D%20W.grad%28%29)
 ________________________________________
 
 
