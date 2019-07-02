@@ -19,7 +19,7 @@ Stochastic gradient descent is the most popular way to update parameters in a de
 
 Even if this gradient descent algorithm is great, one can wonder how much impact an individual X that diverges from the reste of the dataset can have on our neural network. Of course, thanks to a small learning rate, our estimator will converge anyway, but it might not take the shortest path to the minimum :
 
-[image](https://www.researchgate.net/profile/Balint_Gersey/publication/326676131/figure/fig20/AS:653646912028672@1532852976155/The-red-path-represents-the-path-followed-by-stochastic-gradient-descent-using-Momentum.png)
+![image](https://www.researchgate.net/profile/Balint_Gersey/publication/326676131/figure/fig20/AS:653646912028672@1532852976155/The-red-path-represents-the-path-followed-by-stochastic-gradient-descent-using-Momentum.png)
 
 A smoother approach to update our parameters could involve an **average** of all the gradients computed on each individual. But unlike a simple gradient descent, this algorithm would also update the gradient of a random individual at each path, and use it in the update equation. This is what SAGA algorithm attempts to do. 
 
