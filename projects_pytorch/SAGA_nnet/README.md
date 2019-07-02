@@ -1,5 +1,7 @@
 # Implementing SAGA and testing it vs SGD
-The aim of this page is to discuss about the implementation and the interest of a variant of SGD, called SAGA (from  [Lacoste-Julien et al., 2014](http://papers.nips.cc/paper/5258-saga-a-fast-incremental-gradient-method-with-support-for-non-strongly-convex-composite-objectives.pdf) ). It is very similar to Stochastic Average Gradient (SAG) but has better theoretical convergence rates according to its creators.
+The aim of this page is to discuss about the implementation and the interest of a variant of SGD, called SAGA (from  [Lacoste-Julien et al., 2014](http://papers.nips.cc/paper/5258-saga-a-fast-incremental-gradient-method-with-support-for-non-strongly-convex-composite-objectives.pdf) ). 
+It is very similar to Stochastic Average Gradient (SAG) but has better theoretical convergence rates according to its creators.
+You can check the whole implementation in `SAGA_nnet.hpp`.
 
 - **I- [ Intuition behind SAGA ](#intuition)**
 
@@ -88,7 +90,38 @@ have to store the n gradients. If we use a similar architecture to the one in th
 	- 60,000 tensors of shape 10 x 64 to update W2
 	- 60,000 tensors of shape 10  to update b2
 
-Remembering a `double` is 8-bit long, if we use this dtype, we need around **25 Gb** of CPU/GPU memory to run the algorithm. In order to reduce this number, we'll reduce the hidden layer to **16 nodes**.
+Remembering a `double` is 8-bit long, if we use this dtype, we need around **25 Gb** of CPU/GPU memory to store these gradients. In order to reduce this number, we'll reduce the hidden layer to **16 nodes** (i.e. 7 Gb of memory needed).
+We will use 4 `std::vector` (one for each parameter object) of length 60,000 to store the gradients. This storage method is highly debatable.
+
+*Note : Another approach to avoid this storage problem could consist in training on only a small part of the training set, at the cost of a less sharp model.*
+
+<a name="init"></a>
+### 3- Initializing gradients
+
+Here is the part of the `nnet` class constructor we're interested in. The idea is to initialize all the vectors at the right dimensions to avoid any shape issue during the update task. note that we will also
+store the average of gradients in the last case of the vectors :
+
+```c++
+	if(optimizer == "SAGA"){
+		
+		//Using resize() to define vectors length and avoid any hidden complexity
+		SAGA_W1.resize(n_train+1);
+		SAGA_b1.resize(n_train+1);
+		SAGA_W2.resize(n_train+1);
+		SAGA_b2.resize(n_train+1);
+		
+		//setting tensors at the right dimension
+		for(int i=0; i < training_size+1; i++){
+			SAGA_W1[i] = torch::zeros({n_hidden,n_input}).to(options_double);
+			SAGA_b1[i] = torch::zeros({n_hidden}).to(options_double);
+			SAGA_W2[i] = torch::zeros({n_output,n_hidden}).to(options_double);
+			SAGA_b2[i] = torch::zeros({n_output}).to(options_double);
+		}
+	}
+```
+
+<a name="update"></a>
+### 4- SAGA update
 
 <a name="results"></a>
 ## III- Results vs SGD on MNIST

@@ -55,7 +55,7 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 	//this->parameters()[2].set_data(torch::randn({n_output,n_hidden}));
 	
 	if(optimizer == "SAGA"){
-		cout << "Initialisation de la liste de gradients ..." << endl;
+		cout << "Initializing gradients lists..." << endl;
 		SAGA_W1.resize(n_train+1);
 		SAGA_b1.resize(n_train+1);
 		SAGA_W2.resize(n_train+1);
@@ -66,7 +66,7 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 			SAGA_W2[i] = torch::zeros({n_output,n_hidden}).to(options_double);
 			SAGA_b2[i] = torch::zeros({n_output}).to(options_double);
 		}
-		cout << "Initialisation terminée" << endl;
+		cout << "initialization ended." << endl;
 	}
 	
 	//Send Module to device and convert to double

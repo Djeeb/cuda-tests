@@ -7,7 +7,7 @@ int main(){
 	int epochs = 20;
 	int batch_size = 1;
 	int training_size = 10000;
-	nnet neuralnet(training_size,batch_size,784,64,10,0.001,"CPU","SGD");
+	nnet neuralnet(training_size,batch_size,784,16,10,0.001,"CPU","SGD");
 	torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
 	
 		
