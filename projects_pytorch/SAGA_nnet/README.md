@@ -56,7 +56,7 @@ Then, this table of gradients is quite big when it comes to neural network. (see
 <a name="algorithm"></a>
 ### 1- Algorithm
 
-	-  ![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%20%5Cmathcal%7BS%7D%3A%3D%20%5Cleft%20%5B%20dW_%7B1%7D%2C...%2CdW_%7Bn%7D%20%5Cright%20%5D)
+![equation](https://latex.codecogs.com/png.latex?%5Cfn_cm%20%5Cmathcal%7BS%7D%3A%3D%20%5Cleft%20%5B%20dW_%7B1%7D%2C...%2CdW_%7Bn%7D%20%5Cright%20%5D)
 
 
 
