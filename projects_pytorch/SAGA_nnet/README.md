@@ -13,6 +13,8 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 
 - **III- [ SAGA vs SGD on MNIST ](#results)**
 
+- **IV- [Conclusion : SAGA may not be suitable for neural networks ](#conclusion)**
+
 <a name="intuition"></a>
 ## I- Intuition behind SAGA
 
@@ -172,7 +174,7 @@ As you can see in `SAGA_nnet.hpp`, SAG algorithm is quite similar and requires l
 
 First, we made SAGA compete with SAG and SGD with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases) :
 
-| Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy   |
+| Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy (test set)  |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
 | SAGA          | 10,000        | 4 (3)      | 0.001         | 65.5 (51.1)| 87.5%      |
 | SAG          | 10,000         | 4 (3)      | 0.001         | 46.3 (31.9)| 78.1%      |
@@ -189,3 +191,12 @@ Both table and convergence graph show that SGD outperformed SAGA and SAG in term
 
 
 *Note : due to the high cache storage volume needed for SAGA, all models have been trained on GPU*
+
+<a name="conclusion"></a>
+## IV- Conclusion : SAGA is not designed for neural networks
+
+The main reason for that is this gradient storage that is a real problem for deep neural networks architectures and big datasets. Beside that, results on MNIST showed us
+that in these particular cases, SAGA is not faster than SAG. However would be interesting to dig into this family of variance reduced gradients, especially SVRG
+(Stochastic Variance Reduced Gradient) mentionned in SAGA research paper. Indeed, SVRG creators said in [Rie Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf)
+> unlike SDCA or SAG, our method does not require the storage of gradients, and thus is more easily applicable to complex problems such as
+> some structured prediction problems and neural network learning
