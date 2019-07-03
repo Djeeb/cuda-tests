@@ -172,8 +172,8 @@ We tried different approaches for SAGA. First, we made it compete with SGD with 
 
 | Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy   |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
-| SAGA          | 10,000        | 4 (3)      | 10         | 65.5 (51.1)| 87.5%      |
-| **SGD**           | **10,000**        |    ** 3  **    | **50 **        | **39.6**   	   | **90.2%**		|
+| SAGA          | 10,000        | 4 (3)      | 0.001         | 65.5 (51.1)| 87.5%      |
+| **SGD**           | **10,000**        |    **3**    | **0.1**        | **39.6**   	   | **90.2%**		|
 
 
 *Note : due to the high cache storage needed for SAGA, all models have been trained on GPU*
