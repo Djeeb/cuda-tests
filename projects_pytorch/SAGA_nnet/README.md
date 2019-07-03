@@ -86,10 +86,15 @@ have to store the n gradients. If we use a similar architecture to the one in th
 - 60,000 tensors of shape 10 x 64 to update W2
 - 60,000 tensors of shape 10  to update b2
 
-Remembering a `double` is 8-bit long, if we use this dtype, we need around **25 Gb** of CPU/GPU memory to store these gradients. In order to reduce this number, we'll reduce the hidden layer to **16 nodes** (i.e. 7 Gb of memory needed).
+Remembering a `double` is 8-bit long, if we use this dtype, we need around **25 Gb** of CPU/GPU memory to store these gradients. In order to reduce this number, we have two choices :
+
+- Reduce the size of the hidden layer to **16 nodes** (i.e. 7 Gb of memory needed).
+- Train the model on a small part of the dataset (10,000 samples). This method could be improved by combining SAGA with batch gradient descent : one can train the model on 10,000 samples with SAGA 
+during a certain number of epochs, and then change the training set with another 10,000 samples, etc. Problem : each time, we have to initialize gradients again (see below), i.e. spend 1 epoch per batch doing nothing.
+
 We will use 4 `std::vector` (one for each parameter object) of length 60,000 to store the gradients. This storage method is highly debatable.
 
-*Note : Another approach to avoid this storage problem could consist in training on only a small part of the training set, at the cost of a less sharp model.*
+
 
 <a name="init"></a>
 ### 3- Initializing gradients
