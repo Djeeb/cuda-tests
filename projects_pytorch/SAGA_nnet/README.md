@@ -196,7 +196,7 @@ Both table and convergence graph show that SGD outperformed SAGA and SAG in term
 ## IV- Conclusion : SAGA is not designed for neural networks
 
 The main reason for that is this gradient storage that is a real problem for deep neural networks architectures and big datasets. Beside that, results on MNIST showed us
-that in these particular cases, SAGA is not faster than SAG. However would be interesting to dig into this family of variance reduced gradients, especially SVRG
+that in this particular case, SAGA is not faster than SAG. However would be interesting to dig into this family of variance reduced gradients, especially SVRG
 (Stochastic Variance Reduced Gradient) mentionned in SAGA research paper. Indeed, SVRG creators said in [Rie Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf) :
-> *unlike SDCA or SAG, our method does not require the storage of gradients, and thus is more easily applicable to complex problems such as
-> some structured prediction problems and neural network learning*
+> *"Unlike SDCA or SAG, our method does not require the storage of gradients, and thus is more easily applicable to complex problems such as
+> some structured prediction problems and neural network learning."*
