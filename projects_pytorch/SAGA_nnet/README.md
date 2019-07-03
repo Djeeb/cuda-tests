@@ -28,15 +28,11 @@ A smoother approach to update our parameters could involve an **average** of all
 
 To describe this algorithm on a simple weight W, we will denote the i th gradient (out of n) linked to the i th individual, at iteration k by :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20d%5Cmathcal%7BW%7D%5E%7B%28k%29%7D%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7DdW_%7Bi%7D%5E%7B%28k%29%7D)
-
-The average of the n gradients is given by : 
-
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20d%5Cmathcal%7BW%7D%5E%7Bk%7D%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7DdW_%7Bi%7D%5E%7Bk%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20dW_%7Bi%7D%5E%7B%28k%29%7D%3A%3D%20%5Cleft%20%28%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W%7D%20%5Cright%20%29_%7Bi%7D%5E%7B%28k%29%7D)
 
 At the (k+1)th iteration, denoting by i an individual chosen randomly, SAGA algorithm consists in the following update : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%3A%3DW%5E%7B%28k%29%7D%20-%20%5Calpha%20%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k&plus;1%29%7D%20-%5C%3B%20dW_%7Bi%7D%5E%7B%28k%29%7D%20&plus;%5C%3B%20d%5Cmathcal%7BW%7D%5E%7B%28k%29%7D%20%5Cright%20%29)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%20%3A%3D%20W%5E%7B%28k%29%7D%5C%3B%20-%5C%3B%20%5Calpha%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k&plus;1%29%7D-dW_%7Bi%7D%5E%7B%28k%29%7D&plus;%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k%29%7D%20%5Cright%20%29)
 
 As we can see, it clearly involves three quantities :
 	- the new gradient of individual i
@@ -45,7 +41,7 @@ As we can see, it clearly involves three quantities :
 
 The objective of SAGA is to reduce variance by attaching less importance on each individual variation of gradients. It is a variant of the Stochastic Average Gradient (SAG, you can check [Le Roux et al., 2014](https://arxiv.org/pdf/1309.2388.pdf) for more information.). SAG has a reduced variance compared to SAGA, but is biased. Here is the relatively similar implementation of SAG :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%3A%3DW%5E%7B%28k%29%7D%20-%20%5Calpha%20%5Cleft%20%28%20%5Cfrac%7BdW_%7Bi%7D%5E%7B%28k&plus;1%29%7D%20-%5C%3B%20dW_%7Bi%7D%5E%7B%28k%29%7D%7D%7Bn%7D%20&plus;%5C%3B%20d%5Cmathcal%7BW%7D%5E%7B%28k%29%7D%20%5Cright%20%29)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%20%3A%3D%20W%5E%7B%28k%29%7D%5C%3B%20-%5C%3B%20%5Calpha%5Cleft%20%28%20%5Cfrac%7BdW_%7Bi%7D%5E%7B%28k&plus;1%29%7D-dW_%7Bi%7D%5E%7B%28k%29%7D%7D%7Bn%7D&plus;%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k%29%7D%20%5Cright%20%29)
 
 Basically, each individual changes has less impact on the algorithm (this is why the variance is smaller) but it makes the assumption that the dataset is realitvely homogeneous, which is not obvious nor right in some cases.
 

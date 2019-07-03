@@ -5,8 +5,8 @@
 #include <chrono>
 #include <vector>
 using namespace std;
-auto options_int = torch::TensorOptions().dtype(torch::kInt64).device(torch::kCPU);
-auto options_double = torch::TensorOptions().dtype(torch::kFloat64).device(torch::kCPU);
+auto options_int = torch::TensorOptions().dtype(torch::kInt64).device(torch::kCUDA);
+auto options_double = torch::TensorOptions().dtype(torch::kFloat64).device(torch::kCUDA);
 
 
 class nnet : public torch::nn::Module {

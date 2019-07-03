@@ -6,8 +6,8 @@ int main(){
 //______________________________Initializing neural network and optimize
 	int epochs = 20;
 	int batch_size = 1;
-	int training_size = 10000;
-	nnet neuralnet(training_size,batch_size,784,16,10,0.001,"CPU","SGD");
+	int training_size = 60000;
+	nnet neuralnet(training_size,batch_size,784,16,10,0.001,"GPU","SAGA");
 	torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
 	
 		
@@ -50,7 +50,7 @@ auto t1 = chrono::system_clock::now();
 			neuralnet.update(i,k);
 			//optimizer.step();
 			k++;
-			if(k==9999) break;
+			//if(k==9999) break;
 		}	
 	cout << "Epoch: " << i+1 << "\t | Loss: " << neuralnet.compute_cost() << endl;
 	}
