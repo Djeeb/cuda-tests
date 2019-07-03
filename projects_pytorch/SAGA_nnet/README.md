@@ -178,7 +178,7 @@ First, we made SAGA compete with SGD with an additional number of epochs as the 
 | SAGA          | 10,000        | 7 (6)      | 0.001         | 94.9 (90.2)| 90.8%      |
 | **SGD**           | **10,000**        |    **6**    | **0.01**        | **69.8**   	   | **95.9%**		|
 
-
+![image](../data/SAGA_SGD_convergence_rate.png)
 
 
 In this particular task, SAGA did not prove that it has faster convergence rates than SGD. We tried a different approach : instead of not doing anything during the first step,
