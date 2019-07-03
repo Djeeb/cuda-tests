@@ -35,7 +35,7 @@ class nnet : public torch::nn::Module {
 		void update(int,int);
 		void update_SGD();
 		void update_SAGA(int,int);
-		
+		void update_SAG(int,int);		
 
 };
 
@@ -54,7 +54,7 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 	//this->parameters()[0].set_data(torch::randn({n_hidden,n_input}));
 	//this->parameters()[2].set_data(torch::randn({n_output,n_hidden}));
 	
-	if(optimizer == "SAGA"){
+	if(optimizer == "SAGA" or optimizer == "SAG"){
 		cout << "Initializing gradients lists..." << endl;
 		SAGA_W1.resize(n_train+1);
 		SAGA_b1.resize(n_train+1);
@@ -127,7 +127,7 @@ void nnet::update(int epoch, int iter){
 	
 	if(optimizer=="SGD") this->update_SGD();
 	else if(optimizer=="SAGA") this->update_SAGA(epoch,iter);
-
+	else if(optimizer=="SAG") this->update_SAG(epoch,iter);
 }
 
 
@@ -182,3 +182,41 @@ void nnet::update_SAGA(int epoch,int i){
 	}
 }
 
+//___________________________________________________________________SAG
+void nnet::update_SAG(int epoch,int i){
+	
+	//Init with SGD
+	if(epoch==0){
+
+		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
+		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
+		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
+		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
+		
+		SAGA_W1[training_size] += SAGA_W1[i] / double(training_size);
+		SAGA_b1[training_size] += SAGA_b1[i] / double(training_size);
+		SAGA_W2[training_size] += SAGA_W2[i] / double(training_size);
+		SAGA_b2[training_size] += SAGA_b2[i] / double(training_size);
+				
+	}
+	
+	//SAG
+	else{
+
+		SAGA_W1[training_size] += ( this->parameters()[0].grad() - SAGA_W1[i] ) / double(training_size);
+		SAGA_b1[training_size] += ( this->parameters()[1].grad() - SAGA_b1[i] ) / double(training_size);
+		SAGA_W2[training_size] += ( this->parameters()[2].grad() - SAGA_W2[i] ) / double(training_size);
+		SAGA_b2[training_size] += ( this->parameters()[3].grad() - SAGA_b2[i] ) / double(training_size);
+		
+		this->parameters()[0].set_data(this->parameters()[0] - learning_rate * ( SAGA_W1[training_size] ) );
+		this->parameters()[1].set_data(this->parameters()[1] - learning_rate * ( SAGA_b1[training_size] ) );
+		this->parameters()[2].set_data(this->parameters()[2] - learning_rate * ( SAGA_W2[training_size] ) );
+		this->parameters()[3].set_data(this->parameters()[3] - learning_rate * ( SAGA_b2[training_size] ) );
+
+		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
+		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
+		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
+		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
+					
+	}
+}

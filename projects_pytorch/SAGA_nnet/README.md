@@ -165,14 +165,17 @@ void nnet::update_SAGA(int epoch,int i){
 }
 ```
 
-<a name="results"></a>
-## III- SAGA vs SGD on MNIST
+As you can see in `SAGA_nnet.hpp`, SAG algorithm is quite similar and requires less operations for the computer as we can update `SAGA_W1[training_size]` before updating the parameters.
 
-First, we made SAGA compete with SGD with an additional number of epochs as the first one is not a proper update task :
+<a name="results"></a>
+## III- SAGA vs SAG vs SGD on MNIST
+
+First, we made SAGA compete with SAG and SGD with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases) :
 
 | Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy   |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
 | SAGA          | 10,000        | 4 (3)      | 0.001         | 65.5 (51.1)| 87.5%      |
+| SAG          | 10,000         | 4 (3)      | 0.001         | 65.5 (51.1)| 87.5%      |
 | **SGD**           | **10,000**        |    **3**    | **0.01**        | **39.6**   	   | **90.2%**		|
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
 | SAGA          | 10,000        | 7 (6)      | 0.001         | 94.9 (90.2)| 90.8%      |
@@ -181,7 +184,7 @@ First, we made SAGA compete with SGD with an additional number of epochs as the 
 ![image](../data/SAGA_SGD_convergence_rate.png)
 
 
-In this particular task, SAGA did not prove that it has faster convergence rates than SGD. Both table and convergence graph show that SGD outperformed SAGA in terms of convergence. 
+In this particular task, SAGA did not prove that it has faster convergence rates than SGD. Both table and convergence graph show that SGD outperformed SAGA in terms of convergence.
 
 
 *Note : due to the high cache storage volume needed for SAGA, all models have been trained on GPU*
