@@ -11,7 +11,7 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 	- 3- [Initializing gradients ](#init)
 	- 4- [SAGA update ](#update)
 
-- **III- [ Results vs SGD on MNIST ](#results)**
+- **III- [ SAGA vs SGD on MNIST ](#results)**
 
 <a name="intuition"></a>
 ## I- Intuition behind SAGA
@@ -166,4 +166,14 @@ void nnet::update_SAGA(int epoch,int i){
 ```
 
 <a name="results"></a>
-## III- Results vs SGD on MNIST
+## III- SAGA vs SGD on MNIST
+
+We tried different approaches for SAGA. First, we made it compete with SGD with an additional number of epochs as the first one is not a proper update task :
+
+| Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy   |
+| ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
+| SAGA          | 10,000        | 4 (3)      | 10         | 65.5 (51.1)| 87.5%      |
+| **SGD**           | **10,000**        |    ** 3  **    | **50 **        | **39.6**   	   | **90.2%**		|
+
+
+*Note : due to the high cache storage needed for SAGA, all models have been trained on GPU*

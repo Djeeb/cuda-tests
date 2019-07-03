@@ -4,11 +4,11 @@ using namespace std;
 int main(){
 	
 //______________________________Initializing neural network and optimize
-	int epochs = 20;
+	int epochs = 4;
 	int batch_size = 1;
 	int training_size = 10000;
-	nnet neuralnet(training_size,batch_size,784,64,10,0.0001,"GPU","SAGA");
-	torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
+	nnet neuralnet(training_size,batch_size,784,64,10,0.001,"GPU","SAGA");
+	torch::optim::SGD optimizer(neuralnet.parameters(), 0.1);	
 	
 		
 	torch::Tensor X_train, Y_train, loss, X_test, Y_test;
@@ -27,7 +27,7 @@ auto t1 = chrono::system_clock::now();
 	for(int i=0; i < epochs;i++){
 		k = 0;
 		
-		for(auto& sample : *train_set){
+		for(auto& sample : *(train_set)){
 			
 			//Setting optimizer to zero grad
 			optimizer.zero_grad();
@@ -51,7 +51,7 @@ auto t1 = chrono::system_clock::now();
 			//optimizer.step();
 			k++;
 			if(k==9999) break;
-		}	
+		}
 	cout << "Epoch: " << i+1 << "\t | Loss: " << neuralnet.compute_cost() << endl;
 	}
 
