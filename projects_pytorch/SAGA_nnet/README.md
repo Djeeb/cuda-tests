@@ -16,15 +16,15 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 <a name="intuition"></a>
 ## I- Intuition behind SAGA
 
-Stochastic gradient descent is the most popular way to update parameters in a deep learning algorithm task. Let say we have a weight W to update with gradient of J w.r.t W, and a learning rate alpha. At the (k+1)th iteration (i.e. the (k+1) th individual used by our neural network), SGD update is given by :
+Stochastic gradient descent is the most popular way to update parameters in a deep learning algorithm task. Let say we have a weight W to update with gradient of J w.r.t W, and a learning rate alpha. At the (k+1)th iteration we choose an individual i of the dataset randomly, and SGD update is given by :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%20%3A%3D%20W%5E%7B%28k%29%7D%20-%20%5Calpha%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W%5E%7B%28k%29%7D%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k&plus;1%29%7D%20%3A%3D%20W%5E%7B%28k%29%7D%5C%3B%20-%5C%3B%20%5Calpha%5Cleft%20%28%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W%7D%20%5Cright%20%29_%7Bi%7D%5E%7B%28k%29%7D)
 
-Even if this gradient descent algorithm is great, one can wonder how much impact an individual X that diverges from the reste of the dataset can have on our neural network. Of course, thanks to a small learning rate, our estimator will converge anyway, but it might not take the shortest path to the minimum :
+Even if this gradient descent algorithm is great, one can wonder which impact an individual X that diverges from the rest of the dataset can have on our parameters. Of course, thanks to a small learning rate, our estimator will converge anyway, but it might not take the shortest path to the minimum :
 
 ![image](https://www.researchgate.net/profile/Balint_Gersey/publication/326676131/figure/fig20/AS:653646912028672@1532852976155/The-red-path-represents-the-path-followed-by-stochastic-gradient-descent-using-Momentum.png)
 
-A smoother approach to update our parameters could involve an **average** of all the gradients computed on each individual. But unlike a simple gradient descent, this algorithm would also update the gradient of a random individual at each iteration, and use it in the update equation. This is what SAGA algorithm attempts to do. 
+A smoother approach to update our parameters could involve an **average** of all the gradients computed on each individual. But unlike a simple gradient descent, this algorithm would also update the gradient of an individual (randomly chosen) at each iteration, and use it in the update equation. This is what SAGA algorithm attempts to do. 
 
 To describe this algorithm on a simple weight W, we will denote the i th gradient (out of n) linked to the i th individual, at iteration k by :
 
@@ -125,11 +125,13 @@ without updating the parameters. Then, We simply apply the algorithm described a
 void nnet::update_SAGA(int epoch,int i){
 	//Init with SGD
 	if(epoch==0){
+		//updating the i-th gradient
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
 		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
 		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
 		
+		//updating the average of gradients
 		SAGA_W1[training_size] += SAGA_W1[i] / double(training_size);
 		SAGA_b1[training_size] += SAGA_b1[i] / double(training_size);
 		SAGA_W2[training_size] += SAGA_W2[i] / double(training_size);
@@ -137,16 +139,19 @@ void nnet::update_SAGA(int epoch,int i){
 	}
 	//SAGA algorithm
 	else{
+		//updating parameters with SAGA algorithm
 		this->parameters()[0].set_data(this->parameters()[0] - learning_rate * ( this->parameters()[0].grad() - SAGA_W1[i] + SAGA_W1[training_size] ) );
 		this->parameters()[1].set_data(this->parameters()[1] - learning_rate * ( this->parameters()[1].grad() - SAGA_b1[i] + SAGA_b1[training_size] ) );
 		this->parameters()[2].set_data(this->parameters()[2] - learning_rate * ( this->parameters()[2].grad() - SAGA_W2[i] + SAGA_W2[training_size] ) );
 		this->parameters()[3].set_data(this->parameters()[3] - learning_rate * ( this->parameters()[3].grad() - SAGA_b2[i] + SAGA_b2[training_size] ) );
 		
+		//updating the average of gradients
 		SAGA_W1[training_size] += ( this->parameters()[0].grad() - SAGA_W1[i] ) / double(training_size);
 		SAGA_b1[training_size] += ( this->parameters()[1].grad() - SAGA_b1[i] ) / double(training_size);
 		SAGA_W2[training_size] += ( this->parameters()[2].grad() - SAGA_W2[i] ) / double(training_size);
 		SAGA_b2[training_size] += ( this->parameters()[3].grad() - SAGA_b2[i] ) / double(training_size);
-	
+		
+		//updating the i-th gradient
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
 		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
