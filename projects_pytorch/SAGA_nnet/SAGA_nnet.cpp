@@ -4,10 +4,10 @@ using namespace std;
 int main(){
 	
 //______________________________Initializing neural network and optimize
-	int epochs = 10;
+	int epochs = 40;
 	int batch_size = 1;
 	int training_size = 10000;
-	nnet neuralnet(training_size,batch_size,784,64,10,0.001,"GPU","SAGA");
+	nnet neuralnet(training_size,batch_size,784,64,10,0.01,"GPU","SGD");
 	torch::optim::SGD optimizer(neuralnet.parameters(), 0.1);	
 	
 		
@@ -21,6 +21,7 @@ int main(){
                      
 //_____________________________________________________Running algorithm
 int k = 0; //sample index
+cout << "Epoch" << "\t" << "loss" << endl;
 auto t1 = chrono::system_clock::now();
 
 
@@ -48,11 +49,10 @@ auto t1 = chrono::system_clock::now();
 			
 			//update
 			neuralnet.update(i,k);
-			//optimizer.step();
 			k++;
 			if(k==9999) break;
 		}
-	cout << "Epoch: " << i+1 << "\t | Loss: " << neuralnet.compute_cost() << endl;
+	cout << "" << i+1 << "\t" << neuralnet.compute_cost() << endl;
 	}
 
 auto t2 = chrono::system_clock::now();
