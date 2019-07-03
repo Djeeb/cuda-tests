@@ -168,12 +168,14 @@ void nnet::update_SAGA(int epoch,int i){
 <a name="results"></a>
 ## III- SAGA vs SGD on MNIST
 
-We tried different approaches for SAGA. First, we made it compete with SGD with an additional number of epochs as the first one is not a proper update task :
+First, we made SAGA compete with SGD with an additional number of epochs as the first one is not a proper update task :
 
 | Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy   |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
 | SAGA          | 10,000        | 4 (3)      | 0.001         | 65.5 (51.1)| 87.5%      |
 | **SGD**           | **10,000**        |    **3**    | **0.1**        | **39.6**   	   | **90.2%**		|
+
+In this particular task, SAGA did not prove that it has faster convergence rates than SGD. We tried a different approach : instead of not doing anything during the first step,
 
 
 *Note : due to the high cache storage needed for SAGA, all models have been trained on GPU*

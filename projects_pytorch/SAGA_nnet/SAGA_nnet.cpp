@@ -4,7 +4,7 @@ using namespace std;
 int main(){
 	
 //______________________________Initializing neural network and optimize
-	int epochs = 4;
+	int epochs = 10;
 	int batch_size = 1;
 	int training_size = 10000;
 	nnet neuralnet(training_size,batch_size,784,64,10,0.001,"GPU","SAGA");
