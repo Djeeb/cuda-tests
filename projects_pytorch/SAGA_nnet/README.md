@@ -175,16 +175,18 @@ First, we made SAGA compete with SAG and SGD with an additional number of epochs
 | Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy   |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
 | SAGA          | 10,000        | 4 (3)      | 0.001         | 65.5 (51.1)| 87.5%      |
-| SAG          | 10,000         | 4 (3)      | 0.001         | 65.5 (51.1)| 87.5%      |
+| SAG          | 10,000         | 4 (3)      | 0.001         | 46.3 (31.9)| 78.1%      |
 | **SGD**           | **10,000**        |    **3**    | **0.01**        | **39.6**   	   | **90.2%**		|
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
-| SAGA          | 10,000        | 7 (6)      | 0.001         | 94.9 (90.2)| 90.8%      |
+| SAGA          | 10,000        | 7 (6)      | 0.001         | 104.9 (90.2)| 90.8%      |
+| SAGA         | 10,000        | 7 (6)      | 0.001         | 98.2 (83.7)| 73.1%      |
 | **SGD**           | **10,000**        |    **6**    | **0.01**        | **69.8**   	   | **95.9%**		|
 
 ![image](../data/SAGA_SGD_convergence_rate.png)
 
 
-In this particular task, SAGA did not prove that it has faster convergence rates than SGD. Both table and convergence graph show that SGD outperformed SAGA in terms of convergence.
+In this particular task, SAGA did not prove that it has faster convergence rates than SGD but was slightly faster than SAG. 
+Both table and convergence graph show that SGD outperformed SAGA and SAG in terms of convergence.
 
 
 *Note : due to the high cache storage volume needed for SAGA, all models have been trained on GPU*
