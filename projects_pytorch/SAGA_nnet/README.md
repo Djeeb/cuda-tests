@@ -181,7 +181,7 @@ First, we made SAGA compete with SGD with an additional number of epochs as the 
 ![image](../data/SAGA_SGD_convergence_rate.png)
 
 
-In this particular task, SAGA did not prove that it has faster convergence rates than SGD. We tried a different approach : instead of not doing anything during the first step,
+In this particular task, SAGA did not prove that it has faster convergence rates than SGD. Both table and convergence graph show that SGD outperformed SAGA in terms of convergence. 
 
 
 *Note : due to the high cache storage volume needed for SAGA, all models have been trained on GPU*
