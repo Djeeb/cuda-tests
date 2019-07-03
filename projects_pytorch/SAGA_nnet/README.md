@@ -13,7 +13,7 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 
 - **III- [ SAGA vs SGD on MNIST ](#results)**
 
-- **IV- [Conclusion : SAGA may not be suitable for neural networks ](#conclusion)**
+- **IV- [Conclusion : SAGA is not designed for neural networks ](#conclusion)**
 
 <a name="intuition"></a>
 ## I- Intuition behind SAGA
