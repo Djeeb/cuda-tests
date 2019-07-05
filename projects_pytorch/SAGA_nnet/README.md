@@ -175,6 +175,36 @@ As you can see in `SAGA_nnet.hpp`, SAG algorithm is quite similar and requires l
 <a name="results"></a>
 ## III- Numerical comparison between SGD, SAGA and SAG
 
+We recall the general minimization problem we want to deal with. Given a certain loss function J of W and n training samples :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20J%28W%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7DJ_%7Bi%7D%28W%29)
+
+We want to find an optimal W that minimize J (this is the learning task) :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Cwidehat%7BW%7D%20%5Csimeq%20%5Cunderset%7BW%7D%7B%5Carg%5Cmin%7D%5Cleft%20%28%20J%28W%29%20%5Cright%20%29)
+
+And stochastic gradient algorithms are able to make W converge to a minimum if they are well set. In order to set them well, we have to parameter the **learning rate**.
+
+- **For SAGA and SAG**, in [Le Roux et al., 2014](https://arxiv.org/pdf/1309.2388.pdf), we have a theoretical result that gives us a fixed optimal learning rate :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Calpha%3A%3D%5C%3B%20%5Cfrac%7B1%7D%7B2%5Cleft%20%28%20%5Cmu%20n&plus;L%20%5Cright%20%29%7D)
+
+With : 
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Cmu%20%3A%3D%20%5Cunderset%7Bi%3D1...n%7D%7B%5Cmin%7D%5Cleft%20%28%20%5Cleft%20%5C%7C%20X_%7Bi%7D%20%5Cright%20%5C%7C%5E2%20%5Cright%20%29)
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20L%20%3A%3D%20%5Cunderset%7Bi%3D1...n%7D%7B%5Cmax%7D%5Cleft%20%28%20%5Cleft%20%5C%7C%20X_%7Bi%7D%20%5Cright%20%5C%7C%5E2%20%5Cright%20%29)
+
+- **For SGD**, in order to compare it to SAGA and SAG, best way to do so is to implement a decreasing learning rate based on the previous fixed one :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Calpha_%7Bk%7D%3A%3D%20%5C%3B%20%5Cfrac%7B1%7D%7B%5Clambda&plus;%28%5Clambda/k_%7B0%7D%29k%5E%7B0.75%7D%7D)
+
+With :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Clambda%20%3A%3D%201/%5Calpha)
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20k_%7B0%7D%3D%20total%20%5C%3B%20number%5C%3B%20of%5C%3B%20iterations)
+
 <a name="function"></a>
 ### 1- Function estimation
 
