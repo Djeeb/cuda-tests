@@ -12,8 +12,11 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 	- 4- [SAGA update ](#update)
 
 - **III- [ SAGA vs SGD on MNIST ](#results)**
+	- 1- [Function estimation](#function)
+	- 2- [Multi-label classification : simple linear regression](#linear)
+	- 3- [Multi-label classification : Neural network model](#nnet)
 
-- **IV- [Conclusion : SAGA is not designed for neural networks ](#conclusion)**
+- **IV- [ Conclusion : SAGA is not designed for neural networks ](#conclusion)**
 
 <a name="intuition"></a>
 ## I- Intuition behind SAGA
@@ -170,9 +173,19 @@ void nnet::update_SAGA(int epoch,int i){
 As you can see in `SAGA_nnet.hpp`, SAG algorithm is quite similar and requires less operations for the computer as we can update `SAGA_W1[training_size]` before updating the parameters.
 
 <a name="results"></a>
-## III- SAGA vs SAG vs SGD on MNIST
+## III- Numerical comparison between SGD, SAGA and SAG
 
-First, we made SAGA compete with SAG and SGD with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases) :
+<a name="function"></a>
+### 1- Function estimation
+
+<a name="linear"></a>
+### 2- Multi-label classification : simple linear regression
+
+<a name="nnet"></a>
+### 3- Multi-label classification : Neural network model
+
+Then we made SAGA compete with SAG and SGD on a neural network 
+with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases) :
 
 | Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy (test set)  |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |

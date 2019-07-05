@@ -21,14 +21,12 @@ class nnet : public torch::nn::Module {
 		torch::nn::Linear z1{nullptr}, z2{nullptr};
 		
 		vector<torch::Tensor> SAGA_W1, SAGA_b1, SAGA_W2, SAGA_b2;
-		torch::Tensor SAGA;
-		
-
 		
 		nnet(int,int,int,int,int,double,string device="CPU",string opt="SGD");
 		torch::Tensor forward(torch::Tensor &);
 		torch::Tensor predict(torch::Tensor &);
 		torch::Tensor cross_entropy_loss(const torch::Tensor &, const torch::Tensor &);
+		torch::Tensor mse_loss(const torch::Tensor &, const torch::Tensor &);
 		double compute_cost();
 		
 		//update algorithms
@@ -116,9 +114,14 @@ torch::Tensor nnet::cross_entropy_loss(const torch::Tensor & X, const torch::Ten
 	torch::Tensor J = (- ( Y * torch::log( X ) + ( 1 - Y ) * torch::log( 1 - X ))).sum() / double(X.size(0));
 	cost += J.item<double>();
 	return J;
-	
 }
 
+//______________________________________________________________MSE loss
+torch::Tensor nnet::mse_loss(const torch::Tensor & X, const torch::Tensor & Y){
+	torch::Tensor J = ((X-Y)*(X-Y)).sum() / double(X.size(0));
+	cost += J.item<double>();
+	return J;
+}
 
 //------------------- CUSTOM UPDATE ALGORITHMS METHODS -----------------
 
@@ -147,7 +150,7 @@ void nnet::update_SGD(){
 void nnet::update_SAGA(int epoch,int i){
 	
 	//Init with SGD
-	if(epoch==0){
+	if(epoch==1){
 
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
@@ -186,7 +189,7 @@ void nnet::update_SAGA(int epoch,int i){
 void nnet::update_SAG(int epoch,int i){
 	
 	//Init with SGD
-	if(epoch==0){
+	if(epoch==1){
 
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
