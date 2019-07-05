@@ -105,6 +105,34 @@ double nnet::compute_cost(){
 	return x;
 }
 
+//__________________________________________________________max/min norm
+
+double max_mnist(){
+	double x = 0.;
+	auto train_set = torch::data::make_data_loader(
+                     torch::data::datasets::MNIST("../../data").map(
+                     torch::data::transforms::Stack<>()),1);
+
+	for(auto& sample : *(train_set)){
+		auto X_train = sample.data.reshape({1,784}).to(options_double);
+		x = max(x,(X_train * X_train).sum().item<double>());
+	}
+	return x;
+}
+
+double min_mnist(){
+	double x = 100000.;
+	auto train_set = torch::data::make_data_loader(
+                     torch::data::datasets::MNIST("../../data").map(
+                     torch::data::transforms::Stack<>()),1);
+
+	for(auto& sample : *(train_set)){
+		auto X_train = sample.data.reshape({1,784}).to(options_double);
+		x = min(x,(X_train * X_train).sum().item<double>());
+	}
+	return x;
+}
+
 
 //------------------- CUSTOM LOSS FUNCTIONS ----------------------------
 

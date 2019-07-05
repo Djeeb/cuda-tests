@@ -12,9 +12,8 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 	- 4- [SAGA update ](#update)
 
 - **III- [ Numerical comparison between SGD, SAGA and SAG ](#results)**
-	- 1- [Function estimation](#function)
-	- 2- [Multi-label classification : simple linear regression](#linear)
-	- 3- [Multi-label classification : Neural network model](#nnet)
+	- 1- [Multi-label classification : simple linear regression](#linear)
+	- 2- [Multi-label classification : Neural network model](#nnet)
 
 - **IV- [ Conclusion : SAGA is not designed for neural networks ](#conclusion)**
 
@@ -175,19 +174,23 @@ As you can see in `SAGA_nnet.hpp`, SAG algorithm is quite similar and requires l
 <a name="results"></a>
 ## III- Numerical comparison between SGD, SAGA and SAG
 
-We recall the general minimization problem we want to deal with. Given a certain loss function J of W and n training samples :
+We recall the general minimization problem we want to deal with. Given a loss function J of W and n training samples:
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20J%28W%29%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7DJ_%7Bi%7D%28W%29)
 
-We want to find an optimal W that minimize J (this is the learning task) :
+Where Ji are similar functions parameterized by Xi and Yi. We want to find an optimal W that minimize J (this is the learning task) :
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Cwidehat%7BW%7D%20%5Csimeq%20%5Cunderset%7BW%7D%7B%5Carg%5Cmin%7D%5Cleft%20%28%20J%28W%29%20%5Cright%20%29)
 
 And stochastic gradient algorithms are able to make W converge to a minimum if they are well set. In order to set them well, we have to parameter the **learning rate**.
 
-- **For SAGA and SAG**, in [Le Roux et al., 2014](https://arxiv.org/pdf/1309.2388.pdf), we have a theoretical result that gives us a fixed optimal learning rate :
+- **For SAGA and SAG**, in [Le Roux et al., 2014](https://arxiv.org/pdf/1309.2388.pdf), we have two theoretical results that gives us a fixed optimal learning rate :
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Calpha%3A%3D%5C%3B%20%5Cfrac%7B1%7D%7B2%5Cleft%20%28%20%5Cmu%20n&plus;L%20%5Cright%20%29%7D)
+
+or :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Calpha%20%3A%3D%5C%3B%20%5Cfrac%7B1%7D%7B16L%7D)
 
 With : 
 
@@ -205,19 +208,24 @@ With :
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20k_%7B0%7D%3D%20total%20%5C%3B%20number%5C%3B%20of%5C%3B%20iterations)
 
-<a name="function"></a>
-### 1- Function estimation
-
 <a name="linear"></a>
-### 2- Multi-label classification : simple linear regression
+### 1- Multi-label classification : simple linear regression
+
+The aim of this experiment is to validate that SAGA and SAG are well implemented. Consider this simple minimization problem :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Cunderset%7BW%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%20%5Ctimes%20784%7D%7D%7B%5Cmin%7D%5C%3B%20J%28W%29%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%5Cfrac%7B1%7D%7B2%7D%5Cleft%20%5C%7CWX_%7Bi%7D%20%5C%3A%20-%20%5C%3A%20Y_%7Bi%7D%20%5Cright%20%5C%7C%5E2)
+
+Where :
+
+
 
 ![image](../data/linear_convergence_rate.png)
 
 <a name="nnet"></a>
-### 3- Multi-label classification : Neural network model
+### 2- Multi-label classification : Neural network model
 
-Then we made SAGA compete with SAG and SGD on a neural network 
-with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases) :
+Then we made SAGA compete with SAG and SGD on a neural network, again 
+with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases).
 
 | Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy (test set)  |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
