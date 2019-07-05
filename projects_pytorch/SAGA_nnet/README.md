@@ -224,8 +224,7 @@ Where :
 <a name="nnet"></a>
 ### 2- Multi-label classification : Neural network model
 
-![image](../data/nnet_convergence_rate.png){:class="img-responsive"}
-
+![image](../data/nnet_convergence_rate.png)
 Then we made SAGA compete with SAG and SGD on a neural network, again 
 with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases).
 
@@ -238,7 +237,7 @@ with an additional number of epochs for SAG and SAGA (the first one is only a gr
 | SAG         | 10,000        | 7 (6)      | 0.001         | 98.2 (83.7)| 73.1%      |
 | **SGD**           | **10,000**        |    **6**    | **0.01**        | **69.8**   	   | **95.9%**		|
 
-![image](../data/SAGA_SGD_convergence_rate.png)
+![test image size](../data/SAGA_SGD_convergence_rate.png){:height="50%" width="50%"}
 
 
 In this particular task, SAGA did not prove that it has faster convergence rates than SGD but was slightly faster than SAG. 
