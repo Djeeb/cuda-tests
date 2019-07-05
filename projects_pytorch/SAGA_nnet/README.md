@@ -11,7 +11,7 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 	- 3- [Initializing gradients ](#init)
 	- 4- [SAGA update ](#update)
 
-- **III- [ SAGA vs SGD on MNIST ](#results)**
+- **III- [ Numerical comparison between SGD, SAGA and SAG ](#results)**
 	- 1- [Function estimation](#function)
 	- 2- [Multi-label classification : simple linear regression](#linear)
 	- 3- [Multi-label classification : Neural network model](#nnet)
@@ -180,6 +180,8 @@ As you can see in `SAGA_nnet.hpp`, SAG algorithm is quite similar and requires l
 
 <a name="linear"></a>
 ### 2- Multi-label classification : simple linear regression
+
+![image](../data/linear_convergence_rate.png)
 
 <a name="nnet"></a>
 ### 3- Multi-label classification : Neural network model
