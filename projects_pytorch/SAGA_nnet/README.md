@@ -224,7 +224,7 @@ Where :
 <a name="nnet"></a>
 ### 2- Multi-label classification : Neural network model
 
-![image](../data/t.png  | width=100))$
+![image](../data/nnet_convergence_rate.png  | width=100))
 
 Then we made SAGA compete with SAG and SGD on a neural network, again 
 with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases).
