@@ -14,6 +14,7 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 - **III- [ Numerical comparison between SGD, SAGA and SAG ](#results)**
 	- 1- [Multi-label classification : simple linear regression](#linear)
 	- 2- [Multi-label classification : Neural network model](#nnet)
+	- 3- [Empirical approach for the learning rate](#empirical)
 
 - **IV- [ Conclusion : SAGA is not designed for neural networks ](#conclusion)**
 
@@ -215,18 +216,33 @@ The aim of this experiment is to validate that SAGA and SAG are well implemented
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cdpi%7B150%7D%20%5Cunderset%7BW%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%20%5Ctimes%20784%7D%7D%7B%5Cmin%7D%5C%3B%20J%28W%29%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%5Cfrac%7B1%7D%7B2%7D%5Cleft%20%5C%7CWX_%7Bi%7D%20%5C%3A%20-%20%5C%3A%20Y_%7Bi%7D%20%5Cright%20%5C%7C%5E2)
 
-Where :
+Where the labels are represented by a vector including nine  `-1` values and one `1` value denoting the number (just like a one hot vector) :
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20Y_%7Bi%7D%20%5Cin%20%5Cleft%20%5C%7B%20-1%2C1%20%5Cright%20%5C%7D%5E%7B10%7D)
 
+It can be seen as a multi-linear regression problem (without bias)scent is not even useful to minimize. Even so we can make SGD, SAGA and SAG compete with the theoretical learning rates to look at the convergence speed :
 
 ![image](../data/linear_convergence_rate.png)
+
+As we can see, after 5 epochs, the convergence rates are relatively similar in terms of speed. SAG and SGD are slightly faster during the first epochs.
 
 <a name="nnet"></a>
 ### 2- Multi-label classification : Neural network model
 
+Now we make an experiment on a more interesting model : a 1-hidden layer fully connected neural network (just the same as the one we described here, except that we used relu for the first activation function in order to have better convergence results ).
+For the moment, we keep the same theoretical approach for the learning rate described above :
+
 ![image](../data/nnet_convergence_rate.png)
-Then we made SAGA compete with SAG and SGD on a neural network, again 
-with an additional number of epochs for SAG and SAGA (the first one is only a gradient initialization in these cases).
+
+Now SAG has clearly difficulties to reach the same convergence rates as SAGA and SGD. Note that SAGA slightly outperformed SGD. But we were not convinced with this experiment as the accuracy on the test rate
+was not satisfying enough : those learning rate approaches were clearly not optimal for SGD. 
+
+<a name="empirical"></a>
+3- Empirical approach for the learning rate
+
+Keeping the same network structure, we decided to get away from theory for the learning rate settings. We wanted to see if SAG can also be similar to SGD if SGD learning rate is empirically optimized for the task. 
+Then, we chosed a fixed learning rate for both SAGA, SAG and SGD, which is closed to the empirical optimal one as we tested differents learning rates to see which performed the best.
+
 
 | Algorithm     | training size | epochs | learning rate  | time (sec) | Accuracy (test set)  |
 | ------------- | ------------- | ---------- | ---------- | ---------- | ---------- |
@@ -240,7 +256,7 @@ with an additional number of epochs for SAG and SAGA (the first one is only a gr
 ![test image size](../data/SAGA_SGD_convergence_rate.png){:height="50%" width="50%"}
 
 
-In this particular task, SAGA did not prove that it has faster convergence rates than SGD but was slightly faster than SAG. 
+In this particular exercise, SAGA did not prove that it has faster convergence rates than SGD but was slightly faster than SAG. 
 Both table and convergence graph show that SGD outperformed SAGA and SAG in terms of convergence.
 
 
