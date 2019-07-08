@@ -240,7 +240,7 @@ was not satisfying enough : those learning rate approaches were clearly not opti
 <a name="empirical"></a>
 ### 3- Empirical approach for the learning rate
 
-Keeping the same network structure, we decided to get away from theory for the learning rate settings. We wanted to see if SAG can also be similar to SGD if SGD learning rate is empirically optimized for the task. 
+While we kept the same network structure, we decided to get away from theory for the learning rate settings. We wanted to see if SAG can also be similar to SGD if SGD learning rate is empirically optimized for the task. 
 Then, we chosed a fixed learning rate for both SAGA, SAG and SGD, which is closed to the empirical optimal one as we tested differents learning rates to see which performed the best.
 
 
