@@ -16,7 +16,7 @@ You can check the whole implementation in `SAGA_nnet.hpp`.
 	- 2- [Multi-label classification : Neural network model](#nnet)
 	- 3- [Empirical approach for the learning rate](#empirical)
 
-- **IV- [ Conclusion : SAGA is not designed for neural networks ](#conclusion)**
+- **IV- [ Conclusion : SAGA is not designed for neural networks. SVRG might be](#conclusion)**
 
 <a name="intuition"></a>
 ## I- Intuition behind SAGA
@@ -263,7 +263,7 @@ Both table and convergence graph show that SGD outperformed SAGA and SAG in term
 *Note : due to the high cache storage volume needed for SAGA and SAG, all models have been trained on GPU*
 
 <a name="conclusion"></a>
-## IV- Conclusion : SAGA is not designed for neural networks
+## IV- Conclusion : SAGA is not designed for neural networks. SVRG might be.
 
 The main reason for that is this gradient storage that is a real problem for deep neural networks architectures and big datasets. Beside that, results on MNIST showed us
 that in this particular case, SAGA is not faster than SAG. However would be interesting to dig into this family of variance reduced gradients, especially SVRG
