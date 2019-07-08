@@ -234,7 +234,7 @@ For the moment, we keep the same theoretical approach for the learning rate desc
 
 ![50%](../data/nnet_convergence_rate.png)
 
-Now SAG has clearly difficulties to reach the same convergence rates as SAGA and SGD. Note that SAGA slightly outperformed SGD. But we were not convinced with this experiment as the accuracy on the test rate
+Now SAG has clearly difficulties to reach the same convergence rates as SAGA and SGD. Note that SAGA slightly outperformed SGD. But we were not convinced with this experiment as the accuracy on the test set
 was not satisfying enough : those learning rate approaches were clearly not optimal for SGD. 
 
 <a name="empirical"></a>
@@ -260,7 +260,7 @@ In this particular exercise, SAGA did not prove that it has faster convergence r
 Both table and convergence graph show that SGD outperformed SAGA and SAG in terms of convergence.
 
 
-*Note : due to the high cache storage volume needed for SAGA, all models have been trained on GPU*
+*Note : due to the high cache storage volume needed for SAGA and SAG, all models have been trained on GPU*
 
 <a name="conclusion"></a>
 ## IV- Conclusion : SAGA is not designed for neural networks
