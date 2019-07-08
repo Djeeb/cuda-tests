@@ -232,7 +232,7 @@ As we can see, after 5 epochs, the convergence rates are relatively similar in t
 Now we make an experiment on a more interesting model : a 1-hidden layer fully connected neural network (just the same as the one we described here, except that we used relu for the first activation function in order to have better convergence results ).
 For the moment, we keep the same theoretical approach for the learning rate described above :
 
-![200%](../data/nnet_convergence_rate.png)
+![50%](../data/nnet_convergence_rate.png)
 
 Now SAG has clearly difficulties to reach the same convergence rates as SAGA and SGD. Note that SAGA slightly outperformed SGD. But we were not convinced with this experiment as the accuracy on the test rate
 was not satisfying enough : those learning rate approaches were clearly not optimal for SGD. 
