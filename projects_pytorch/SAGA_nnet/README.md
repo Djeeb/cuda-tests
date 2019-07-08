@@ -232,13 +232,13 @@ As we can see, after 5 epochs, the convergence rates are relatively similar in t
 Now we make an experiment on a more interesting model : a 1-hidden layer fully connected neural network (just the same as the one we described here, except that we used relu for the first activation function in order to have better convergence results ).
 For the moment, we keep the same theoretical approach for the learning rate described above :
 
-![image](../data/nnet_convergence_rate.png)
+![image](../data/nnet_convergence_rate.png){:height="50%" width="50%"}
 
 Now SAG has clearly difficulties to reach the same convergence rates as SAGA and SGD. Note that SAGA slightly outperformed SGD. But we were not convinced with this experiment as the accuracy on the test rate
 was not satisfying enough : those learning rate approaches were clearly not optimal for SGD. 
 
 <a name="empirical"></a>
-3- Empirical approach for the learning rate
+### 3- Empirical approach for the learning rate
 
 Keeping the same network structure, we decided to get away from theory for the learning rate settings. We wanted to see if SAG can also be similar to SGD if SGD learning rate is empirically optimized for the task. 
 Then, we chosed a fixed learning rate for both SAGA, SAG and SGD, which is closed to the empirical optimal one as we tested differents learning rates to see which performed the best.
@@ -253,7 +253,7 @@ Then, we chosed a fixed learning rate for both SAGA, SAG and SGD, which is close
 | SAG         | 10,000        | 7 (6)      | 0.001         | 98.2 (83.7)| 73.1%      |
 | **SGD**           | **10,000**        |    **6**    | **0.01**        | **69.8**   	   | **95.9%**		|
 
-![test image size](../data/SAGA_SGD_convergence_rate.png){:height="50%" width="50%"}
+![test image size](../data/SAGA_SGD_convergence_rate.png)
 
 
 In this particular exercise, SAGA did not prove that it has faster convergence rates than SGD but was slightly faster than SAG. 
