@@ -9,6 +9,7 @@ You can check the whole implementation in `SVRG_nnet.hpp`.
 
 - **II- [ Implementing SVRG on libtorch ](#implementing)**
 	- 1- [Algorithm ](#algorithm)
+	- 2- [How to compute the gradient of W tild without any storage ?](#gradient)
 
 <a name="intuition"></a>
 ## I- Intuition behind SVRG
@@ -35,6 +36,8 @@ In addition, the convergence theories behind SVRG work even in a nonconvex learn
 <a name="algorithm"></a>
 ### 1- Algorithm
 
+SVRG algorithm requires to compute 2 parameters : the *snapshot* one, and the real one. The snapshot one, denoted by W tild, must be updated each m iterations. 
+
 ________________________________________
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20%5Cfn_cm%20initialize%5C%3B%20m%5C%3B%20and%5C%3B%20%5Calpha)
@@ -56,3 +59,6 @@ ________________________________________
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20%5Cfn_cm%20.%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5Cwidetilde%7BW%7D_%7Bs%7D%20%3D%20W%5E%7B%28m%29%7D)
 
 ________________________________________
+
+<a name="gradient"></a>
+### 2- How to compute the gradient of W tild without any storage ?
