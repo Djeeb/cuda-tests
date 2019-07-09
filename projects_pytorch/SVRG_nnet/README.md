@@ -37,11 +37,7 @@ In addition, the convergence theories behind SVRG work even in a nonconvex learn
 
 ________________________________________
 
-- Initialization :
-
-![equation]()
-
-- Iteration :
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20%5Cfn_cm%20initialize%5C%3B%20m%5C%3B%20and%5C%3B%20%5Calpha)
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20%5Cfn_cm%20for%5C%3B%5C%3B%20s%3A%3D1%2C2%2C...%3A)
 
@@ -57,5 +53,6 @@ ________________________________________
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20%5Cfn_cm%20.%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D-%5Calpha%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k-1%29%7D-d%5Cwidetilde%7BW%7D_%7Bi%7D&plus;%20%5Cwidehat%7B%5Cmu%7D%20%5Cright%20%29)
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20%5Cfn_cm%20.%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5C%3B%20%5Cwidetilde%7BW%7D_%7Bs%7D%20%3D%20W%5E%7B%28m%29%7D)
 
 ________________________________________
