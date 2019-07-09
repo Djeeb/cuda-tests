@@ -20,7 +20,12 @@ class nnet : public torch::nn::Module {
 		torch::DeviceType device_type;
 		torch::nn::Linear z1{nullptr}, z2{nullptr};
 		
+		//SAG and SAGA gradients storage
 		vector<torch::Tensor> SAGA_W1, SAGA_b1, SAGA_W2, SAGA_b2;
+		
+		//SVRG gradients storage
+		torch::nn::Linear z1_SVRG{nullptr}, z2_SVRG{nullptr};
+		torch::Tensor 	SVRG_W1, SVRG_b1, SVRG_W2, SVRG_b2;
 		
 		nnet(int,int,int,int,int,double,string device="CPU",string opt="SGD");
 		torch::Tensor forward(torch::Tensor &);
@@ -35,6 +40,8 @@ class nnet : public torch::nn::Module {
 		void update_SAGA(int,int);
 		void update_SAG(int,int);		
 		void update_SVRG(int,int);
+		
+		//auxiliary functions for SVRG
 
 };
 
@@ -54,7 +61,7 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 	//this->parameters()[2].set_data(torch::randn({n_output,n_hidden}));
 	
 	if(optimizer == "SAGA" or optimizer == "SAG"){
-		cout << "Initializing gradients lists..." << endl;
+		cout << optimizer << " --Initializing gradients lists..." << endl;
 		SAGA_W1.resize(n_train+1);
 		SAGA_b1.resize(n_train+1);
 		SAGA_W2.resize(n_train+1);
@@ -65,6 +72,20 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 			SAGA_W2[i] = torch::zeros({n_output,n_hidden}).to(options_double);
 			SAGA_b2[i] = torch::zeros({n_output}).to(options_double);
 		}
+		cout << "initialization ended." << endl;
+	}
+	if(optimizer == "SVRG"){
+		z1_SVRG = register_module("z1_SVRG", torch::nn::Linear(n_input,n_hidden));
+		z2_SVRG = register_module("z2_SVRG", torch::nn::Linear(n_hidden,n_output));
+		
+		SVRG_W1 = torch::zeros({n_hidden,n_input}).to(options_double);
+		SVRG_b1 = torch::zeros({n_hidden}).to(options_double);
+		SVRG_W2 = torch::zeros({n_output,n_hidden}).to(options_double);
+		SVRG_b2 = torch::zeros({n_output}).to(options_double);
+			
+		this->parameters()[4].set_data(this->parameters()[0].clone());
+		this->parameters()[6].set_data(this->parameters()[2].clone());
+		
 		cout << "initialization ended." << endl;
 	}
 	
@@ -81,8 +102,18 @@ torch::Tensor nnet::forward(torch::Tensor & X){
 	X = torch::relu(X);
 	
 	return X;
-
 }
+
+//__________________________________________________________SVRG_Forward
+torch::Tensor nnet::forward_SVRG(torch::Tensor X){
+	auto X_ = z1_SVRG->forward(X);
+	X_ = torch::relu(X_);
+	X_ = z2_SVRG->forward(X_);
+	X_ = torch::relu(X_);
+	
+	return X_;
+}
+
 
 //____________________________________________________________Prediction
 torch::Tensor nnet::predict(torch::Tensor & X_test){
@@ -475,40 +506,20 @@ void nnet::update_SAG(int epoch,int i){
 }
 
 //__________________________________________________________________SVRG
-void nnet::update_SAGA(int epoch,int i){
+void nnet::update_SVRG(int epoch,int i){
 	
-	//Init with SGD
-	if(epoch==1){
-
-		SVRG_W1[0] += SVRG_W1[0] / double(training_size);
-		SVRG_b1[0] += SVRG_b1[0] / double(training_size);
-		SVRG_W2[0] += SVRG_W2[0] / double(training_size);
-		SVRG_b2[0] += SVRG_b2[0] / double(training_size);
-				
+	if(epoch%3==0){
+		
+		SVRG_W1.set_data(SVRG_W1 + this->parameters()[0].grad().clone() / double(training_size) );	
+		SVRG_b1.set_data(SVRG_b1 + this->parameters()[1].grad().clone() / double(training_size) );	
+		SVRG_W2.set_data(SVRG_W2 + this->parameters()[2].grad().clone() / double(training_size) );	
+		SVRG_b2.set_data(SVRG_b2 + this->parameters()[3].grad().clone() / double(training_size) );	
+		
 	}
 	
-	//SVRG
 	else{
 		
-		SVRG_W1[0] += SVRG_W1[0] / double(training_size);
-		SVRG_b1[0] += SVRG_b1[0] / double(training_size);
-		SVRG_W2[0] += SVRG_W2[0] / double(training_size);
-		SVRG_b2[0] += SVRG_b2[0] / double(training_size);			
-		
-		this->parameters()[0].set_data(this->parameters()[0] - learning_rate * ( this->parameters()[0].grad() - SAGA_W1[i] + SAGA_W1[training_size] ) );
-		this->parameters()[1].set_data(this->parameters()[1] - learning_rate * ( this->parameters()[1].grad() - SAGA_b1[i] + SAGA_b1[training_size] ) );
-		this->parameters()[2].set_data(this->parameters()[2] - learning_rate * ( this->parameters()[2].grad() - SAGA_W2[i] + SAGA_W2[training_size] ) );
-		this->parameters()[3].set_data(this->parameters()[3] - learning_rate * ( this->parameters()[3].grad() - SAGA_b2[i] + SAGA_b2[training_size] ) );
-		
-		SAGA_W1[training_size] += ( this->parameters()[0].grad() - SAGA_W1[i] ) / double(training_size);
-		SAGA_b1[training_size] += ( this->parameters()[1].grad() - SAGA_b1[i] ) / double(training_size);
-		SAGA_W2[training_size] += ( this->parameters()[2].grad() - SAGA_W2[i] ) / double(training_size);
-		SAGA_b2[training_size] += ( this->parameters()[3].grad() - SAGA_b2[i] ) / double(training_size);
-	
-		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
-		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
-		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
-		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
+
 					
 	}
 }
