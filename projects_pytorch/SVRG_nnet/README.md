@@ -62,3 +62,4 @@ ________________________________________
 
 <a name="gradient"></a>
 ### 2- How to compute the gradient of W tild without any storage ?
+
