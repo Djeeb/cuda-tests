@@ -8,8 +8,10 @@
 
 //_______________________________________________Function to approximate
 
+
+//Euclidean norm
 torch::Tensor euclidean_norm(const torch::Tensor & X){
-	Y = torch::zeros({X.size(1)});
-	for(int i=0; i < X.size(1); i++) Y[i] = X[i].norm();
+	torch::Tensor Y = torch::zeros({X.size(0)});
+	for(int i=0; i < X.size(0); i++) Y[i] = X[i].norm();
 	return Y;
 }

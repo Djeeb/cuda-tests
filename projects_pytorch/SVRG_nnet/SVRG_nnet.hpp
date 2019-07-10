@@ -1,11 +1,12 @@
 #include <torch/torch.h>
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include <string>
 #include <chrono>
 #include <vector>
 using namespace std;
-auto options_int = torch::TensorOptions().dtype(torch::kInt64).device(torch::kCUDA);
+auto options_int = torch::TensorOptions().dtype(torch::kInt64).device(torch::kCPU);
 auto options_double = torch::TensorOptions().dtype(torch::kFloat64).device(torch::kCUDA);
 
 
@@ -97,9 +98,9 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 //_______________________________________________________________Forward
 torch::Tensor nnet::forward(torch::Tensor & X){
 	X = z1->forward(X);
-	X = torch::relu(X);
+	X = torch::tanh(X)*1.2;
 	X = z2->forward(X);
-	X = torch::relu(X);
+	X = torch::tanh(X)*1.2;
 	
 	return X;
 }
@@ -207,25 +208,25 @@ void nnet::update_SAGA(int epoch,int i){
 		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
 		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
 		
-		SAGA_W1[training_size] += SAGA_W1[i] / double(training_size);
-		SAGA_b1[training_size] += SAGA_b1[i] / double(training_size);
-		SAGA_W2[training_size] += SAGA_W2[i] / double(training_size);
-		SAGA_b2[training_size] += SAGA_b2[i] / double(training_size);
+		SAGA_W1[training_size] += SAGA_W1[i].clone() / double(training_size);
+		SAGA_b1[training_size] += SAGA_b1[i].clone() / double(training_size);
+		SAGA_W2[training_size] += SAGA_W2[i].clone() / double(training_size);
+		SAGA_b2[training_size] += SAGA_b2[i].clone() / double(training_size);
 				
 	}
 	
 	//SAGA
 	else{
 		
-		this->parameters()[0].set_data(this->parameters()[0] - learning_rate * ( this->parameters()[0].grad() - SAGA_W1[i] + SAGA_W1[training_size] ) );
-		this->parameters()[1].set_data(this->parameters()[1] - learning_rate * ( this->parameters()[1].grad() - SAGA_b1[i] + SAGA_b1[training_size] ) );
-		this->parameters()[2].set_data(this->parameters()[2] - learning_rate * ( this->parameters()[2].grad() - SAGA_W2[i] + SAGA_W2[training_size] ) );
-		this->parameters()[3].set_data(this->parameters()[3] - learning_rate * ( this->parameters()[3].grad() - SAGA_b2[i] + SAGA_b2[training_size] ) );
-		
-		SAGA_W1[training_size] += ( this->parameters()[0].grad() - SAGA_W1[i] ) / double(training_size);
-		SAGA_b1[training_size] += ( this->parameters()[1].grad() - SAGA_b1[i] ) / double(training_size);
-		SAGA_W2[training_size] += ( this->parameters()[2].grad() - SAGA_W2[i] ) / double(training_size);
-		SAGA_b2[training_size] += ( this->parameters()[3].grad() - SAGA_b2[i] ) / double(training_size);
+		this->parameters()[0].set_data(this->parameters()[0].clone() - learning_rate * ( this->parameters()[0].grad().clone() - SAGA_W1[i].clone() + SAGA_W1[training_size].clone() ) );
+		this->parameters()[1].set_data(this->parameters()[1].clone() - learning_rate * ( this->parameters()[1].grad().clone() - SAGA_b1[i].clone() + SAGA_b1[training_size].clone() ) );
+		this->parameters()[2].set_data(this->parameters()[2].clone() - learning_rate * ( this->parameters()[2].grad().clone() - SAGA_W2[i].clone() + SAGA_W2[training_size].clone() ) );
+		this->parameters()[3].set_data(this->parameters()[3].clone() - learning_rate * ( this->parameters()[3].grad().clone() - SAGA_b2[i].clone() + SAGA_b2[training_size].clone() ) );
+
+		SAGA_W1[training_size] += ( this->parameters()[0].grad() - SAGA_W1[i].clone() ) / double(training_size);
+		SAGA_b1[training_size] += ( this->parameters()[1].grad() - SAGA_b1[i].clone() ) / double(training_size);
+		SAGA_W2[training_size] += ( this->parameters()[2].grad() - SAGA_W2[i].clone() ) / double(training_size);
+		SAGA_b2[training_size] += ( this->parameters()[3].grad() - SAGA_b2[i].clone() ) / double(training_size);
 	
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
@@ -246,25 +247,26 @@ void nnet::update_SAG(int epoch,int i){
 		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
 		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
 		
-		SAGA_W1[training_size] += SAGA_W1[i] / double(training_size);
-		SAGA_b1[training_size] += SAGA_b1[i] / double(training_size);
-		SAGA_W2[training_size] += SAGA_W2[i] / double(training_size);
-		SAGA_b2[training_size] += SAGA_b2[i] / double(training_size);
+		SAGA_W1[training_size] += SAGA_W1[i].clone() / double(training_size);
+		SAGA_b1[training_size] += SAGA_b1[i].clone() / double(training_size);
+		SAGA_W2[training_size] += SAGA_W2[i].clone() / double(training_size);
+		SAGA_b2[training_size] += SAGA_b2[i].clone() / double(training_size);
 				
 	}
 	
 	//SAG
 	else{
-
-		SAGA_W1[training_size] += ( this->parameters()[0].grad() - SAGA_W1[i] ) / double(training_size);
-		SAGA_b1[training_size] += ( this->parameters()[1].grad() - SAGA_b1[i] ) / double(training_size);
-		SAGA_W2[training_size] += ( this->parameters()[2].grad() - SAGA_W2[i] ) / double(training_size);
-		SAGA_b2[training_size] += ( this->parameters()[3].grad() - SAGA_b2[i] ) / double(training_size);
 		
-		this->parameters()[0].set_data(this->parameters()[0] - learning_rate * ( SAGA_W1[training_size] ) );
-		this->parameters()[1].set_data(this->parameters()[1] - learning_rate * ( SAGA_b1[training_size] ) );
-		this->parameters()[2].set_data(this->parameters()[2] - learning_rate * ( SAGA_W2[training_size] ) );
-		this->parameters()[3].set_data(this->parameters()[3] - learning_rate * ( SAGA_b2[training_size] ) );
+		SAGA_W1[training_size] += ( this->parameters()[0].grad().clone() - SAGA_W1[i].clone() ) / double(training_size);
+		SAGA_b1[training_size] += ( this->parameters()[1].grad().clone() - SAGA_b1[i].clone() ) / double(training_size);
+		SAGA_W2[training_size] += ( this->parameters()[2].grad().clone() - SAGA_W2[i].clone() ) / double(training_size);
+		SAGA_b2[training_size] += ( this->parameters()[3].grad().clone() - SAGA_b2[i].clone() ) / double(training_size);
+
+		
+		this->parameters()[0].set_data(this->parameters()[0].clone() - learning_rate * ( SAGA_W1[training_size].clone() ) );
+		this->parameters()[1].set_data(this->parameters()[1].clone() - learning_rate * ( SAGA_b1[training_size].clone() ) );
+		this->parameters()[2].set_data(this->parameters()[2].clone() - learning_rate * ( SAGA_W2[training_size].clone() ) );
+		this->parameters()[3].set_data(this->parameters()[3].clone() - learning_rate * ( SAGA_b2[training_size].clone() ) );
 
 		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
 		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());

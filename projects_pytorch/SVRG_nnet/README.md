@@ -1,15 +1,21 @@
-# Implementing SVRG and testing it vs SGD
+# Implementing SVRG to approximate simple functions
 Following our exploration of variants of SGD algorithm (check our previous analysis of [SAGA](https://github.com/Djeeb/stage_DL/tree/master/projects_pytorch/SAGA_nnet) algorithm),
 we decided to dig into the promising **Stochastic Variance Reduced Gradient** algorithm from [R. Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf).
 It is directly inspired from SDCA and SAG, but unlike SAG, it doesn't involve full gradients storage. Researchers say it is actually easily applicable for neural network learning.
 We want to compare convergence rate to SGD algorithm on a neural network structure. 
 You can check the whole implementation in `SVRG_nnet.hpp`.
 
+Unlike previous experiments, our numerical tests will be based on a simple function approximation. 
+
 - **I- [ Intuition behind SVRG ](#intuition)**
 
 - **II- [ Implementing SVRG on libtorch ](#implementing)**
 	- 1- [Algorithm ](#algorithm)
 	- 2- [How to compute the gradient of W tild without any storage ?](#gradient)
+	
+- **III- [ Numerical application ](#numerical)**
+	- 1- [Approximation of sin(x) ](#sin)
+	- 2- [Approximation of the euclidean norm](#euclidean)
 
 <a name="intuition"></a>
 ## I- Intuition behind SVRG
@@ -63,3 +69,11 @@ ________________________________________
 <a name="gradient"></a>
 ### 2- How to compute the gradient of W tild without any storage ?
 
+<a name="numerical"></a>
+## III- Numerical application
+
+<a name="sin"></a>
+### 1- Approximation of sin(x)
+
+<a name="euclidean"></a>
+### 2- Approximation of the euclidean norm
