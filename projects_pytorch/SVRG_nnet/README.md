@@ -239,6 +239,11 @@ We use a one-hidden fully connected neural network :
 
 #### **Results**
 
+test set plot with sinus curve : 
+
+![image](../data/sin_test_SVRG_2.png)
+
+![image](../data/sin_test_SGD_2.png)
 
 <a name="euclidean"></a>
 ### 2- Approximation of the euclidean norm
