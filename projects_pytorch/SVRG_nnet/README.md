@@ -153,6 +153,60 @@ return X;
 }
 ```
 
+#### **Update**
+
+We have to deal with several cases :
+
+- when we compute the snapshot parameters gradients : we don't do anything beside reducing `i` by 1 and set `is_snapshot` to `false` to prepare real pass. 
+- when we compute the real parameters gradients : we apply SVRG formula and set `is_snapshot` to `true`. In addition, if we're at the end of the training_set :
+	- if we didn't finish all the passes, we increment m and reinitialize `i`.
+	- if we already did all the passes, we set W tild to the real current parameters, set mu to 0, and `is_mu` to `true` in order to prepare the average of gradients calculation. 
+
+Here is the code :
+
+```c++
+//When it's snapshot parameters turn : we don't update anything
+if(is_snapshot==true){
+	is_snapshot = false;
+	i--;
+}
+
+//When it's real parameters turn : we update parameters with SVRG formula
+else{
+	this->parameters()[0].set_data(this->parameters()[0].clone() - learning_rate * ( this->parameters()[0].grad().clone() - this->parameters()[4].grad().clone() + mu_W1 ) );
+	this->parameters()[1].set_data(this->parameters()[1].clone() - learning_rate * ( this->parameters()[1].grad().clone() - this->parameters()[5].grad().clone() + mu_b1 ) );
+	this->parameters()[2].set_data(this->parameters()[2].clone() - learning_rate * ( this->parameters()[2].grad().clone() - this->parameters()[6].grad().clone() + mu_W2 ) );
+	this->parameters()[3].set_data(this->parameters()[3].clone() - learning_rate * ( this->parameters()[3].grad().clone() - this->parameters()[7].grad().clone() + mu_b2 ) );			
+	is_snapshot = true;
+}
+
+//deal with the end of the training set pass
+if(i==training_size-1){
+
+	//Can be m<5
+	if(m<2){
+		i = -1;
+		m++;
+		}
+	
+	//Updating W tild and prepare the next average of gradients computation
+	else{
+		this->parameters()[4].set_data( this->parameters()[0].clone() );
+		this->parameters()[5].set_data( this->parameters()[1].clone() );
+		this->parameters()[6].set_data( this->parameters()[2].clone() );
+		this->parameters()[7].set_data( this->parameters()[3].clone() );
+		
+		mu_W1 -= mu_W1;
+		mu_b1 -= mu_b1;
+		mu_W2 -= mu_W2;
+		mu_b2 -= mu_b2;
+		
+		m = 1;
+		is_mu = true;
+	}
+}
+```
+
 <a name="numerical"></a>
 ## III- Numerical application
 
