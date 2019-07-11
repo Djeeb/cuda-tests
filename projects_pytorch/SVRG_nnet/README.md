@@ -217,8 +217,23 @@ We will try SVRG, SGD, SAGA and SAG on a function approximation problem. More pr
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20f_%7B2%7D%3A%5Cmathbb%7BR%7D%5E%7Bd%7D%5Crightarrow%20%5Cmathbb%7BR%7D%2C%20%5C%3B%20%5C%3B%20x%20%5Cmapsto%20%5Cleft%20%5C%7C%20x%20%5Cright%20%5C%7C_%7B2%7D)
 
+We will use the convergence rate of the loss function (MSE for all the approximations). We will also use MSE loss value for the test set and plot the approximation to see if it fits with sin(x) curve.
+
 <a name="sin"></a>
 ### 1- Approximation of sin(x)
+
+Here are the information of the training and the test sets : 
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20X_%7Btrain%7D%20%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%5B%200%2C%5Cpi%20%5Cright%20%5D%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B2000%7D)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20X_%7Btest%7D%20%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%5B%200%2C%5Cpi%20%5Cright%20%5D%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B200%7D)
+
+#### **Neural network architecture used**
+We use a one-hidden fully connected neural network : 
+	- one node for the input - 20 nodes on the hidden layer - 1 node for the output
+	- 1st activation function : relu
+	- 2nd activation function : tanh() * 1.2 in order to fit with the highest and lowest values of sin(x)
+
 
 <a name="euclidean"></a>
 ### 2- Approximation of the euclidean norm
