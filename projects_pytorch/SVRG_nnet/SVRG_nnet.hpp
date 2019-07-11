@@ -105,13 +105,13 @@ torch::Tensor nnet::forward(torch::optim::SGD & opt, torch::Tensor & X){
 		if(is_snapshot){
 			opt.zero_grad();
 			X = z1_snapshot->forward(X);
-			X = torch::tanh(X)*1.2;
+			X = torch::relu(X);
 			X = z2_snapshot->forward(X);
 			X = torch::tanh(X)*1.2;		
 		}
 		else{
 			X = z1->forward(X);
-			X = torch::tanh(X)*1.2;
+			X = torch::relu(X);
 			X = z2->forward(X);
 			X = torch::tanh(X)*1.2;
 		}
@@ -120,7 +120,7 @@ torch::Tensor nnet::forward(torch::optim::SGD & opt, torch::Tensor & X){
 	else{
 		opt.zero_grad();
 		X = z1->forward(X);
-		X = torch::tanh(X)*1.2;
+			X = torch::relu(X);
 		X = z2->forward(X);
 		X = torch::tanh(X)*1.2;		
 	}
