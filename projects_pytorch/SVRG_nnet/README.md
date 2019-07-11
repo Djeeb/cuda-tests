@@ -78,8 +78,8 @@ Imagine we have a neural network with 2 activation functions. We want to be able
 
 Our strategy will consist in :
 
-	- 1. doing a forward / back propagation with snapshot parameters and store dWi, but without updating any weight.
-	- 2. doing a forward / back propagation with real parameters and update them with SVRG method thanks to mu and dWi.
+	1. doing a forward / back propagation with snapshot parameters and store dWi, but without updating any weight.
+	2. doing a forward / back propagation with real parameters and update them with SVRG method thanks to mu and dWi.
 	
 
 #### **Initialization**
@@ -125,7 +125,7 @@ if(is_mu){
 	}
 }
 ```
-#### **Forward propagation*
+#### **Forward propagation**
 
 Now we have to change the forward propagation in order to pass to the good modules regarding the bool `is_snapshot` :
 
