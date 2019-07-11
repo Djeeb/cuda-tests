@@ -72,9 +72,37 @@ ________________________________________
 What is complicated with SVRG is to store a snapshot of W every `m*n` iterations (we tried with `m=2` and `m=5` as suggested in the paper) in order to compute the gradient of an individual i at each iteration.
 We also have to compute the average of gradients w.r.t W tild whenever it changes. 
 
-Here is a drawing of what we want to implement in c++ : 
+Imagine we have a neural network with 2 activation functions. We want to be able to compute both "real" parameter gradient and also "snapshot" gradient at each iteration. Here is a drawing of what we want to implement in c++ : 
 
 ![image](../data/drawing_SVRG.jpg)
+
+Our strategy will consist in :
+	- 1. doing a forward / back propagation with snapshot parameters and store dWi, but without updating any weight.
+	- 2. doing a forward / back propagation with real parameters and update them with SVRG method thanks to mu and dWi.
+	
+
+#### **Initialization**
+
+In order to compute 
+
+
+```c++
+	if(is_mu){
+		
+
+		mu_W1 += this->parameters()[4].grad().clone() / double(training_size);
+		mu_b1 += this->parameters()[5].grad().clone() / double(training_size);
+		mu_W2 += this->parameters()[6].grad().clone() / double(training_size);
+		mu_b2 += this->parameters()[7].grad().clone() / double(training_size);
+
+	
+		if(i==training_size-1){
+			i = -1;
+			is_mu = false;
+		}
+	}
+```
+
 
 <a name="numerical"></a>
 ## III- Numerical application
