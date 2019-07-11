@@ -127,7 +127,8 @@ if(is_mu){
 ```
 #### **Forward propagation**
 
-Now we have to change the forward propagation in order to pass to the good modules regarding the bool `is_snapshot` :
+Now we have to change the forward propagation in order to pass to the good modules regarding the bool `is_snapshot`. Also note that we use two `torch::tanh()*1.2` activation functions
+that actually are useful for approximating sin(x) (see numerical application) :
 
 ```c++
 torch::Tensor nnet::forward( torch::Tensor & X ){
@@ -209,6 +210,10 @@ if(i==training_size-1){
 
 <a name="numerical"></a>
 ## III- Numerical application
+
+We will try SVRG, SGD, SAGA and SAG on a function approximation problem. More precisely, we will try to approximate :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20f%3A%5Cmathbb%7BR%7D%5E%7Bd%7D%5Crightarrow%20%5Cmathbb%7BR%7D)
 
 <a name="sin"></a>
 ### 1- Approximation of sin(x)
