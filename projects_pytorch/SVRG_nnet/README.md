@@ -213,7 +213,9 @@ if(i==training_size-1){
 
 We will try SVRG, SGD, SAGA and SAG on a function approximation problem. More precisely, we will try to approximate :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20f%3A%5Cmathbb%7BR%7D%5E%7Bd%7D%5Crightarrow%20%5Cmathbb%7BR%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20f_%7B1%7D%3A%5Cmathbb%7BR%7D%5Crightarrow%20%5Cmathbb%7BR%7D%2C%20%5C%3B%20%5C%3B%20x%20%5Cmapsto%20%5Csin%28x%29)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20f_%7B2%7D%3A%5Cmathbb%7BR%7D%5E%7Bd%7D%5Crightarrow%20%5Cmathbb%7BR%7D%2C%20%5C%3B%20%5C%3B%20x%20%5Cmapsto%20%5Cleft%20%5C%7C%20x%20%5Cright%20%5C%7C_%7B2%7D)
 
 <a name="sin"></a>
 ### 1- Approximation of sin(x)
