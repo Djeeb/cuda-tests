@@ -78,8 +78,8 @@ Imagine we have a neural network with 2 activation functions. We want to be able
 
 Our strategy will consist in :
 
-- 1. doing a forward / back propagation with snapshot parameters and store dWi, but without updating any weight.
-- 2. doing a forward / back propagation with real parameters and update them with SVRG method thanks to mu and dWi.
+- 1. computing a forward / back propagation with snapshot parameters and store dWi, but without updating any weight.
+- 2. computing a forward / back propagation with real parameters and update them with SVRG method thanks to mu and dWi.
 	
 
 #### **Initialization**
