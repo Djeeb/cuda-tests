@@ -231,7 +231,9 @@ Here are the information of the training and the test sets :
 #### **Neural network architecture used**
 We use a one-hidden fully connected neural network : 
 
-	- one node for the input - 20 nodes on the hidden layer - 1 node for the output
+	- one node for the input layer 
+	- 20 nodes on the hidden layer 
+	- 1 node for the output
 	- 1st activation function : relu
 	- 2nd activation function : tanh() * 1.2 in order to fit with the highest and lowest values of sin(x)
 
