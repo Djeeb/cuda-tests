@@ -11,7 +11,7 @@ Unlike previous experiments, our numerical tests will be based on a simple funct
 
 - **II- [ Implementing SVRG on libtorch ](#implementing)**
 	- 1- [Algorithm ](#algorithm)
-	- 2- [How to compute the gradient of W tild without any storage ?](#gradient)
+	- 2- [How to compute and store the gradient of W tild ?](#gradient)
 	
 - **III- [ Numerical application ](#numerical)**
 	- 1- [Approximation of sin(x) ](#sin)
@@ -67,7 +67,14 @@ ________________________________________
 ________________________________________
 
 <a name="gradient"></a>
-### 2- How to compute the gradient of W tild without any storage ?
+### 2- How to compute and store the gradient of W tild ?
+
+What is complicated with SVRG is to store a snapshot of W every `m*n` iterations (we tried with `m=2` and `m=5` as suggested in the paper) in order to compute the gradient of an individual i at each iteration.
+We also have to compute the average of gradients w.r.t W tild whenever it changes. 
+
+Here is a drawing of what we want to implement in c++ : 
+
+![image](../data/drawing_SVRG.jpg)
 
 <a name="numerical"></a>
 ## III- Numerical application

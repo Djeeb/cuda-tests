@@ -5,7 +5,7 @@ using namespace std;
 int main(){
 	//______________________________________________Initializing dataset
 		int d = 1;
-		int n = 20000;
+		int n = 2000;
 		int n_test = 200;
 		auto X_train = torch::rand({n,d}).to(options_double) * 6.28;
 		auto X_test = torch::rand({n_test,d}).to(options_double) * 6.28;
@@ -18,28 +18,26 @@ int main(){
 	
 	
 	//_______________________________________Initializing neural network
-		int epochs = 41;
+		int epochs = 20;
 		int batch_size = 1;
-		double learning_rate = 0.0001;
-		nnet neuralnet(n,batch_size,d,20,1,learning_rate,"GPU","SAGA");
+		double learning_rate = 0.001;
+		nnet neuralnet(n,batch_size,d,20,1,learning_rate,"GPU","SVRG");
 		torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
 		
 		
 		
 	//_________________________________________________Running algorithm
-	cout << "Epoch" << "\t" << "loss" << endl;
+	cout << "Iter" << "\t\t" << "loss" << endl;
 	auto t1 = chrono::system_clock::now();
 
 		for(int i=1; i <= epochs;i++){
 			
 			for(int k=0; k < n; k++){
 				
-				optimizer.zero_grad();
-				
 				//Forward propagation
 				auto X = X_train[k].clone();
 				auto Y = Y_train[k].clone();
-				X = neuralnet.forward( X );
+				X = neuralnet.forward( optimizer, X );
 				
 				//Compute loss function
 				auto loss =  neuralnet.mse_loss( X , Y );		
@@ -50,7 +48,7 @@ int main(){
 				//update
 				neuralnet.update(i,k);
 			}
-			cout << "" << i << "\t" << neuralnet.compute_cost() << endl;
+			//cout << "" << i << "\t" << neuralnet.compute_cost() << endl;
 		}
 
 	auto t2 = chrono::system_clock::now();
@@ -60,7 +58,8 @@ int main(){
 	//______________________________________________________Evaluating model
 	
 	auto test = X_test.clone();
-	auto Y_hat = neuralnet.forward( X_test );
+	neuralnet.is_snapshot = false;
+	auto Y_hat = neuralnet.forward( optimizer, X_test );
 	auto loss =  neuralnet.mse_loss( Y_hat , Y_test );
 	
 	ofstream file("../../data/sin_app_SGD.dat");

@@ -24,25 +24,26 @@ class nnet : public torch::nn::Module {
 		//SAG and SAGA gradients storage
 		vector<torch::Tensor> SAGA_W1, SAGA_b1, SAGA_W2, SAGA_b2;
 		
-		//SVRG gradients storage
-		torch::nn::Linear z1_SVRG{nullptr}, z2_SVRG{nullptr};
-		torch::Tensor 	SVRG_W1, SVRG_b1, SVRG_W2, SVRG_b2;
+		//SVRG gradients storage (snapshots)
+		torch::nn::Linear z1_snapshot{nullptr}, z2_snapshot{nullptr};
+		torch::Tensor 	mu_W1, mu_b1, mu_W2, mu_b2;
+		bool is_snapshot = false;
+		int m = 1;
+		bool is_mu = true;
 		
 		nnet(int,int,int,int,int,double,string device="CPU",string opt="SGD");
-		torch::Tensor forward(torch::Tensor &);
+		torch::Tensor forward(torch::optim::SGD &, torch::Tensor &);
 		torch::Tensor predict(torch::Tensor &);
 		torch::Tensor cross_entropy_loss(const torch::Tensor &, const torch::Tensor &);
 		torch::Tensor mse_loss(const torch::Tensor &, const torch::Tensor &);
 		double compute_cost();
 		
 		//update algorithms
-		void update(int,int);
+		void update(int,int &);
 		void update_SGD();
 		void update_SAGA(int,int);
 		void update_SAG(int,int);		
-		void update_SVRG(int,int);
-		
-		//auxiliary functions for SVRG
+		void update_SVRG(int,int &);
 
 };
 
@@ -76,16 +77,18 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 		cout << "initialization ended." << endl;
 	}
 	if(optimizer == "SVRG"){
-		z1_SVRG = register_module("z1_SVRG", torch::nn::Linear(n_input,n_hidden));
-		z2_SVRG = register_module("z2_SVRG", torch::nn::Linear(n_hidden,n_output));
-		
-		SVRG_W1 = torch::zeros({n_hidden,n_input}).to(options_double);
-		SVRG_b1 = torch::zeros({n_hidden}).to(options_double);
-		SVRG_W2 = torch::zeros({n_output,n_hidden}).to(options_double);
-		SVRG_b2 = torch::zeros({n_output}).to(options_double);
-			
+		cout << optimizer << " --Snapshot storage..." << endl;
+		z1_snapshot = register_module("z1_snapshot", torch::nn::Linear(n_input,n_hidden));
+		z2_snapshot = register_module("z2_snapshot", torch::nn::Linear(n_hidden,n_output));
 		this->parameters()[4].set_data(this->parameters()[0].clone());
-		this->parameters()[6].set_data(this->parameters()[2].clone());
+		this->parameters()[6].set_data(this->parameters()[2].clone());	
+
+		mu_W1 = torch::zeros({n_hidden,n_input}).to(options_double);
+		mu_b1 = torch::zeros({n_hidden}).to(options_double);
+		mu_W2 = torch::zeros({n_output,n_hidden}).to(options_double);
+		mu_b2 = torch::zeros({n_output}).to(options_double);
+		
+		is_snapshot = true;
 		
 		cout << "initialization ended." << endl;
 	}
@@ -96,34 +99,38 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 }
 
 //_______________________________________________________________Forward
-torch::Tensor nnet::forward(torch::Tensor & X){
-	X = z1->forward(X);
-	X = torch::tanh(X)*1.2;
-	X = z2->forward(X);
-	X = torch::tanh(X)*1.2;
+torch::Tensor nnet::forward(torch::optim::SGD & opt, torch::Tensor & X){
+
+	if(optimizer=="SVRG"){
+		if(is_snapshot){
+			opt.zero_grad();
+			X = z1_snapshot->forward(X);
+			X = torch::tanh(X)*1.2;
+			X = z2_snapshot->forward(X);
+			X = torch::tanh(X)*1.2;		
+		}
+		else{
+			X = z1->forward(X);
+			X = torch::tanh(X)*1.2;
+			X = z2->forward(X);
+			X = torch::tanh(X)*1.2;
+		}
+	}
 	
+	else{
+		opt.zero_grad();
+		X = z1->forward(X);
+		X = torch::tanh(X)*1.2;
+		X = z2->forward(X);
+		X = torch::tanh(X)*1.2;		
+	}
+		
 	return X;
-}
-
-
-//____________________________________________________________Prediction
-torch::Tensor nnet::predict(torch::Tensor & X_test){
-	
-	return this->forward(X_test).argmax(1).to(torch::TensorOptions().dtype(torch::kInt64));
-	
-}
-
-
-//____________________________________________________________Error_rate
-double error_rate(const torch::Tensor & Y_test, const torch::Tensor & Y_hat){
-	
-	return 1 - (at::one_hot(Y_test,10) - at::one_hot(Y_hat,10)).abs().sum().item<double>()/(2.*double(Y_test.size(0)));
-	
 }
 
 //____________________________________________________________Reset cost
 double nnet::compute_cost(){
-	double x = cost * double(batch_size) / double(training_size);
+	double x = cost * double(batch_size) / ( double(training_size) );
 	cost = 0;
 	return x;
 }
@@ -163,25 +170,26 @@ double min_mnist(){
 //____________________________________________________Cross-entropy loss
 torch::Tensor nnet::cross_entropy_loss(const torch::Tensor & X, const torch::Tensor & Y){
 	torch::Tensor J = (- ( Y * torch::log( X ) + ( 1 - Y ) * torch::log( 1 - X ))).sum() / double(X.size(0));
-	cost += J.item<double>();
+	if(is_snapshot==false) cost += J.item<double>();
 	return J;
 }
 
 //______________________________________________________________MSE loss
 torch::Tensor nnet::mse_loss(const torch::Tensor & X, const torch::Tensor & Y){
 	torch::Tensor J = ((X-Y)*(X-Y)).sum() / double(X.size(0));
-	cost += J.item<double>();
+	if(is_snapshot==false) cost += J.item<double>();
 	return J;
 }
 
 //------------------- CUSTOM UPDATE ALGORITHMS METHODS -----------------
 
 //________________________________________________________________UPDATE
-void nnet::update(int epoch, int iter){
+void nnet::update(int epoch, int & iter){
 	
 	if(optimizer=="SGD") this->update_SGD();
 	else if(optimizer=="SAGA") this->update_SAGA(epoch,iter);
 	else if(optimizer=="SAG") this->update_SAG(epoch,iter);
+	else if(optimizer=="SVRG") this->update_SVRG(epoch, iter);
 }
 
 
@@ -202,11 +210,6 @@ void nnet::update_SAGA(int epoch,int i){
 	
 	//Init with SGD
 	if(epoch==1){
-
-		SAGA_W1[i].set_data(this->parameters()[0].grad().clone());
-		SAGA_b1[i].set_data(this->parameters()[1].grad().clone());
-		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
-		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
 		
 		SAGA_W1[training_size] += SAGA_W1[i].clone() / double(training_size);
 		SAGA_b1[training_size] += SAGA_b1[i].clone() / double(training_size);
@@ -273,5 +276,65 @@ void nnet::update_SAG(int epoch,int i){
 		SAGA_W2[i].set_data(this->parameters()[2].grad().clone());
 		SAGA_b2[i].set_data(this->parameters()[3].grad().clone());
 					
+	}
+}
+
+//__________________________________________________________________SVRG
+void nnet::update_SVRG(int epoch,int & i){
+	
+	//Init with SGD
+	if(is_mu){
+		
+
+		mu_W1 += this->parameters()[4].grad().clone() / double(training_size);
+		mu_b1 += this->parameters()[5].grad().clone() / double(training_size);
+		mu_W2 += this->parameters()[6].grad().clone() / double(training_size);
+		mu_b2 += this->parameters()[7].grad().clone() / double(training_size);
+
+	
+		if(i==training_size-1){
+			i = -1;
+			is_mu = false;
+		}
+	}
+	
+	//
+	else{
+		
+		if(is_snapshot==false){
+
+			this->parameters()[0].set_data(this->parameters()[0].clone() - learning_rate * ( this->parameters()[0].grad().clone() - this->parameters()[4].grad().clone() + mu_W1 ) );
+			this->parameters()[1].set_data(this->parameters()[1].clone() - learning_rate * ( this->parameters()[1].grad().clone() - this->parameters()[5].grad().clone() + mu_b1 ) );
+			this->parameters()[2].set_data(this->parameters()[2].clone() - learning_rate * ( this->parameters()[2].grad().clone() - this->parameters()[6].grad().clone() + mu_W2 ) );
+			this->parameters()[3].set_data(this->parameters()[3].clone() - learning_rate * ( this->parameters()[3].grad().clone() - this->parameters()[7].grad().clone() + mu_b2 ) );			
+			is_snapshot = true;
+		}
+		
+		else {
+			is_snapshot = false;
+			i--;
+		}
+		
+		if(i==training_size-1){
+			cout << "" << (epoch*2)-2+m << "\t\t" << this->compute_cost() << endl;
+			if(m<2){
+				i = -1;
+				m++;
+				}
+			else{
+				this->parameters()[4].set_data( this->parameters()[0].clone() );
+				this->parameters()[5].set_data( this->parameters()[1].clone() );
+				this->parameters()[6].set_data( this->parameters()[2].clone() );
+				this->parameters()[7].set_data( this->parameters()[3].clone() );
+				
+				mu_W1 -= mu_W1;
+				mu_b1 -= mu_b1;
+				mu_W2 -= mu_W2;
+				mu_b2 -= mu_b2;
+				
+				m = 1;
+				is_mu = true;
+			}
+		}
 	}
 }
