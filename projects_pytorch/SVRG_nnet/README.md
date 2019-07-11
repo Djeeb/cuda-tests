@@ -77,32 +77,81 @@ Imagine we have a neural network with 2 activation functions. We want to be able
 ![image](../data/drawing_SVRG.jpg)
 
 Our strategy will consist in :
+
 	- 1. doing a forward / back propagation with snapshot parameters and store dWi, but without updating any weight.
 	- 2. doing a forward / back propagation with real parameters and update them with SVRG method thanks to mu and dWi.
 	
 
 #### **Initialization**
 
-In order to compute 
-
+We decided to materialize the snapshot activation functions by two additional `torch::nn::Linear` modules, and initialize them with the real parameters. We also use the boolean
+`is_snapshot` that will help us switching from the real module to the snapshot one, and inversely :
 
 ```c++
-	if(is_mu){
-		
+//initializing modules and setting parameters equal to the real one. 
+z1_snapshot = register_module("z1_snapshot", torch::nn::Linear(n_input,n_hidden));
+z2_snapshot = register_module("z2_snapshot", torch::nn::Linear(n_hidden,n_output));
+this->parameters()[4].set_data(this->parameters()[0].clone());
+this->parameters()[6].set_data(this->parameters()[2].clone());	
 
-		mu_W1 += this->parameters()[4].grad().clone() / double(training_size);
-		mu_b1 += this->parameters()[5].grad().clone() / double(training_size);
-		mu_W2 += this->parameters()[6].grad().clone() / double(training_size);
-		mu_b2 += this->parameters()[7].grad().clone() / double(training_size);
-
+//initializing average of gradients w.r.t snapshot parameters
+mu_W1 = torch::zeros({n_hidden,n_input}).to(options_double);
+mu_b1 = torch::zeros({n_hidden}).to(options_double);
+mu_W2 = torch::zeros({n_output,n_hidden}).to(options_double);
+mu_b2 = torch::zeros({n_output}).to(options_double);
 	
-		if(i==training_size-1){
-			i = -1;
-			is_mu = false;
-		}
-	}
+//boolean helper to switch between real/snapshot modules
+is_snapshot = true;
 ```
 
+#### **Compute the average of gradients**
+
+In order to compute the average of gradients w.r.t the snapshot W tild, we have to create a special loop every `m*n` iterations, thanks to a bool variable `is_mu` : 
+during `n` iterations, we compute this average of gradients. 
+At the last iteration, we get out of the loop and reinitilalize the iteration number in order to pass through the training set `m` more times and compute an actual gradient descent :
+
+```c++
+if(is_mu){
+	//compute average of gradients w.r.t W tild. 
+	mu_W1 += this->parameters()[4].grad().clone() / double(training_size);
+	mu_b1 += this->parameters()[5].grad().clone() / double(training_size);
+	mu_W2 += this->parameters()[6].grad().clone() / double(training_size);
+	mu_b2 += this->parameters()[7].grad().clone() / double(training_size);
+
+	//get out of the loop
+	if(i==training_size-1){
+		i = -1;
+		is_mu = false;
+	}
+}
+```
+#### **Forward propagation*
+
+Now we have to change the forward propagation in order to pass to the good modules regarding the bool `is_snapshot` :
+
+```c++
+torch::Tensor nnet::forward( torch::Tensor & X ){
+
+//Snapshot forward
+if(is_snapshot){
+	opt.zero_grad();
+	X = z1_snapshot->forward(X);
+	X = torch::tanh(X)*1.2;
+	X = z2_snapshot->forward(X);
+	X = torch::tanh(X)*1.2;		
+}
+
+//Real forward
+else{
+	X = z1->forward(X);
+	X = torch::tanh(X)*1.2;
+	X = z2->forward(X);
+	X = torch::tanh(X)*1.2;
+}
+		
+return X;
+}
+```
 
 <a name="numerical"></a>
 ## III- Numerical application
