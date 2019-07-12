@@ -316,8 +316,8 @@ void nnet::update_SVRG(int epoch,int & i){
 		}
 		
 		if(i==training_size-1){
-			cout << "" << (epoch*2)-2+m << "\t\t" << this->compute_cost() << endl;
-			if(m<2){
+			cout << "" << (epoch*5)-5+m << "\t\t" << this->compute_cost() << endl;
+			if(m<5){
 				i = -1;
 				m++;
 				}

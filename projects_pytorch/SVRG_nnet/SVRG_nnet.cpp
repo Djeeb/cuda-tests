@@ -18,9 +18,9 @@ int main(){
 	
 	
 	//_______________________________________Initializing neural network
-		int epochs = 20;
+		int epochs = 8;
 		int batch_size = 1;
-		double learning_rate = 0.015;
+		double learning_rate = 0.005;
 		nnet neuralnet(n,batch_size,d,20,1,learning_rate,"GPU","SVRG");
 		torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
 		
@@ -62,7 +62,7 @@ int main(){
 	auto Y_hat = neuralnet.forward( optimizer, X_test );
 	auto loss =  neuralnet.mse_loss( Y_hat , Y_test );
 	
-	ofstream file("../../data/sin_app_SVRG_2.dat");
+	ofstream file("../../data/sin_app_SVRG_5.dat");
 	for(int i=0;i<test.size(0);i++){
 		file << test[i].item<double>() << "\t" << Y_hat[i].item<double>() << endl;
 	}
