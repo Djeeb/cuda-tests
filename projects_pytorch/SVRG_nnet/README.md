@@ -245,15 +245,11 @@ what could be the best learning rate in SVRG research paper, we tried different 
 
 Here are the test set approximations :
 
-<img src="../data/sin_test_SGD.png" alt="alt text" width="80%" height="80%">
+<img src="../data/sin_test_SGD.png" alt="alt text" width="100%" height="100%" title="SGD approximation (MSE = 3.23104e-05)">
 
-<img src="../data/sin_test_SVRG_2.png" alt="alt text" width="80%" height="80%">
+<img src="../data/sin_test_SVRG_2.png" alt="alt text" width="100%" height="100%" title="SVRG with 2 passes approximation (MSE = 0.00169617)">
 
-![image](../data/sin_test_SGD.png)
-
-![image](../data/sin_test_SVRG_2.png)
-
-
+<img src="../data/sin_test_SVRG_2.png" alt="alt text" width="100%" height="100%" title="SVRG with 2 passes approximation (MSE = 0.00169617)">
 
 <a name="euclidean"></a>
 ### 2- Approximation of the euclidean norm
