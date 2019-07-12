@@ -239,11 +239,17 @@ We use a one-hidden fully connected neural network :
 
 #### **Results**
 
-test set plot with sinus curve : 
+We tried two different approaches : one with 2 passes per W tild updated, one with 5 passes per W tild updated (i.e. `m=2` or `m=5`). As there is no proper theory of
+what could be the best learning rate in SVRG research paper, we tried different learning rates. Here are the results :
+
+
+Here are the test set approximations :
+
+![image](../data/sin_test_SGD.png)
 
 ![image](../data/sin_test_SVRG_2.png)
 
-![image](../data/sin_test_SGD_2.png)
+
 
 <a name="euclidean"></a>
 ### 2- Approximation of the euclidean norm

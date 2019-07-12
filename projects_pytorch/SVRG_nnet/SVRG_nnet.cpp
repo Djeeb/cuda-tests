@@ -20,7 +20,7 @@ int main(){
 	//_______________________________________Initializing neural network
 		int epochs = 20;
 		int batch_size = 1;
-		double learning_rate = 0.02;
+		double learning_rate = 0.015;
 		nnet neuralnet(n,batch_size,d,20,1,learning_rate,"GPU","SVRG");
 		torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
 		
