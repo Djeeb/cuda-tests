@@ -245,15 +245,21 @@ what could be the best learning rate in SVRG research paper, we tried different 
 
 Here are the test set approximations :
 
+*MSE loss convergence :*
+
+<img src="../data/SVRG_SGD_convergence_rate.png" alt="alt text" width="100%" height="100%" title="SGD approximation (MSE = 3.23104e-05)">
+
+
+
 *Approximation with SGD (MSE = 3.23104e-05) :*
 
 <img src="../data/sin_test_SGD.png" alt="alt text" width="100%" height="100%" title="SGD approximation (MSE = 3.23104e-05)">
 
-*Approximation with SVRG - 5 passes  (MSE = 0.00169617) :*
+*Approximation with SVRG - 2 passes  (MSE = 0.00169617) :*
 
 <img src="../data/sin_test_SVRG_2.png" alt="alt text" width="100%" height="100%" title="SVRG with 2 passes approximation (MSE = 0.00169617)">
 
-*Approximation with SVRG - 2 passes  (MSE = 0.00169617) :*
+*Approximation with SVRG - 5 passes  (MSE = 0.00272672) :*
 <img src="../data/sin_test_SVRG_5.png" alt="alt text" width="100%" height="100%" title="SVRG with 5 passes approximation (MSE = 0.00169617)">
 
 <a name="euclidean"></a>
