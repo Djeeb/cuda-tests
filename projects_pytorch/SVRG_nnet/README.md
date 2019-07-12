@@ -224,7 +224,7 @@ We will use the convergence rate of the loss function (MSE for all the approxima
 
 Here are the information of the training and the test sets : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20X_%7Btrain%7D%20%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%5B%200%2C%5Cpi%20%5Cright%20%5D%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B2000%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20X_%7Btrain%7D%20%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%5B%200%2C2%5Cpi%20%5Cright%20%5D%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B2000%7D)
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20X_%7Btest%7D%20%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%5B%200%2C%5Cpi%20%5Cright%20%5D%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B200%7D)
 
