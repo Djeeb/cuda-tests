@@ -245,6 +245,8 @@ what could be the best learning rate in SVRG research paper, we tried different 
 
 Here are the test set approximations :
 
+<img src="../data/sin_test_SGD.png" alt="alt text" width="50" height="50">
+
 ![image](../data/sin_test_SGD.png)
 
 ![image](../data/sin_test_SVRG_2.png)
