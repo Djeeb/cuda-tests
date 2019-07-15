@@ -7,7 +7,7 @@ int main(){
 	
 	//______________________________________________Initializing dataset
 		int d = 1;
-		int n = 2000; 
+		int n = 4000; 
 		int n_test = 200;
 		
 		auto X_train = torch::rand({n,d}).to(options_double) * 6.28;
@@ -20,8 +20,8 @@ int main(){
 	
 	
 	//_______________________________________Initializing neural network
-		int epochs = 4;
-		double learning_rate = 0.001;
+		int epochs = 40;
+		double learning_rate = 0.02;
 		nnet neuralnet(n,d,20,1,learning_rate,"GPU");
 		torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
 		
@@ -41,9 +41,9 @@ int main(){
 				X = neuralnet.forward( X );
 				auto loss =  neuralnet.mse_loss( X , Y );
 				loss.backward();
-				neuralnet.update();
+				neuralnet.update_SGD();
 			
-				if((k+1)%n == 0 ) cout << "" << k+(i-1)*n << "\t" << neuralnet.compute_cost() << endl;
+				if((k+1)%n == 0 ) cout << "" << k+1+(i-1)*n << "\t" << neuralnet.compute_cost() << endl;
 			}
 		}
 
@@ -63,5 +63,5 @@ int main(){
 	}
 	
 	cout << "\nTEST SET" << endl;
-	cout << "MSE = " << neuralnet.compute_cost() << endl;
+	cout << "MSE = " << neuralnet.compute_cost() * n / n_test << endl;
 }

@@ -20,9 +20,9 @@ class nnet : public torch::nn::Module {
 		torch::DeviceType device_type;
 		torch::nn::Linear z1{nullptr}, z2{nullptr};
 		
-		nnet(int,int,int,int,int,double,string device="CPU");
+		nnet(int,int,int,int,double,string device="CPU");
 		
-		torch::Tensor forward(torch::optim::SGD &, torch::Tensor &);
+		torch::Tensor forward( torch::Tensor &);
 		torch::Tensor mse_loss(const torch::Tensor &, const torch::Tensor &);
 		double compute_cost();
 		void update_SGD();
@@ -30,7 +30,7 @@ class nnet : public torch::nn::Module {
 };
 
 //________________________________________________________Initialization
-nnet::nnet(int n_train, int n_input,int n_hidden,int n_output,double alpha, string device,string opt): training_size(n_train), batch_size(n_batch),
+nnet::nnet(int n_train, int n_input,int n_hidden,int n_output,double alpha, string device): training_size(n_train),
 		   cost(0.), learning_rate(alpha) {
 
 	//Device choice
@@ -46,9 +46,9 @@ nnet::nnet(int n_train, int n_input,int n_hidden,int n_output,double alpha, stri
 }
 
 //_______________________________________________________________Forward
-torch::Tensor nnet::forward(torch::optim::SGD & opt, torch::Tensor & X){
+torch::Tensor nnet::forward(torch::Tensor & X){
 	X = z1->forward(X);
-	X = torch::relu(X);
+	X = torch::tanh(X)*1.2;	
 	X = z2->forward(X);
 	X = torch::tanh(X)*1.2;		
 	return X;

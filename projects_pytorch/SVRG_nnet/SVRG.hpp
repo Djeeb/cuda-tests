@@ -34,6 +34,7 @@ class nnet : public torch::nn::Module {
 		torch::Tensor forward_snapshot( torch::Tensor &);
 		void set_snapshot();
 		void update_SVRG();
+		void update_SGD();
 		void update_mu();
 		
 		
@@ -68,7 +69,7 @@ nnet::nnet(int n_train, int n_input,int n_hidden,int n_output,double alpha, stri
 //_______________________________________________________________Forward
 torch::Tensor nnet::forward( torch::Tensor & X ){	
 	X = z1->forward(X);
-	X = torch::relu(X);
+	X = torch::tanh(X)*1.2;
 	X = z2->forward(X);
 	X = torch::tanh(X)*1.2;
 		
@@ -77,7 +78,7 @@ torch::Tensor nnet::forward( torch::Tensor & X ){
 
 torch::Tensor nnet::forward_snapshot( torch::Tensor & X ){	
 	X = z1_snapshot->forward(X);
-	X = torch::relu(X);
+	X = torch::tanh(X)*1.2;
 	X = z2_snapshot->forward(X);
 	X = torch::tanh(X)*1.2;
 		
@@ -104,7 +105,7 @@ void nnet::set_snapshot(){
 	
 	//set snapshot to the most recent value of W
 	for(int i=0;i<4;i++){
-		this->parameters()[4].set_data( this->parameters()[0].clone() );
+		this->parameters()[i+4].set_data( this->parameters()[i].clone() );
 	}	
 	//reinitialize mu
 	mu[0] = torch::zeros({this->parameters()[0].size(0),this->parameters()[0].size(1)}).to(options_double);
@@ -124,5 +125,14 @@ void nnet::update_SVRG(){
 void nnet::update_mu(){
 	for(int i=0;i<4;i++){
 		mu[i] += this->parameters()[i+4].grad().clone() / double(training_size);
+	}
+}
+
+
+
+//___________________________________________________________________SGD
+void nnet::update_SGD(){
+	for(int i=0; i < 4; i++){
+		this->parameters()[i].set_data(this->parameters()[i] - learning_rate * this->parameters()[i].grad());			
 	}
 }
