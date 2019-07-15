@@ -28,7 +28,7 @@ class nnet : public torch::nn::Module {
 		torch::nn::Linear z1_snapshot{nullptr}, z2_snapshot{nullptr};
 		torch::Tensor 	mu_W1, mu_b1, mu_W2, mu_b2;
 		bool is_snapshot = false;
-		int m = 1;
+		int m = 1; int max_m = 1;
 		bool is_mu = true;
 		
 		nnet(int,int,int,int,int,double,string device="CPU",string opt="SGD");
@@ -316,8 +316,8 @@ void nnet::update_SVRG(int epoch,int & i){
 		}
 		
 		if(i==training_size-1){
-			cout << "" << (epoch*5)-5+m << "\t\t" << this->compute_cost() << endl;
-			if(m<5){
+			cout << "" << (epoch*max_m)-max_m+m << "\t\t" << this->compute_cost() << endl;
+			if(m<max_m){
 				i = -1;
 				m++;
 				}
