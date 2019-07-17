@@ -285,12 +285,12 @@ It is the same architecture as the one used in the SVRG research paper.
 #### **Parameters and hyperparameters**
 
 - For SGD :
-	- # epoch : 500
+	- #epoch : 500
 	- learning rate start : 0.025
 	- decay hyperparameter : 0.003
 	
 - For SVRG : 
-	- # epoch : 10 just like SGD above, 490 as real SVRG
+	- #epoch : 10 just like SGD above, 490 as real SVRG
 	- learning rate : between 0.16 and 0.20
 	- number of passes : 5 (as recommended in the research paper)
 	
