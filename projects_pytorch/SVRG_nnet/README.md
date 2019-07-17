@@ -260,6 +260,9 @@ we will use the same SGD set up as the one SVRG compete with. We tried many lear
 exponential one :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Calpha_%7B0%7D%20%3D%20learning%5C%3B%20rate%5C%3B%20initialization)
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Clambda%20%3D%20decay%5C%3B%20parameter)
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20t%20%3D%20epoch)
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Calpha_t%20%3A%3D%20%5Calpha_0%20%5C%3B%20e%5E%7B-%5Clambda%20t%7D)
