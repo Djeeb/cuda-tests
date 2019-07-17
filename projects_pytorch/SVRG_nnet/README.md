@@ -302,4 +302,4 @@ struggle to stay stable. As you can see below, as soon as the learning rate is a
 
 If we 
 
-![image](../data/SVRG_SGD_MNIST.jpg)
+![image](../data/SVRG_SGD_MNIST.png)
