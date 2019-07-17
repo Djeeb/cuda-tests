@@ -3,7 +3,7 @@ Following our exploration of variants of SGD algorithm (check our previous analy
 we decided to dig into the promising **Stochastic Variance Reduced Gradient** algorithm from [R. Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf).
 It is directly inspired from SDCA and SAG, but unlike SAG, it doesn't involve full gradients storage. Researchers say it is actually easily applicable for neural network learning.
 We want to compare convergence rate to SGD algorithm on a neural network structure. 
-You can check the whole implementation in `SVRG_nnet.hpp`.
+You can check the whole implementation in `SVRG.hpp`.
 
 Unlike previous experiments, our numerical tests will be based on a simple function approximation. 
 
@@ -12,6 +12,7 @@ Unlike previous experiments, our numerical tests will be based on a simple funct
 - **II- [ Implementing SVRG on libtorch ](#implementing)**
 	- 1- [Algorithm ](#algorithm)
 	- 2- [How to compute and store the gradient of W tild ?](#gradient)
+	- 3- [Warm start implementation](#warm)
 	
 - **III- [ Numerical application ](#numerical)**
 	- 1- [Approximation of sin(x) ](#sin)
@@ -84,129 +85,109 @@ Our strategy will consist in :
 
 #### **Initialization**
 
-We decided to materialize the snapshot activation functions by two additional `torch::nn::Linear` modules, and initialize them with the real parameters. We also use the boolean
-`is_snapshot` that will help us switching from the real module to the snapshot one, and inversely :
+We decided to materialize the snapshot activation functions by two additional `torch::nn::Linear` modules, which are kinds of "copies at time t" of real activation functions.
+We use a custom method `set_snapshot` to reinitialize snapshot weights and mu respectively to the real weight and 0 whenever we need :
 
 ```c++
-//initializing modules and setting parameters equal to the real one. 
+//Snapshot activation functions initialization
 z1_snapshot = register_module("z1_snapshot", torch::nn::Linear(n_input,n_hidden));
 z2_snapshot = register_module("z2_snapshot", torch::nn::Linear(n_hidden,n_output));
-this->parameters()[4].set_data(this->parameters()[0].clone());
-this->parameters()[6].set_data(this->parameters()[2].clone());	
 
-//initializing average of gradients w.r.t snapshot parameters
-mu_W1 = torch::zeros({n_hidden,n_input}).to(options_double);
-mu_b1 = torch::zeros({n_hidden}).to(options_double);
-mu_W2 = torch::zeros({n_output,n_hidden}).to(options_double);
-mu_b2 = torch::zeros({n_output}).to(options_double);
+//Initializating mu and snapshots
+mu.resize(4);
+this->set_snapshot();
+```
+Note that we get access to the parameter i through the syntax `.parameters()[i]`. W1 is is the first slot, b1 in the second, etc. W1_snapshot is in the fifth slot, b1_snapshot in the sixth, etc.
+Therefore here is the `set_snapshot` method that will be useful each time we end the 5 passes through the dataset :
+
+```c++
+void nnet::set_snapshot(){
 	
-//boolean helper to switch between real/snapshot modules
-is_snapshot = true;
+//set snapshot to the most recent value of W
+for(int i=0;i<4;i++){
+	this->parameters()[i+4].set_data( this->parameters()[i].clone() );
+}	
+//reinitialize mu
+mu[0] = torch::zeros({this->parameters()[0].size(0),this->parameters()[0].size(1)}).to(options_double);
+mu[1] = torch::zeros({this->parameters()[1].size(0)}).to(options_double);
+mu[2] = torch::zeros({this->parameters()[2].size(0),this->parameters()[2].size(1)}).to(options_double);
+mu[3] = torch::zeros({this->parameters()[3].size(0)}).to(options_double);
+	
+}
 ```
 
 #### **Compute the average of gradients**
 
-In order to compute the average of gradients w.r.t the snapshot W tild, we have to create a special loop every `m*n` iterations, thanks to a bool variable `is_mu` : 
-during `n` iterations, we compute this average of gradients. 
-At the last iteration, we get out of the loop and reinitilalize the iteration number in order to pass through the training set `m` more times and compute an actual gradient descent :
+In order to compute the average of gradients w.r.t the snapshot W tild, we use a simple update method that will be triggered every m*n iterations, during 1 epoch :
 
 ```c++
-if(is_mu){
-	//compute average of gradients w.r.t W tild. 
-	mu_W1 += this->parameters()[4].grad().clone() / double(training_size);
-	mu_b1 += this->parameters()[5].grad().clone() / double(training_size);
-	mu_W2 += this->parameters()[6].grad().clone() / double(training_size);
-	mu_b2 += this->parameters()[7].grad().clone() / double(training_size);
+void nnet::update_mu(){
 
-	//get out of the loop
-	if(i==training_size-1){
-		i = -1;
-		is_mu = false;
-	}
+for(int i=0;i<4;i++){
+	mu[i] += this->parameters()[i+4].grad().clone() / double(training_size);
+}
+
 }
 ```
+
 #### **Forward propagation**
 
-Now we have to change the forward propagation in order to pass to the good modules regarding the bool `is_snapshot`. Also note that we use two `torch::tanh()*1.2` activation functions
-that actually are useful for approximating sin(x) (see numerical application) :
+We have to duplicate the forward propagation method in order to compute both gradientd w.r.t real and snapshot parameters. 
+
+Here is the 'real' forward :
 
 ```c++
-torch::Tensor nnet::forward( torch::Tensor & X ){
-
-//Snapshot forward
-if(is_snapshot){
-	opt.zero_grad();
-	X = z1_snapshot->forward(X);
-	X = torch::tanh(X)*1.2;
-	X = z2_snapshot->forward(X);
-	X = torch::tanh(X)*1.2;		
-}
-
-//Real forward
-else{
+torch::Tensor nnet::forward( torch::Tensor & X ){	
 	X = z1->forward(X);
-	X = torch::tanh(X)*1.2;
+	X = torch::sigmoid(X);
 	X = z2->forward(X);
-	X = torch::tanh(X)*1.2;
-}
+	X = torch::softmax(X,1);
 		
-return X;
+	return X;
+}
+```
+
+Here is the 'snapshot' forward :
+
+```c++
+torch::Tensor nnet::forward_snapshot( torch::Tensor & X ){	
+	X = z1_snapshot->forward(X);
+	X = torch::sigmoid(X);
+	X = z2_snapshot->forward(X);
+	X = torch::softmax(X,1);
+		
+	return X;
 }
 ```
 
 #### **Update**
 
-We have to deal with several cases :
-
-- when we compute the snapshot parameters gradients : we don't do anything beside reducing `i` by 1 and set `is_snapshot` to `false` to prepare real pass. 
-- when we compute the real parameters gradients : we apply SVRG formula and set `is_snapshot` to `true`. In addition, if we're at the end of the training_set :
-	- if we didn't finish all the passes, we increment m and reinitialize `i`.
-	- if we already did all the passes, we set W tild to the real current parameters, set mu to 0, and `is_mu` to `true` in order to prepare the average of gradients calculation. 
-
-Here is the code :
+Update method for SVRG is quite simple as far as we gathered all the values before :
 
 ```c++
-//When it's snapshot parameters turn : we don't update anything
-if(is_snapshot==true){
-	is_snapshot = false;
-	i--;
-}
-
-//When it's real parameters turn : we update parameters with SVRG formula
-else{
-	this->parameters()[0].set_data(this->parameters()[0].clone() - learning_rate * ( this->parameters()[0].grad().clone() - this->parameters()[4].grad().clone() + mu_W1 ) );
-	this->parameters()[1].set_data(this->parameters()[1].clone() - learning_rate * ( this->parameters()[1].grad().clone() - this->parameters()[5].grad().clone() + mu_b1 ) );
-	this->parameters()[2].set_data(this->parameters()[2].clone() - learning_rate * ( this->parameters()[2].grad().clone() - this->parameters()[6].grad().clone() + mu_W2 ) );
-	this->parameters()[3].set_data(this->parameters()[3].clone() - learning_rate * ( this->parameters()[3].grad().clone() - this->parameters()[7].grad().clone() + mu_b2 ) );			
-	is_snapshot = true;
-}
-
-//deal with the end of the training set pass
-if(i==training_size-1){
-
-	//Can be m<5
-	if(m<2){
-		i = -1;
-		m++;
-		}
-	
-	//Updating W tild and prepare the next average of gradients computation
-	else{
-		this->parameters()[4].set_data( this->parameters()[0].clone() );
-		this->parameters()[5].set_data( this->parameters()[1].clone() );
-		this->parameters()[6].set_data( this->parameters()[2].clone() );
-		this->parameters()[7].set_data( this->parameters()[3].clone() );
-		
-		mu_W1 -= mu_W1;
-		mu_b1 -= mu_b1;
-		mu_W2 -= mu_W2;
-		mu_b2 -= mu_b2;
-		
-		m = 1;
-		is_mu = true;
-	}
+void nnet::update_SVRG(){
+for(int i=0;i<4;i++){
+	this->parameters()[i].set_data(this->parameters()[i].clone() - learning_rate * ( this->parameters()[i].grad().clone() - this->parameters()[i+4].grad().clone() + mu[i] ) );
+}	
 }
 ```
+
+
+<a name="warm"></a>
+### 3- Warm start implementation
+
+As stated in R. Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf), computing a *warm-start* 
+using SGD helps clearly SVRG to converge faster. At least, it intitialize `mu` with a good parameter quite close to a local minimum.
+We will try different approaches during the numerical application. Here is the SGD update algorithm :
+
+```c++
+void nnet::update_SGD(){
+for(int i=0; i < 4; i++){
+	this->parameters()[i].set_data(this->parameters()[i] - learning_rate * this->parameters()[i].grad());			
+}
+}
+```
+
 
 <a name="numerical"></a>
 ## III- Numerical application
