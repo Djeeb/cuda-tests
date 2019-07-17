@@ -8,7 +8,7 @@ int main(){
 //paramètres d'initialisation
 	int epochs = 10;
 	int training_size = 60000;
-	int batch_size = 6;
+	int batch_size = 1;
 	torch::DeviceType device_type = torch::kCPU;
 	nnet neuralnet(784,64,10,batch_size,0.1,device_type);
 	torch::Tensor Y_train,Y_hat,Y_test;
