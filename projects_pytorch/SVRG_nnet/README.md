@@ -17,6 +17,8 @@ Unlike previous experiments, our numerical tests will be based on a simple funct
 - **III- [ Numerical application ](#numerical)**
 	- 1- [Approximation of sin(x) ](#sin)
 	- 2- [Neural network on MNIST classification task](#MNIST)
+	
+- **III- [ Conclusion : SVRG performance highly depends on hyperparameters chosen ](#conclusion)**
 
 <a name="intuition"></a>
 ## I- Intuition behind SVRG
@@ -300,6 +302,14 @@ The reason why we chose a range between 0.16 and 0.20 for SVRG is that this is t
 struggle to stay stable. As you can see below, as soon as the learning rate is above 0.19, the losss function diverges :
 
 
-If we 
+
+If we take the best SGD set up vs the best SVRG set up, here is what we get : 
 
 ![image](../data/SVRG_SGD_MNIST.png)
+
+Accuracy on test sets :
+- 0.9784 for SGD
+- 0.9794 for SVRG
+
+<a name="conclusion"></a>
+## III- Conclusion : SVRG performance highly depends on hyperparameters chosen
