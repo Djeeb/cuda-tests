@@ -16,7 +16,7 @@ Unlike previous experiments, our numerical tests will be based on a simple funct
 	
 - **III- [ Numerical application ](#numerical)**
 	- 1- [Approximation of sin(x) ](#sin)
-	- 2- [Approximation of the euclidean norm](#euclidean)
+	- 2- [Neural network on MNIST classification task](#MNIST)
 
 <a name="intuition"></a>
 ## I- Intuition behind SVRG
@@ -192,16 +192,16 @@ for(int i=0; i < 4; i++){
 <a name="numerical"></a>
 ## III- Numerical application
 
-We will try SVRG, SGD, SAGA and SAG on a function approximation problem. More precisely, we will try to approximate :
+<a name="sin"></a>
+### 1- Approximation of sin(x)
+
+Our first numerical application concern a simple function approximation, more specifically sin(x) :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20f_%7B1%7D%3A%5Cmathbb%7BR%7D%5Crightarrow%20%5Cmathbb%7BR%7D%2C%20%5C%3B%20%5C%3B%20x%20%5Cmapsto%20%5Csin%28x%29)
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20f_%7B2%7D%3A%5Cmathbb%7BR%7D%5E%7Bd%7D%5Crightarrow%20%5Cmathbb%7BR%7D%2C%20%5C%3B%20%5C%3B%20x%20%5Cmapsto%20%5Cleft%20%5C%7C%20x%20%5Cright%20%5C%7C_%7B2%7D)
-
-We will use the convergence rate of the loss function (MSE for all the approximations). We will also use MSE loss value for the test set and plot the approximation to see if it fits with sin(x) curve.
-
-<a name="sin"></a>
-### 1- Approximation of sin(x)
+In order to judge how well the algorithm converge, 
+we will compute the value of the loss function (MSE in this case). 
+We will also use MSE loss value for the test set and plot the approximation to see if it fits with sin(x) curve.
 
 Here are the information of the training and the test sets : 
 
@@ -212,7 +212,7 @@ Here are the information of the training and the test sets :
 #### **Neural network architecture used**
 We use a one-hidden fully connected neural network : 
 
-	- one node for the input layer 
+	- 1 node for the input layer 
 	- 20 nodes on the hidden layer 
 	- 1 node for the output layer
 	- 1st activation function : relu
@@ -224,13 +224,18 @@ We tried two different approaches : one with 2 passes per W tild updated, one wi
 what could be the best learning rate in SVRG research paper, we tried different learning rates. Here are the results :
 
 
-Here are the test set approximations :
-
-*MSE loss convergence :*
+Here are the loss values :
 
 <img src="../data/SVRG_SGD_convergence_rate.png" alt="alt text" width="100%" height="100%" title="SGD approximation (MSE = 3.23104e-05)">
 
+*'sin_SVRG.dat'* has been set up with 2 passes, *'sin_SVRG_5.dat'* with 5 ones. Learning rate was 0.25 for SVRG and 0.1 for SGD. But we didn't perform
+any learning rate decay for SGD. After 40 epochs, the loss values were quite close, but there is a lot of unstability for SVRG after a few epochs. 
+Two main reasons could explain why SVRG didn't perform well :
 
+- We **roughly** selected different learning rates , but we didn't try all the possible learning rates between 0.20 and 0.25 for example.
+- No **warm start** was performed. 
+
+Here are the test set approximations :
 
 *Approximation with SGD (MSE = 3.23104e-05) :*
 
@@ -243,5 +248,18 @@ Here are the test set approximations :
 *Approximation with SVRG - 5 passes  (MSE = 0.00272672) :*
 <img src="../data/sin_test_SVRG_5.png" alt="alt text" width="100%" height="100%" title="SVRG with 5 passes approximation (MSE = 0.00169617)">
 
-<a name="euclidean"></a>
-### 2- Approximation of the euclidean norm
+This confirms that our model based on SVRG wasn't sharp enough to compete with SGD. 
+
+<a name="MNIST"></a>
+### 2- Neural network on MNIST classification task
+
+Now, we're back on MNIST and we will try to play with *hyperparameters* and *warm start* to set up the best SVRG algorithm possible.
+
+For some reason, SVRG is more useful when the model is already trained and near a local minimum. To pre-train the model (also known as warm start),
+we will use the same SGD set up as the one SVRG compete with. We tried many learning rates and learning rate decay algorithms. We finally choose the 
+exponential one :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Calpha_%7B0%7D%20%3D%20learning%5C%3B%20rate%5C%3B%20initialization)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Clambda%20%3D%20decay%5C%3B%20parameter)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20t%20%3D%20epoch)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Calpha_t%20%3A%3D%20%5Calpha_0%20%5C%3B%20e%5E%7B-%5Clambda%20t%7D)
