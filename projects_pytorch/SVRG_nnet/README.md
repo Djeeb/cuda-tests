@@ -324,6 +324,7 @@ struggle to stay stable. As you can see below, as soon as the learning rate is o
 
 ![image](../data/SVRG_compare_MNIST.png)
 
+While 0.17 and 0.18 converged well, 0.16, 0.19 and 0.20 diverged brutally after 50-200 epochs.
 It shows how important hyperparameters are in these variance reduced algorithms. 
 If we take the best SGD set up vs the best SVRG set up, here is what we get : 
 
