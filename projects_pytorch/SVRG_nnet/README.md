@@ -16,7 +16,7 @@ You can check the whole implementation in `SVRG.hpp`.
 	- 1- [Approximation of sin(x) ](#sin)
 	- 2- [Neural network on MNIST classification task](#MNIST)
 	
-- **III- [ Conclusion : SVRG performance highly depends on hyperparameters chosen ](#conclusion)**
+- **III- [ Conclusion : SVRG performance highly depends on parameters chosen ](#conclusion)**
 
 <a name="intuition"></a>
 ## I- Intuition behind SVRG
@@ -241,15 +241,16 @@ We use a one-hidden fully connected neural network :
 #### **Results**
 
 We tried two different approaches : one with 2 passes per W tilde updated, one with 5 passes per W tilde updated (i.e. `m=2` or `m=5`). As there is no proper theory of
-what could be the best learning rate in SVRG research paper, we tried different learning rates. Here are the results :
+what could be the best learning rate in SVRG research paper, we tried different learning rates and took the best ones.
 
 
-Here are the loss values :
+Here are the loss value graphs :
 
 <img src="../data/SVRG_SGD_convergence_rate.png" alt="alt text" width="100%" height="100%" title="SGD approximation (MSE = 3.23104e-05)">
 
 *'sin_SVRG.dat'* has been set up with 2 passes, *'sin_SVRG_5.dat'* with 5 ones. Learning rate was 0.25 for SVRG and 0.1 for SGD. But we didn't perform
-any learning rate decay for SGD. After 40 epochs, the loss values were quite close, but there is a lot of unstability for SVRG after a few epochs. 
+any learning rate decay for SGD. After 40 epochs, the loss values were quite close between the 2 SVRG algorithms, but there is a lot of unstability for both SVRG after a few epochs. 
+SGD was better in this case. 
 Two main reasons could explain why SVRG didn't perform well :
 
 - We **roughly** selected different learning rates , but we didn't try all the possible learning rates between 0.20 and 0.25 for example.
@@ -332,7 +333,11 @@ Accuracy on test sets :
 - 0.9784 for SGD
 - 0.9794 for SVRG
 
-In this case, SVRG outperformed SGD. 
+In this case, SVRG was slightly better than SGD. One can wonder if it would have been even better if the warm start was longer. 
 
 <a name="conclusion"></a>
-## III- Conclusion : SVRG performance highly depends on hyperparameters chosen
+## III- Conclusion : SVRG performance highly depends on parameters chosen
+
+The main difference between first and second experiment was the hyperparameter choice and the warm start. The last graph raises another question : what 
+if SGD learning rate decay wasn't the best one after 100 epochs ? if we had time to choose a better one, maybe the results would have been different. 
+SVRG is only a way not to waste so much time on choosing the best learning rate decay in order to avoid variance troubles with SGD. 
