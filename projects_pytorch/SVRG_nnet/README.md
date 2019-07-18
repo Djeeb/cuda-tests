@@ -1,17 +1,15 @@
-# Implementing SVRG to approximate simple functions
+# Implementing SVRG for neural networks
 Following our exploration of variants of SGD algorithm (check our previous analysis of [SAGA](https://github.com/Djeeb/stage_DL/tree/master/projects_pytorch/SAGA_nnet) algorithm),
 we decided to dig into the promising **Stochastic Variance Reduced Gradient** algorithm from [R. Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf).
 It is directly inspired from SDCA and SAG, but unlike SAG, it doesn't involve full gradients storage. Researchers say it is actually easily applicable for neural network learning.
-We want to compare convergence rate to SGD algorithm on a neural network structure. 
+We want to compare convergence rate to SGD algorithm on several neural network structures and learning tasks. 
 You can check the whole implementation in `SVRG.hpp`.
-
-Unlike previous experiments, our numerical tests will be based on a simple function approximation. 
 
 - **I- [ Intuition behind SVRG ](#intuition)**
 
 - **II- [ Implementing SVRG on libtorch ](#implementing)**
 	- 1- [Algorithm ](#algorithm)
-	- 2- [How to compute and store the gradient of W tild ?](#gradient)
+	- 2- [How to compute and store the gradient of W tilde ?](#gradient)
 	- 3- [Warm start implementation](#warm)
 	
 - **III- [ Numerical application ](#numerical)**
@@ -45,7 +43,7 @@ In addition, the convergence theories behind SVRG work even in a nonconvex learn
 <a name="algorithm"></a>
 ### 1- Algorithm
 
-SVRG algorithm requires to compute 2 parameters : the *snapshot* one, and the real one. The snapshot one, denoted by W tild, must be updated each m iterations. 
+SVRG algorithm requires to compute 2 parameters : the *snapshot* one, and the real one. The snapshot one, denoted by W tilde, must be updated each m*n iterations. 
 
 ________________________________________
 
@@ -70,25 +68,25 @@ ________________________________________
 ________________________________________
 
 <a name="gradient"></a>
-### 2- How to compute and store the gradient of W tild ?
+### 2- How to compute and store the gradient of W tilde ?
 
 What is complicated with SVRG is to store a snapshot of W every `m*n` iterations (we tried with `m=2` and `m=5` as suggested in the paper) in order to compute the gradient of an individual i at each iteration.
-We also have to compute the average of gradients w.r.t W tild whenever it changes. 
+We also have to compute the average of gradients w.r.t W tilde whenever it changes. 
 
-Imagine we have a neural network with 2 activation functions. We want to be able to compute both "real" parameter gradient and also "snapshot" gradient at each iteration. Here is a drawing of what we want to implement in c++ : 
+Imagine we have a neural network with 2 activation functions. We want to be able to compute both "real" parameters gradients and also "snapshots" gradients at each iteration. Here is a drawing of what we want to implement in c++ : 
 
 ![image](../data/drawing_SVRG.jpg)
 
 Our strategy will consist in :
 
-- 1. computing a forward / back propagation with snapshot parameters and store dWi, but without updating any weight.
+- 1. computing a forward / back propagation with snapshot parameters and store dWi, **without updating any weight**.
 - 2. computing a forward / back propagation with real parameters and update them with SVRG method thanks to mu and dWi.
 	
 
 #### **Initialization**
 
-We decided to materialize the snapshot activation functions by two additional `torch::nn::Linear` modules, which are kinds of "copies at time t" of real activation functions.
-We use a custom method `set_snapshot` to reinitialize snapshot weights and mu respectively to the real weight and 0 whenever we need :
+We decided to materialize the snapshot activation functions by two additional `torch::nn::Linear` modules, which can be seen as "copies at time t" of real activation functions.
+We use a custom method `set_snapshot` to reinitialize snapshot weights and mu respectively to the real parameters and 0 whenever we need :
 
 ```c++
 //Snapshot activation functions initialization
@@ -100,6 +98,7 @@ mu.resize(4);
 this->set_snapshot();
 ```
 Note that we get access to the parameter i through the syntax `.parameters()[i]`. W1 is is the first slot, b1 in the second, etc. W1_snapshot is in the fifth slot, b1_snapshot in the sixth, etc.
+We also decided to store mu in a vector of tensors of size 4. 
 Therefore here is the `set_snapshot` method that will be useful each time we end the 5 passes through the dataset :
 
 ```c++
@@ -120,7 +119,7 @@ mu[3] = torch::zeros({this->parameters()[3].size(0)}).to(options_double);
 
 #### **Compute the average of gradients**
 
-In order to compute the average of gradients w.r.t the snapshot W tild, we use a simple update method that will be triggered every m*n iterations, during 1 epoch :
+In order to compute the average of gradients w.r.t the snapshot W tilde, we use a simple update method that will be triggered every m*n iterations, during 1 epoch :
 
 ```c++
 void nnet::update_mu(){
@@ -175,11 +174,30 @@ for(int i=0;i<4;i++){
 ```
 
 
+#### **Cost computing**
+
+In order to avoid any cost computation when we calculate the loss function through the snapshot network, we added a boolean `is_cost` to any custom loss function. It is 
+set as `true` by default. If it is set as `false`, it doesn't update the cost.
+
+```c++
+torch::Tensor nnet::mse_loss(const torch::Tensor & X, const torch::Tensor & Y,bool is_cost){
+	torch::Tensor J = ((X-Y)*(X-Y)).sum() / double(batch_size);
+	if(is_cost) cost += J.item<double>();
+	return J;
+}
+```
+
 <a name="warm"></a>
 ### 3- Warm start implementation
 
-As stated in R. Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf), computing a *warm-start* 
-using SGD helps clearly SVRG to converge faster. At least, it intitialize `mu` with a good parameter quite close to a local minimum.
+As stated in [R. Johnson et al., 2013](https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf), computing a *warm-start* 
+using SGD  helps SVRG to converge faster. It intitialize `mu` with a good parameter quite close to a local minimum :
+
+> *"In order to apply SVRG to nonconvex problems such as neural networks, it is useful
+> to start with an initial vector w˜0 that is close to a local minimum (which may be obtained with
+> SGD), and then the method can be used to accelerate the local convergence rate of SGD (which may
+> converge very slowly by itself)"*
+
 We will try different approaches during the numerical application. Here is the SGD update algorithm :
 
 ```c++
@@ -222,7 +240,7 @@ We use a one-hidden fully connected neural network :
 
 #### **Results**
 
-We tried two different approaches : one with 2 passes per W tild updated, one with 5 passes per W tild updated (i.e. `m=2` or `m=5`). As there is no proper theory of
+We tried two different approaches : one with 2 passes per W tilde updated, one with 5 passes per W tilde updated (i.e. `m=2` or `m=5`). As there is no proper theory of
 what could be the best learning rate in SVRG research paper, we tried different learning rates. Here are the results :
 
 
