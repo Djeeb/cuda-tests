@@ -298,6 +298,8 @@ It is the same architecture as the one used in the SVRG research paper.
 	
 #### **Results**
 
+As the 50 first epochs are set in the same way, the graphs begin at epoch #50. Note that we needed to look at epoch #500 to see a real difference
+between SVRG and SGD.
 The reason why we chose a range between 0.16 and 0.20 for SVRG is that this is the range where the loss function begin to 
 struggle to stay stable. As you can see below, as soon as the learning rate is out of ]0.16,0.19[, the losss function diverges :
 
