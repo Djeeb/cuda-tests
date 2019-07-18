@@ -6,22 +6,23 @@
 #include <chrono>
 #include <vector>
 using namespace std;
-auto options_int = torch::TensorOptions().dtype(torch::kInt64).device(torch::kCPU);
-auto options_double = torch::TensorOptions().dtype(torch::kFloat64).device(torch::kCPU);
+auto options_int = torch::TensorOptions().dtype(torch::kInt64).device(torch::kGPU);
+auto options_double = torch::TensorOptions().dtype(torch::kFloat64).device(torch::kGPU);
 
 
 class nnet : public torch::nn::Module {
 	public:
 		int training_size;
 		int batch_size;
+		int n_layers;
 		double cost;
 		double learning_rate;
 		string optimizer;
 		
 		torch::DeviceType device_type;
-		torch::nn::Linear z1{nullptr}, z2{nullptr};
+		vector<torch::nn::Linear> z{nullptr};
 		
-		nnet(int,int,int,int,int,double,string device="CPU");
+		nnet(int,int,vector<int> &,double,string device="CPU");
 		
 		torch::Tensor forward( torch::Tensor &);
 		torch::Tensor cross_entropy_loss(const torch::Tensor &, const torch::Tensor &, bool is_cost=true);
@@ -35,15 +36,17 @@ class nnet : public torch::nn::Module {
 };
 
 //________________________________________________________Initialization
-nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,double alpha, string device): training_size(n_train), batch_size(n_batch),
+nnet::nnet(int n_train, int n_batch, vector<int> & layers,double alpha, string device): training_size(n_train), batch_size(n_batch), n_layers(layers.size()-1),
 		   cost(0.), learning_rate(alpha) {
 
 	//Device choice
 	device_type = (device=="GPU")?torch::kCUDA:torch::kCPU;
 
 	//Activation functions initialization
-	z1 = register_module("z1", torch::nn::Linear(n_input,n_hidden));
-	z2 = register_module("z2", torch::nn::Linear(n_hidden,n_output));
+	z.resize(n_layers);
+	for(int i = 0 ; i<n_layers ; i++){
+		z[i] = register_module(to_string(i), torch::nn::Linear(i,i+1));
+	}
 	
 	//Send Module to device and convert to double
 	this->to(device_type,torch::kFloat64);
@@ -52,9 +55,12 @@ nnet::nnet(int n_train, int n_batch, int n_input,int n_hidden,int n_output,doubl
 
 //_______________________________________________________________Forward
 torch::Tensor nnet::forward( torch::Tensor & X ){	
-	X = z1->forward(X);
-	X = torch::sigmoid(X);
-	X = z2->forward(X);
+	for(int i = 0 ; i<z.size()-1 ; i++){
+		X = z[i]->forward(X);
+		X = torch::relu(X);
+	}
+	
+	X = z[n_layers-1]->forward(X);
 	X = torch::softmax(X,1);
 		
 	return X;
@@ -88,7 +94,7 @@ torch::Tensor nnet::cross_entropy_loss(const torch::Tensor & X, const torch::Ten
 
 //___________________________________________________________________SGD
 void nnet::update_SGD(){
-	for(int i=0; i < 4; i++){
+	for(int i=0; i < n_layers*2; i++){
 		this->parameters()[i].set_data(this->parameters()[i] - learning_rate * this->parameters()[i].grad());			
 	}
 }
