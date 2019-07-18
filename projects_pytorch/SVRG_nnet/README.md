@@ -299,11 +299,11 @@ It is the same architecture as the one used in the SVRG research paper.
 #### **Results**
 
 The reason why we chose a range between 0.16 and 0.20 for SVRG is that this is the range where the loss function begin to 
-struggle to stay stable. As you can see below, as soon as the learning rate is above 0.19, the losss function diverges :
+struggle to stay stable. As you can see below, as soon as the learning rate is out of ]0.16,0.19[, the losss function diverges :
 
 ![image](../data/SVRG_compare_MNIST.png)
 
-
+It shows how important hyperparameters are in these variance reduced algorithms. 
 If we take the best SGD set up vs the best SVRG set up, here is what we get : 
 
 ![image](../data/SVRG_SGD_MNIST.png)
@@ -311,6 +311,8 @@ If we take the best SGD set up vs the best SVRG set up, here is what we get :
 Accuracy on test sets :
 - 0.9784 for SGD
 - 0.9794 for SVRG
+
+In this case, SVRG outperformed SGD. 
 
 <a name="conclusion"></a>
 ## III- Conclusion : SVRG performance highly depends on hyperparameters chosen
