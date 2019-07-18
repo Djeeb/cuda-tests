@@ -301,6 +301,7 @@ It is the same architecture as the one used in the SVRG research paper.
 The reason why we chose a range between 0.16 and 0.20 for SVRG is that this is the range where the loss function begin to 
 struggle to stay stable. As you can see below, as soon as the learning rate is above 0.19, the losss function diverges :
 
+![image](../data/SVRG_compare_MNIST.png)
 
 
 If we take the best SGD set up vs the best SVRG set up, here is what we get : 
