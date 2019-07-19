@@ -69,12 +69,22 @@ dataset :
 The most classical method to numerically minimize this function is the **standard gradient descent** algorithm. At iteration k, we compute the average of gradients 
 w.r.t W regarding the dataset and update the weight consequently with a small pace alpha :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmin%20J%28W%29%3A%3D%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7Df_%7Bi%7D%28W%29)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D%20-%20%5Calpha%20%5C%3A%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW%5E%7B%28k-1%29%7D_%7Bj%7D)
 
 The problem of this method is that each update is very computationally **expensive** as it requires to calculate n gradients. Therefore, **Stochastic Gradient 
 Descent** (SGD) was a way to reduce this cost by updating the weight with only one gradient calculated on a individual i randomly picked :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D%20-%20%5Calpha%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7DdW%5E%7B%28k-1%29%7D_%7Bi%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D%20-%20%5Calpha%20%5C%3A%20dW%5E%7B%28k-1%29%7D_%7Bi%7D)
+
+This popular methode was mathematically justified by the fact that the expectation of W at k knowing W at k-1 is identical. As soon as individual i is uniform randomly picked : 
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%20%5Cleft%20%5B%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20dW%5E%7B%28k-1%29%7D_%7Bj%7D%20%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20dW%5E%7B%28k-1%29%7D_%7Bj%7D)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%20%5Cleft%20%5BdW%5E%7B%28k-1%29%7D_%7Bi%7D%20%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20dW%5E%7B%28k-1%29%7D_%7Bj%7D)
+
+And 
+
+
 
 <a name="implementing"></a>
 ## II- Implementing SVRG on libtorch
