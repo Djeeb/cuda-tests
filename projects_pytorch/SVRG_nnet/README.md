@@ -6,7 +6,7 @@ We want to compare convergence rate to SGD algorithm on several neural network s
 You can check the whole implementation in `SVRG.hpp`.
 
 - **I- [ Intuition behind SVRG ](#intuition)**
-	- 1- [What is SVRG ](#abstract)
+	- 1- [What is SVRG ?](#abstract)
 	- 2- [Reducing variance while keeping the same expectation](#variance)
 
 - **II- [ Implementing SVRG on libtorch ](#implementing)**
@@ -24,7 +24,7 @@ You can check the whole implementation in `SVRG.hpp`.
 ## I- Intuition behind SVRG
 
 <a name="abstract"></a>
-### 1- What is SVRG
+### 1- What is SVRG ?
 
 The idea behind SVRG is to reduce the variance induced by SDG. Indeed, if SGD algorithm converges to classical gradient descent in expectation, 
 the variance of random sampling make the convergence rate much lower, as we have to choose a small learning rate or make it decrease at each iteration.The solution proposed by SVRG is to use a fixed and larger learning rate in the spirit of SAG ([Le Roux et al., 2012](https://arxiv.org/pdf/1202.6258.pdf)) without using any gradients storage.
@@ -60,8 +60,16 @@ At iteration (k), **SVRG** consists in picking an index i randomly among the n s
 <a name="variance"></a>
 ### 2- Reducing variance while keeping the same expectation
 
+Our general learning problem is still defined as a minimization of a cost function J regarding some parameters materialized by W. In our case, these parameters are the
+weights and biases of our neural network. Generally, the cost function is an average of loss functions that only differ by the input, i.e. the individual i of the 
+dataset :
 
- 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmin%20J%28W%29%3A%3D%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7Df_%7Bi%7D%28W%29) (1)
+
+The most classical method to numerically minimize this function is the **standard gradient descent** algorithm. At iteration k, we compute the average of gradients 
+w.r.t W regarding the dataset :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmin%20J%28W%29%3A%3D%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%7Df_%7Bi%7D%28W%29)
 
 <a name="implementing"></a>
 ## II- Implementing SVRG on libtorch
