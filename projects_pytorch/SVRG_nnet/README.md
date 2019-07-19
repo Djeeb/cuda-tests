@@ -101,7 +101,7 @@ We also have to compute the average of gradients w.r.t W tilde whenever it chang
 
 Imagine we have a neural network with 2 activation functions. We want to be able to compute both "real" parameters gradients and also "snapshots" gradients at each iteration. Here is a drawing of what we want to implement in c++ : 
 
-![image](../data/drawing_SVRG.jpg)
+![image](../data/SVRG_drawing.jpg)
 
 Our strategy will consist in :
 
