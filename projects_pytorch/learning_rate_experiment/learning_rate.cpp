@@ -9,20 +9,20 @@ int main(){
 	//______________________________________________Initializing dataset
 	auto train_set = torch::data::make_data_loader(
                      torch::data::datasets::MNIST("../../data").map(
-                     torch::data::transforms::Stack<>()),10);
+                     torch::data::transforms::Stack<>()),batch);
 
 	//_______________________________________Initializing neural network
 	int d = 784;
 	int n = 60000; 
 	int n_test = 10000;
-	int epochs = 10;
-	vector<int> layers = {784,512,256,64,10}
-	double learning_rate = 0.025;
+	int epochs = 500;
+	vector<int> layers = {d,512,256,64,10};
+	double learning_rate = 0.25;
 	double decay = 0.003;
 	double cost;
 	nnet neuralnet(n,batch,layers,learning_rate,"GPU");
 	torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
-				
+
 	//_________________________________________________Running algorithm
 	cout << "Iter" << "\t\t" << "loss" << endl;
 	auto t1 = chrono::system_clock::now();
@@ -44,7 +44,7 @@ int main(){
 		cost = neuralnet.compute_cost() * batch;
 		cout << "" << i << "\t" << cost << endl;
 		file << "" << i << "\t" << cost << endl;
-		neuralnet.learning_rate = learning_rate * exp(-decay*i);
+		neuralnet.learning_rate = learning_rate * exp(-decay*(i/double(2)));
 	}
 	
 	auto t2 = chrono::system_clock::now();
