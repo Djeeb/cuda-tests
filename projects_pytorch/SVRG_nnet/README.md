@@ -76,13 +76,23 @@ Descent** (SGD) was a way to reduce this cost by updating the weight with only o
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D%20-%20%5Calpha%20%5C%3A%20dW%5E%7B%28k-1%29%7D_%7Bi%7D)
 
-This popular methode was mathematically justified by the fact that the expectation of W at k knowing W at k-1 is identical. As soon as individual i is uniform randomly picked : 
+With this method, updates are computed with only one gradient calculation instead of n.
+This popular methode was mathematically justified by the fact that the expectation of W at k knowing W at k-1 is identical. Indeed, for the classical
+gradient descent we have : 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%20%5Cleft%20%5B%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20dW%5E%7B%28k-1%29%7D_%7Bj%7D%20%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20dW%5E%7B%28k-1%29%7D_%7Bj%7D)
 
+And for SGD, i can be seen as a random variable following a uniform distribution, and then : 
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%20%5Cleft%20%5BdW%5E%7B%28k-1%29%7D_%7Bi%7D%20%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%3D%20%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20dW%5E%7B%28k-1%29%7D_%7Bj%7D)
 
-And 
+However, some variance is introduced with SGD. Indeed, remembering the general formula of conditional variance : 
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathrm%7BVar%7D%5Cleft%20%28%20X%20%7C%20Y%20%5Cright%20%29%3D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20%5Cleft%20%28%20X-%20%5Cmathbb%7BE%7D%20%5Cleft%20%5B%20X%7C%20Y%5Cright%20%5D%20%5Cright%20%29%5E2%20%7C%20Y%20%5Cright%20%5D)
+
+We have in SGD case :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathrm%7BVar%7D%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k-1%29%7D%20%7C%20W%5E%7B%28k-1%29%7D%20%5Cright%20%29%3D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k-1%29%7D-%20%5Cmathbb%7BE%7D%20%5Cleft%20%5B%20dW_%7Bi%7D%5E%7B%28k-1%29%7D%7C%20W%5E%7B%28k-1%29%7D%5Cright%20%5D%20%5Cright%20%29%5E2%20%5Cright%20%7C%20W%5E%7B%28k-1%29%7D%20%5D)
 
 
 
