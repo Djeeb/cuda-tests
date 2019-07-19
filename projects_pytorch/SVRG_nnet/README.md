@@ -48,11 +48,11 @@ The only thing we will need from this variable is the gradient of J (regarding a
 In addition, each time W tilde is updated, we compute the classical gradient of the dataset (i.e. the average of all the individual gradients). It will be also used
 in the SVRG algorithm to increase stability :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cwidehat%7B%5Cmu%7D%20%3A%3D%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7Dd%5Cwidetilde%7BW%7D_%7Bj%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cwidetilde%7B%5Cmu%7D%3A%3D%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7Dd%5Cwidetilde%7BW%7D_%7Bj%7D)
 
 At iteration (k), **SVRG** consists in picking an index i randomly among the n samples and update the parameter W as follows : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%20%3D%20W%5E%7B%28k-1%29%7D%5C%3B%20-%20%5C%3B%20%5Calpha%20%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k-1%29%7D-d%5Cwidetilde%7BW%7D_%7Bi%7D%20%5C%3B%20&plus;%20%5C%3B%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7Dd%5Cwidetilde%7BW%7D_%7Bj%7D%20%5Cright%20%29) 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D%5C%3B%20-%5C%3B%20%5Calpha%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k-1%29%7D-d%5Cwidetilde%7BW%7D_%7Bi%7D&plus;%20%5Cwidetilde%7B%5Cmu%7D%20%5Cright%20%29) 
 
 <a name="variance"></a>
 ### 2- Reducing variance while keeping the same expectation
