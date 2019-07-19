@@ -27,16 +27,19 @@ You can check the whole implementation in `SVRG.hpp`.
 ### 1- What is SVRG
 
 The idea behind SVRG is to reduce the variance induced by SDG. Indeed, if SGD algorithm converges to classical gradient descent in expectation, 
-the variance of random sampling make the convergence rate much lower, as we have to choose a small learning rate or make it decrease at each iteration.
-
-The solution proposed by SVRG is to use a fixed and larger learning rate in the spirit of SAG ([Le Roux et al., 2012](https://arxiv.org/pdf/1202.6258.pdf)) without using any gradients storage.
+the variance of random sampling make the convergence rate much lower, as we have to choose a small learning rate or make it decrease at each iteration.The solution proposed by SVRG is to use a fixed and larger learning rate in the spirit of SAG ([Le Roux et al., 2012](https://arxiv.org/pdf/1202.6258.pdf)) without using any gradients storage.
 In addition, the convergence theories behind SVRG work even in a nonconvex learning task. Thus, it is specially designed for neural networks.
+
+The idea is simple : at each m * n step, we keep the parameter W in memory. For the next m * n steps, we also compute its gradient (in addition to the real parameter's one) to add stabilization during the update task. 
+This W kept in memory is called a "snapshot" and is denoted by W tilde. Here is a drawing of how the SVRG algorithm roughly works compared to SGD : 
+
+![image](../data/SVRG_SGD_update_drawing.jpg)
 
 As usual, we denote the gradient of J w.r.t a parameter W at iteration (k) on the ith sample by : 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20dW_%7Bi%7D%5E%7B%28k%29%7D%3A%3D%20%5Cleft%20%28%20%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20W%7D%20%5Cright%20%29_%7Bi%7D%5E%7B%28k%29%7D)
 
-W tilde denotes a *snapshot* of the parameter i.e. a copy of W taken at a certain iteration s.  It will be used in the algorithm to reduce the impact
+As we said, W tilde denotes a *snapshot* of the parameter i.e. a copy of W taken at a certain iteration s.  It will be used in the algorithm to reduce the impact
 of the variance  Typically, this W tilde is updated every 2n or 5n (n = number of samples in the dataset) :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cwidetilde%7BW%7D%20%3A%3D%20W%5E%7B%5Cleft%20%28%20s%20%5Cright%20%29%7D)
@@ -156,7 +159,7 @@ for(int i=0;i<4;i++){
 
 #### **Forward propagation**
 
-We have to duplicate the forward propagation method in order to compute both gradientd w.r.t real and snapshot parameters. 
+We have to duplicate the forward propagation method in order to compute both gradients w.r.t real and snapshot parameters. 
 
 Here is the 'real' forward :
 
