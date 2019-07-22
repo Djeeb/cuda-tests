@@ -90,11 +90,19 @@ However, some variance is introduced with SGD. Indeed, remembering the general f
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathrm%7BVar%7D%5Cleft%20%28%20X%20%7C%20Y%20%5Cright%20%29%3D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20%5Cleft%20%28%20X-%20%5Cmathbb%7BE%7D%20%5Cleft%20%5B%20X%7C%20Y%5Cright%20%5D%20%5Cright%20%29%5E2%20%7C%20Y%20%5Cright%20%5D)
 
-We have in SGD case
+Therefore, we have in SGD case : 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathrm%7BVar%7D%5Cleft%20%28%20W%5E%7B%28k%29%7D%20%5C%3B%20%7C%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%29%20%3D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20%5Cleft%20%28%20W%5E%7B%28k%29%7D%20%5Cright%20%29%5E2%20%5C%3B%20%7C%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20-%20%5Cleft%20%28%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20%5Cleft%20W%5E%7B%28k%29%7D%20%5Cright%20%5C%3B%20%7C%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%5Cright%20%29%5E2)
 
+Yet :
 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20%5Cleft%20%28%20W%5E%7B%28k%29%7D%20%5Cright%20%29%5E2%20%5C%3B%20%7C%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%3D%20%5Cleft%20%28%20W%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2%5C%3B%20-%20%5C%3B2%5Calpha%20W%5E%7B%28k-1%29%7D%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D%5C%3B%20&plus;%20%5C%3B%20%5Calpha%5E2%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%5Cleft%20%28%20dW_%7Bj%7D%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cleft%20%28%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20W%5E%7B%28k%29%7D%20%5C%3B%20%7C%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%5Cright%20%29%5E2%20%3D%20%5Cleft%20%28%20W%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2%5C%3B%20-%20%5C%3B2%5Calpha%20W%5E%7B%28k-1%29%7D%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D%5C%3B%20&plus;%20%5C%3B%20%5Calpha%5E2%5Cfrac%7B1%7D%7Bn%5E2%7D%5Cleft%20%28%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20dW_%7Bj%7D%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2)
+
+And finally we obtain the variance of W for SGD case : 
+
+![equation]()
 
 <a name="implementing"></a>
 ## II- Implementing SVRG on libtorch
