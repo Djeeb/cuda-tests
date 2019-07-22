@@ -80,11 +80,11 @@ With this method, updates are computed with only one gradient calculation instea
 This popular methode was mathematically justified by the fact that the expectation of W at k knowing W at k-1 is identical. As it is not a stochastic method, for the classical
 gradient descent we have obviously :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20W%5E%7B%28k%29%7D%20%7C%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%3D%20W%5E%7B%28k%29%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20W%5E%7B%28k%29%7D%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%3D%20W%5E%7B%28k-1%29%7D-%5Calpha%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D)
 
 And for SGD, index *i* can be seen as a random variable following a uniform distribution, and then :
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20W%5E%7B%28k%29%7D%20%7C%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%20%3D%20W%5E%7B%28k-1%29%7D%20-%20%5Calpha%20%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D%20%3D%20W%5E%7B%28k%29%7D)
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20W%5E%7B%28k%29%7D%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%3D%20W%5E%7B%28k-1%29%7D-%5Calpha%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D)
 
 However, some variance is introduced with SGD. Indeed, remembering the general formula of conditional variance
 
@@ -103,6 +103,18 @@ Yet :
 And finally we obtain the variance of W for SGD case : 
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathrm%7BVar%7D%5Cleft%20%28%20W%5E%7B%28k%29%7D%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%29%3D%20%5Calpha%5E2%5Cleft%20%28%20%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20%5Cleft%20%28%20dW_%7Bj%7D%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2%20%5C%3B%20-%5C%3B%20%5Cfrac%7B1%7D%7Bn%5E2%7D%5Cleft%20%28%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2%20%5Cright%20%29)
+
+After thousands of iterations with SGD, this variance is not optimal as we need to be "more accurate" when we update W. Thus, the only way to reduce variance is to reduce alpha 
+consequently, at the cost of a slower descent. 
+
+But what if we try to reduce the other term of the variance, i.e. reshaping the gradient update algorithm ? As we have seen before, SVRG algorithm is introducing 2 other terms to
+stabilize variance :
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D%5C%3B%20-%5C%3B%20%5Calpha%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k-1%29%7D-d%5Cwidetilde%7BW%7D_%7Bi%7D&plus;%20%5Cwidetilde%7B%5Cmu%7D%20%5Cright%20%29) 
+
+
+
+ 
 
 <a name="implementing"></a>
 ## II- Implementing SVRG on libtorch
