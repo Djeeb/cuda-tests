@@ -112,9 +112,13 @@ stabilize variance :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20W%5E%7B%28k%29%7D%3A%3DW%5E%7B%28k-1%29%7D%5C%3B%20-%5C%3B%20%5Calpha%5Cleft%20%28%20dW_%7Bi%7D%5E%7B%28k-1%29%7D-d%5Cwidetilde%7BW%7D_%7Bi%7D&plus;%20%5Cwidetilde%7B%5Cmu%7D%20%5Cright%20%29) 
 
+The expectation is the same as for SGD and standard gradient : 
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20W%5E%7B%28k%29%7D%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%3D%20W%5E%7B%28k-1%29%7D-%5Calpha%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%5Cleft%20%28%20dW_%7Bj%7D%5E%7B%28k-1%29%7D%20-%20d%5Cwidetilde%7BW%7D_%7Bj%7D%20%5Cright%20%29%5C%3B%20&plus;%20%5Calpha%20%5Cwidetilde%7B%5Cmu%7D)
+
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathbb%7BE%7D%5Cleft%20%5B%20W%5E%7B%28k%29%7D%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%5D%3D%20W%5E%7B%28k-1%29%7D-%5Calpha%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D)
 
 
- 
 
 <a name="implementing"></a>
 ## II- Implementing SVRG on libtorch
