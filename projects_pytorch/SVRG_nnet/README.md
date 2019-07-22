@@ -102,7 +102,7 @@ Yet :
 
 And finally we obtain the variance of W for SGD case : 
 
-![equation]()
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cmathrm%7BVar%7D%5Cleft%20%28%20W%5E%7B%28k%29%7D%5C%3B%20%7C%20%5C%3B%20W%5E%7B%28k-1%29%7D%20%5Cright%20%29%3D%20%5Calpha%5E2%5Cleft%20%28%20%5Cfrac%7B1%7D%7Bn%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%20%5Cleft%20%28%20dW_%7Bj%7D%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2%20%5C%3B%20-%5C%3B%20%5Cfrac%7B1%7D%7Bn%5E2%7D%5Cleft%20%28%20%5Csum_%7Bj%3D1%7D%5E%7Bn%7DdW_%7Bj%7D%5E%7B%28k-1%29%7D%20%5Cright%20%29%5E2%20%5Cright%20%29)
 
 <a name="implementing"></a>
 ## II- Implementing SVRG on libtorch
