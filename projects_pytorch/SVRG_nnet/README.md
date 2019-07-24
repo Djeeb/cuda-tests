@@ -308,7 +308,7 @@ We will also use MSE loss value for the test set and plot the approximation to s
 
 Here are the information of the training and the test sets : 
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20X_%7Btrain%7D%20%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%5B%200%2C2%5Cpi%20%5Cright%20%5D%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B2000%7D)
+![equation](https://latex.codecogs.com/png.latex?X_%7Btrain%7D%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%20%5Cleft%20%5B%200%2C2%5Cpi%20%5Cright%20%5D%20%5Cright%20%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B10%5E4%7D)
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B120%7D%20X_%7Btest%7D%20%5Csim%20%5Cmathbb%7BU%7D%5Cleft%20%28%5B%200%2C2%5Cpi%20%5Cright%20%5D%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B200%7D)
 
@@ -318,13 +318,43 @@ We use a one-hidden fully connected neural network :
 	- 1 node for the input layer 
 	- 20 nodes on the hidden layer 
 	- 1 node for the output layer
-	- 1st activation function : relu
-	- 2nd activation function : tanh() * 1.2 in order to fit with the highest and lowest values of sin(x)
+	- 1st activation function : tanh() * 1.5 in order to fit with the highest and lowest values of sin(x)
+	- 2nd activation function : tanh() * 1.5 in order to fit with the highest and lowest values of sin(x)
 
 #### **Results**
 
-We tried two different approaches : one with 2 passes per W tilde updated, one with 5 passes per W tilde updated (i.e. `m=2` or `m=5`). As there is no proper theory of
-what could be the best learning rate in SVRG research paper, we tried different learning rates and took the best ones.
+The first thing we noticed is that convergence rate highly depends on the 10 000 data points randomly picked and the weights initialization. 
+Therefore, we decided to use the **same parameters and dataset** for all the applications. We used a *warm start* and a *learning rate decay* with SGD (see next section) in order to smooth the
+beginning of SVRG. There is no difference between the warm start and the actual algorithm used for SVRG : 
+
+**For SGD** : 200 epochs
+
+	- learning rate : 0.08
+	- decay : 0.03
+
+**For SVRG** : 200 epochs
+
+	- Warm start with SGD (20 epochs) 
+		- learning rate : 0.08
+		- decay : 0.03
+	- learning rate : 0.01;
+
+Here is the graph of the loss function, starting at epoch 18 :
+
+![image](../data/sin_SVRG_vs_SGD.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Here are the loss value graphs :
