@@ -1,33 +1,35 @@
-#include "SGD_decay.hpp"
+#include "SGD.hpp"
+#include "function_gen.hpp"
 using namespace std;
-ofstream file("../../data/mnist_SGD_decay/SGD_first_try.dat");
+ofstream file("../../data/mnist_SVRG/SGD_0_025_expdecay_0_001.dat");
 
 int main(){
 	
-	int batch = 60;
+	int batch = 10;
 
 	//______________________________________________Initializing dataset
 	auto train_set = torch::data::make_data_loader(
                      torch::data::datasets::MNIST("../../data").map(
-                     torch::data::transforms::Stack<>()),batch);
+                     torch::data::transforms::Stack<>()),10);
 
 	//_______________________________________Initializing neural network
 	int d = 784;
 	int n = 60000; 
 	int n_test = 10000;
-	int epochs = 500;
-	vector<int> layers = {d,512,256,64,10};
-	double learning_rate = 0.25;
-	double decay = 0.003;
+	int epochs = 100;
+	int k = 0;
+	double learning_rate = 0.03;
+	double decay = 0.01;
 	double cost;
-	nnet neuralnet(n,batch,layers,learning_rate,"GPU");
+	nnet neuralnet(n,batch,d,100,10,learning_rate,"CPU");
 	torch::optim::SGD optimizer(neuralnet.parameters(), 0.01);	
-
+				
 	//_________________________________________________Running algorithm
 	cout << "Iter" << "\t\t" << "loss" << endl;
 	auto t1 = chrono::system_clock::now();
 
 	for(int i=1; i <= epochs;i++){
+		k=1;
 		for(auto& sample : *(train_set)){
 			optimizer.zero_grad();
 			
@@ -36,24 +38,24 @@ int main(){
 			auto Y = at::one_hot(sample.target,10).to(options_double);
 			
 			X = neuralnet.forward( X );
-			auto loss =  neuralnet.cross_entropy_loss( X , Y );
+			auto loss =  neuralnet.mse_loss( X , Y );
 			loss.backward();
 			neuralnet.update_SGD();
 		
+
+			k++;
 		}
 		cost = neuralnet.compute_cost() * batch;
 		cout << "" << i << "\t" << cost << endl;
 		file << "" << i << "\t" << cost << endl;
-		neuralnet.learning_rate = learning_rate * exp(-decay*(i/double(2)));
+		neuralnet.learning_rate = learning_rate/(1+decay*i);
 	}
 	
 	auto t2 = chrono::system_clock::now();
 	chrono::duration<double> diff = t2 - t1;
 	cout << "Phase d'apprentissage terminée en " << diff.count() << " sec" << endl;
-		
+
 	//______________________________________________________Evaluating model
-	
-//______________________________________________________Evaluating model
 	auto test_set = torch::data::make_data_loader(
                      torch::data::datasets::MNIST("../../data",torch::data::datasets::MNIST::Mode::kTest).map(
                      torch::data::transforms::Stack<>()),n_test);
