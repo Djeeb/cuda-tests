@@ -370,11 +370,33 @@ some other SGD set up that were not working well on the first epochs, managed to
 
 ![image](../data/sin_SGD_SGD_best.png)
 
-*But if we look from epoch 60 to 200, this SGD set up clearly outperfored the first one*
+*But if we zoom on epoch 60 to 200, this SGD set up clearly outperfored the first one*
 
 ![image](../data/sin_SGD_SGD_best_2.png)
 
-As we can see, 
+As we can see, SGD_best convergence rate is really fast until epoch 60. What we can do is make a mix between SGD and SVRG by increasing our warm start from 20 to 60 epoch
+and continue with SVRG for the last 140 epochs. Here is our **optimal set up** for this problem, knowing that we don't want to increase the epoch number :
+
+**For SVRG_best** : 200 epochs
+
+	- Warm start with SGD (60 epochs) 
+		- learning rate : 0.15
+		- decay : 0.1
+	- SVRG 5 passes (180 epochs)
+	- learning rate : 0.021;
+
+*SVRG_best set up performed slightly better than SGD_best set up*
+![image](../data/sin_SVRG_vs_SGD_best_2.png)
+
+One can see with the test set approximation that our new model has greatly improved the performance :
+
+![image](sin_test_SVRG_best.png)
+
+#### **Conclusion**
+
+Warm start is quite important as we will see in the next section. One can wonder if SVRG can be used as a "booster" for SGD when it becomes
+difficult and costly to choose the best learning rate that increase the convergence rate. This is why a "mix" between SVRG and SGD can be a good 
+trade-off when it comes to choosing a gradient descent algorithm. 
 
 
 <a name="MNIST"></a>
