@@ -337,52 +337,25 @@ beginning of SVRG. There is no difference between the warm start and the actual 
 	- Warm start with SGD (20 epochs) 
 		- learning rate : 0.08
 		- decay : 0.03
+	- SVRG 5 passes (180 epochs)
 	- learning rate : 0.01;
 
-Here is the graph of the loss function, starting at epoch 18 :
+We tried a lot of different parameters combinations in order to find the best set up for SVRG. Here is the graph of the loss functions, starting at epoch 18 :
 
 ![image](../data/sin_SVRG_vs_SGD.png)
 
+SVRG loss rate (in purple) clearly outperformed SGD (in green).
+
+
+Here are the test set approximations (200 points):
+
+*Approximation with SGD (MSE = 1.42038e-05) :*
 
 
 
+*Approximation with SVRG (MSE = 0.00169617) :*
 
 
-
-
-
-
-
-
-
-
-
-Here are the loss value graphs :
-
-<img src="../data/SVRG_SGD_convergence_rate.png" alt="alt text" width="100%" height="100%" title="SGD approximation (MSE = 3.23104e-05)">
-
-*'sin_SVRG.dat'* has been set up with 2 passes, *'sin_SVRG_5.dat'* with 5 ones. Learning rate was 0.25 for SVRG and 0.1 for SGD. But we didn't perform
-any learning rate decay for SGD. After 40 epochs, the loss values were quite close between the 2 SVRG algorithms, but there is a lot of unstability for both SVRG after a few epochs. 
-SGD was better in this case. 
-Two main reasons could explain why SVRG didn't perform well :
-
-- We **roughly** selected different learning rates , but we didn't try all the possible learning rates between 0.20 and 0.25 for example.
-- No **warm start** was performed. 
-
-Here are the test set approximations :
-
-*Approximation with SGD (MSE = 3.23104e-05) :*
-
-<img src="../data/sin_test_SGD.png" alt="alt text" width="100%" height="100%" title="SGD approximation (MSE = 3.23104e-05)">
-
-*Approximation with SVRG - 2 passes  (MSE = 0.00169617) :*
-
-<img src="../data/sin_test_SVRG_2.png" alt="alt text" width="100%" height="100%" title="SVRG with 2 passes approximation (MSE = 0.00169617)">
-
-*Approximation with SVRG - 5 passes  (MSE = 0.00272672) :*
-<img src="../data/sin_test_SVRG_5.png" alt="alt text" width="100%" height="100%" title="SVRG with 5 passes approximation (MSE = 0.00169617)">
-
-This confirms that our model based on SVRG wasn't sharp enough to compete with SGD. 
 
 <a name="MNIST"></a>
 ### 2- Neural network on MNIST classification task
