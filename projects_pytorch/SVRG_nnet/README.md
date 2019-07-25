@@ -453,7 +453,7 @@ Just like the previous example, one curious thing we notice is this shift at epo
 ![image](../data/mnist_shift_SVRG.png)
 
 One can wonder if it would have been even better if the warm start was shorter. Indeed, as we can see above, the SGD gradient descent fastness start to 
-decrease around 5 epochs. 
+decrease around 3-4 epochs. 
 
 Accuracy on test sets :
 - 0.9784 for SGD

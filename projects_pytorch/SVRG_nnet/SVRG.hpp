@@ -76,18 +76,18 @@ nnet::nnet(int n_train,int n_batch, int n_input,int n_hidden,int n_output,double
 //_______________________________________________________________Forward
 torch::Tensor nnet::forward( torch::Tensor & X ){	
 	X = z1->forward(X);
-	X = torch::tanh(X) * 1.5;
+	X = torch::sigmoid(X);
 	X = z2->forward(X);
-	X = torch::tanh(X) * 1.5;
+	X = torch::softmax(X,1);
 		
 	return X;
 }
 
 torch::Tensor nnet::forward_snapshot( torch::Tensor & X ){	
 	X = z1_snapshot->forward(X);
-	X = torch::tanh(X) * 1.5;
+	X = torch::sigmoid(X);
 	X = z2_snapshot->forward(X);
-	X = torch::tanh(X) * 1.5;
+	X = torch::softmax(X,1);
 		
 	return X;
 }
