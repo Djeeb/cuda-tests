@@ -18,7 +18,7 @@ You can check the whole implementation in `SVRG.hpp`.
 	- 1- [Approximation of sin(x) ](#sin)
 	- 2- [Neural network on MNIST classification task](#MNIST)
 	
-- **III- [ Conclusion : SVRG performance highly depends on parameters chosen ](#conclusion)**
+- **III- [ Conclusion ](#conclusion)**
 
 <a name="intuition"></a>
 ## I- Intuition behind SVRG
@@ -461,8 +461,8 @@ Accuracy on test sets :
 - 0.9794 for SVRG
 
 <a name="conclusion"></a>
-## III- Conclusion : SVRG performance highly depends on parameters chosen
+## III- Conclusion
 
-The main difference between first and second experiment was the hyperparameter choice and the warm start. The last graph raises another question : what 
-if SGD learning rate decay wasn't the best one after 100 epochs ? if we had time to choose a better one, maybe the results would have been different. 
-SVRG is only a way not to waste so much time on choosing the best learning rate decay in order to avoid variance troubles with SGD. 
+As we saw, SVRG highly depends on the learning rate (which is logical and obvious), and more suprisingly on the warm start based on SGD. 
+SVRG presents an interesting alternative to learning rate decay. During numerical applications, data scientists may gain time on parameters choice as 
+they don't have to care about learning rate decay.
