@@ -390,7 +390,7 @@ and continue with SVRG for the last 140 epochs. Here is our **optimal set up** f
 
 One can see with the test set approximation that our new model has greatly improved the performance :
 
-![image](sin_test_SVRG_best_2.png)
+![image](sin_test_SVRG_best.png)
 
 #### **Conclusion**
 
