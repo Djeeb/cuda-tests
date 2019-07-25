@@ -351,9 +351,15 @@ Here are the test set approximations (200 points):
 
 *Approximation with SGD (MSE = 1.42038e-05) :*
 
+![image](../data/sin_test_SGD_bad.png)
 
+*Approximation with SVRG (MSE = 4.64745e-06) :*
 
-*Approximation with SVRG (MSE = 0.00169617) :*
+![image](../data/sin_test_SVRG_bad.png)
+
+As we can see, our model isn't sharp enough to clearly approximate the sinus curve. In addition, even if this SGD set up was the best to make a warm start for SVRG,
+some other SGD set up that were not working well on the first epochs, managed to do better in 200 epochs :
+
 
 
 
