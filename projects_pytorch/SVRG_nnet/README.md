@@ -358,9 +358,23 @@ Here are the test set approximations (200 points):
 ![image](../data/sin_test_SVRG_bad.png)
 
 As we can see, our model isn't sharp enough to clearly approximate the sinus curve. In addition, even if this SGD set up was the best to make a warm start for SVRG,
-some other SGD set up that were not working well on the first epochs, managed to do better in 200 epochs :
+some other SGD set up that were not working well on the first epochs, managed to do better in 200 epochs. Here is the set up of the best SGD algorithm in our case : 
+
+**For SGD_best** : 200 epochs
+
+	- learning rate : 0.15
+	- decay : 0.1
 
 
+*At first, it looks like our formal SGD set up worked better*
+
+![image](../data/sin_SGD_SGD_best.png)
+
+*But if we look from epoch 60 to 200, this SGD set up clearly outperfored the first one*
+
+![image](../data/sin_SGD_SGD_best_2.png)
+
+As we can see, 
 
 
 <a name="MNIST"></a>
