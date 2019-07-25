@@ -382,7 +382,7 @@ and continue with SVRG for the last 140 epochs. Here is our **optimal set up** f
 	- Warm start with SGD (60 epochs) 
 		- learning rate : 0.15
 		- decay : 0.1
-	- SVRG 5 passes (180 epochs)
+	- SVRG 5 passes (140 epochs)
 	- learning rate : 0.021;
 
 *SVRG_best set up performed slightly better than SGD_best set up*
@@ -407,8 +407,7 @@ Now, we're back on MNIST and we will try to play with *hyperparameters* and *war
 #### **Warm start and learning rate decay**
 
 For some reason, SVRG is more useful when the model is already trained and near a local minimum. To pre-train the model (also known as warm start),
-we will use the same SGD set up as the one SVRG compete with. We tried many learning rates and learning rate decay algorithms. We finally chose the 
-exponential one :
+we will use the same SGD set up as the one SVRG compete with. For this warm start, we tried many learning rates and learning rate decay algorithms. We finally chose the 't-inverse' one :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Calpha_%7B0%7D%20%3D%20learning%5C%3B%20rate%5C%3B%20initialization)
 
@@ -416,9 +415,7 @@ exponential one :
 
 ![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20t%20%3D%20epoch)
 
-![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Calpha_t%20%3A%3D%20%5Calpha_0%20%5C%3B%20e%5E%7B-%5Clambda%20t%7D)
-
-This warm start will represent 10% of the number of epochs. 
+![equation](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Calpha_%7Bt%7D%3A%3D%20%5Cfrac%7B%5Calpha_%7B0%7D%7D%7B1&plus;%5Clambda%20t%7D)
 
 #### **NN architecture**
 
@@ -440,29 +437,27 @@ It is the same architecture as the one used in the SVRG research paper.
 	
 - For SVRG : 
 	- #epoch : 10 just like SGD above, 490 as real SVRG
-	- learning rate : between 0.16 and 0.20
+	- learning rate : 3 models tested, 0.25, 0.5, 1.0
 	- number of passes : 5 (as recommended in the research paper)
 	
 #### **Results**
 
-As the 50 first epochs are set in the same way, the graphs begin at epoch #50. Note that we needed to look at epoch #500 to see a real difference
-between SVRG and SGD.
-The reason why we chose a range between 0.16 and 0.20 for SVRG is that this is the range where the loss function begin to 
-struggle to stay stable. As you can see below, as soon as the learning rate is out of ]0.16,0.19[, the losss function diverges :
 
-![image](../data/SVRG_compare_MNIST.png)
+Overall SVRG clearly outperformed best SGD set up. The best SVRG set up was the one with a 0.25 learning rate :
 
-While 0.17 and 0.18 converged well, 0.16, 0.19 and 0.20 diverged brutally after 50-200 epochs.
-It shows how important hyperparameters are in these variance reduced algorithms. 
-If we take the best SGD set up vs the best SVRG set up, here is what we get : 
+![image](../data/mnist_SVRG_SGD.png)
 
-![image](../data/SVRG_SGD_MNIST.png)
+Just like the previous example, one curious thing we notice is this shift at epoch #10 between SVRG and SGD. When the model changes
+(from SGD warm start to SVRG) the convergence rate benefits from a boost :
+
+![image](../data/mnist_shift_SVRG.png)
+
+One can wonder if it would have been even better if the warm start was shorter. Indeed, as we can see above, the SGD gradient descent fastness start to 
+decrease around 5 epochs. 
 
 Accuracy on test sets :
 - 0.9784 for SGD
 - 0.9794 for SVRG
-
-In this case, SVRG was slightly better than SGD. One can wonder if it would have been even better if the warm start was longer. 
 
 <a name="conclusion"></a>
 ## III- Conclusion : SVRG performance highly depends on parameters chosen
