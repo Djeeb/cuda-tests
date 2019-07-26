@@ -7,4 +7,4 @@ Explorations de bibliothèques donnant des structures pour la créations de rés
 - **libtorch_projects** ( *C++* ) : implementing customed variants of stochastic gradient descent (SAGA, SVRG) using pytorch C++ API. 
 
 
-- **pytorch_projects** : ( *Python* ) to be discussed. 
+- **pytorch_projects** ( *Python* ) : to be discussed. 
