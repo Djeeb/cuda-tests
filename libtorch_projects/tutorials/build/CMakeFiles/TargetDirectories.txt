@@ -1,0 +1,8 @@
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/edit_cache.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/nnet.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/sandbox.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/rebuild_cache.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/nnet_from_scratch.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/tensor_example.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/autograd_example.dir
+/home/jb/stage_DL/projects_pytorch/tutorials/build/CMakeFiles/GPU_CPU_example.dir
